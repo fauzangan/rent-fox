@@ -1,20 +1,22 @@
 @extends('dashboard.layouts.main')
 @section('content')
 <div class="section-header">
-    <h1>Tambah Data Customer</h1>
+    <h1>Edit Data Customer</h1>
     <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active"><a href="/">Dashboard</a></div>
         <div class="breadcrumb-item"><a href="{{ route('dashboard.customers.index') }}">Manajemen Customer</a></div>
-        <div class="breadcrumb-item">Tambah Customer</div>
+        <div class="breadcrumb-item">Edit Customer</div>
     </div>
 </div>
+
 <div class="section-body">
     <div class="card">
         <div class="card-header">
-            <h4>Biodata Customer</h4>
+            <h4>Edit Biodata Customer (Id : {{ $customer->customer_id }})</h4>
         </div>
         <div class="card-body">
-            <form action="{{ route('dashboard.customers.store') }}" method="POST">
+            <form action="{{ route('dashboard.customers.update', $customer) }}" method="POST">
+                @method('PUT')
                 @csrf
                 <div class="row">
                     <div class="col">
@@ -22,7 +24,7 @@
                             <label>Nama<span class="text-danger" data-toggle="tooltip"
                                     title="Wajib Diisi!">*</span></label>
                             <input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama"
-                                value="{{ old('nama') }}">
+                                value="{{ old('nama', $customer->nama) }}">
                             @error('nama')
                             <div class="invalid-feedback">
                                 Nama perlu diisi
@@ -31,18 +33,20 @@
                         </div>
                         <div class="form-group">
                             <label>Jenis Identitas<span class="text-danger" data-toggle="tooltip"
-                                title="Wajib Diisi!">*</span></label>
+                                    title="Wajib Diisi!">*</span></label>
                             <select class="form-control" name="jenis_identitas" id="jenis_identitas">
-                                <option value="KTP" {{ old('jenis_identitas') == 'KTP' ? 'selected' : '' }}>KTP</option>
-                                <option value="SIM" {{ old('jenis_identitas') == 'SIM' ? 'selected' : '' }}>SIM</option>
+                                <option value="KTP" {{ old('jenis_identitas', $customer->jenis_identitas) == 'KTP' ?
+                                    'selected' : '' }}>KTP</option>
+                                <option value="SIM" {{ old('jenis_identitas', $customer->jenis_identitas) == 'SIM' ?
+                                    'selected' : '' }}>SIM</option>
                             </select>
                         </div>
                         <div class="form-group" id="identitas_berlaku_form">
                             <label>ID Berlaku Sampai Tanggal<span class="text-danger" data-toggle="tooltip"
-                                title="Wajib Diisi!">*</span></label>
+                                    title="Wajib Diisi!">*</span></label>
                             <input type="text" class="form-control @error('identitas_berlaku') is-invalid @enderror"
                                 name="identitas_berlaku" placeholder="HH/BB/TTTT" id="identitas_berlaku"
-                                value="{{ old('identitas_berlaku') }}">
+                                value="{{ old('identitas_berlaku', $customer->identitas_berlaku) }}">
                             @error('identitas_berlaku')
                             <div class="invalid-feedback">
                                 Identitas Berlaku Sampai, perlu diisi
@@ -51,9 +55,10 @@
                         </div>
                         <div class="form-group">
                             <label>No. Identitas<span class="text-danger" data-toggle="tooltip"
-                                title="Wajib Diisi!">*</span></label>
+                                    title="Wajib Diisi!">*</span></label>
                             <input type="text" class="form-control @error('nomor_identitas') is-invalid @enderror"
-                                name="nomor_identitas" id="nomor_identitas" value="{{ old('nomor_identitas') }}">
+                                name="nomor_identitas" id="nomor_identitas"
+                                value="{{ old('nomor_identitas', $customer->nomor_identitas) }}">
                             @error('nomor_identitas')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -63,7 +68,7 @@
                         <div class="form-group">
                             <label>Jabatan</label>
                             <input type="text" class="form-control @error('jabatan') is-invalid @enderror"
-                                name="jabatan" value="{{ old('jabatan') }}">
+                                name="jabatan" value="{{ old('jabatan', $customer->jabatan) }}">
                             @error('jabatan')
                             <div class="invalid-feedback">
                                 Jabatan perlu diisi
@@ -72,9 +77,9 @@
                         </div>
                         <div class="form-group">
                             <label>Alamat<span class="text-danger" data-toggle="tooltip"
-                                title="Wajib Diisi!">*</span></label>
+                                    title="Wajib Diisi!">*</span></label>
                             <textarea type="text" class="form-control @error('alamat') is-invalid @enderror"
-                                name="alamat">{{ old('alamat') }}</textarea>
+                                name="alamat">{{ old('alamat', $customer->alamat) }}</textarea>
                             @error('alamat')
                             <div class="invalid-feedback">
                                 Alamat perlu diisi
@@ -83,8 +88,9 @@
                         </div>
                         <div class="form-group">
                             <label>Kota<span class="text-danger" data-toggle="tooltip"
-                                title="Wajib Diisi!">*</span></label>
-                            <input type="text" class="form-control @error('kota') is-invalid @enderror" name="kota" value="{{ old('kota') }}">
+                                    title="Wajib Diisi!">*</span></label>
+                            <input type="text" class="form-control @error('kota') is-invalid @enderror" name="kota"
+                                value="{{ old('kota', $customer->kota) }}">
                             @error('kota')
                             <div class="invalid-feedback">
                                 Kota perlu diisi
@@ -93,9 +99,9 @@
                         </div>
                         <div class="form-group">
                             <label>Provinsi<span class="text-danger" data-toggle="tooltip"
-                                title="Wajib Diisi!">*</span></label>
+                                    title="Wajib Diisi!">*</span></label>
                             <input type="text" class="form-control @error('provinsi') is-invalid @enderror"
-                                name="provinsi">
+                                name="provinsi" value="{{ old('kota', $customer->provinsi) }}">
                             @error('provinsi')
                             <div class="invalid-feedback">
                                 Provinsi perlu diisi
@@ -113,7 +119,7 @@
                                     </div>
                                 </div>
                                 <input type="text" class="form-control @error('telp') is-invalid @enderror" name="telp"
-                                    id="telp" value="{{ old('telp') }}">
+                                    id="telp" value="{{ old('telp', $customer->telp) }}">
                                 @error('telp')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -130,7 +136,7 @@
                                     </div>
                                 </div>
                                 <input type="text" class="form-control @error('fax') is-invalid @enderror" name="fax"
-                                    id="fax" value="{{ old('fax') }}">
+                                    id="fax" value="{{ old('fax', $customer->fax) }}">
                                 @error('fax')
                                 <div class="invalid-feedback">
                                     Fax perlu diisi
@@ -140,7 +146,7 @@
                         </div>
                         <div class="form-group">
                             <label>Handphone<span class="text-danger" data-toggle="tooltip"
-                                title="Wajib Diisi!">*</span></label>
+                                    title="Wajib Diisi!">*</span></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
@@ -148,7 +154,8 @@
                                     </div>
                                 </div>
                                 <input type="text" class="form-control @error('handphone') is-invalid @enderror"
-                                    name="handphone" id="handphones" value="{{ old('handphone') }}">
+                                    name="handphone" id="handphones"
+                                    value="{{ old('handphone', $customer->handphone) }}">
                                 @error('handphone')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -159,7 +166,7 @@
                         <div class="form-group">
                             <label>Keterangan</label>
                             <textarea type="text" class="form-control @error('keterangan') is-invalid @enderror"
-                                name="keterangan">{{ old('keterangan') }}</textarea>
+                                name="keterangan">{{ old('keterangan', $customer->keterangan) }}</textarea>
                             @error('keterangan')
                             <div class="invalid-feedback">
                                 Keterangan perlu diisi
@@ -168,54 +175,63 @@
                         </div>
                         <div class="form-group">
                             <label>Bonafidity<span class="text-danger" data-toggle="tooltip"
-                                title="Wajib Diisi!">*</span></label>
+                                    title="Wajib Diisi!">*</span></label>
                             <select class="form-control" name="bonafidity">
-                                <option value="$">$</option>
-                                <option value="$$">$$</option>
-                                <option value="del">del</option>
+                                <option value="$" {{ old('bonafidity', $customer->bonafidity) == '$' ? 'selected' : ''
+                                    }}>$</option>
+                                <option value="$$" {{ old('bonafidity', $customer->bonafidity) == '$$' ? 'selected' : ''
+                                    }}>$$</option>
+                                <option value="del" {{ old('bonafidity', $customer->bonafidity) == 'del' ? 'selected' :
+                                    '' }}>del</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Status Data<span class="text-danger" data-toggle="tooltip"
-                                title="Wajib Diisi!">*</span></label>
+                                    title="Wajib Diisi!">*</span></label>
                             <select class="form-control" name="bit_active">
-                                <option value=1>Aktif</option>
-                                <option value=0>Tidak Aktif</option>
+                                <option value=1 {{ old('bit_active', $customer->bit_active) == 1 ? 'selected' : ''
+                                    }}>Aktif</option>
+                                <option value=0 {{ old('bit_active', $customer->bit_active) == 0 ? 'selected' : ''
+                                    }}>Tidak Aktif</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Surat Kuasa</label>
                             <select class="form-control" name="surat_kuasa">
-                                <option value=0>Tidak Ada</option>
-                                <option value=1>Ada</option>
+                                <option value=0 {{ old('surat_kuasa', $customer->surat_kuasa) == 0 ? 'selected' : ''
+                                    }}>Tidak Ada</option>
+                                <option value=1 {{ old('surat_kuasa', $customer->surat_kuasa) == 1 ? 'selected' : ''
+                                    }}>Ada</option>
                             </select>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label>Mewakili<span class="text-danger" data-toggle="tooltip"
-                                title="Wajib Diisi!">*</span></label>
-                            <select class="form-control" name="is_perusahaan" id="is_perusahaan">
-                                <option value=0 {{ old('is_perusahaan') == 0 ? 'selected' : '' }}>Diri Sendiri</option>
-                                <option value=1 {{ old('is_perusahaan') == 1 ? 'selected' : '' }}>Perusahaan</option>
+                                    title="Wajib Diisi!">*</span></label>
+                            <select class="form-control" name="is_perusahaan" id="is_perusahaan" disabled="true">
+                                <option value=0 @if($customer->perusahaan_id == null) selected @endif >Diri Sendiri
+                                </option>
+                                <option value=1 @if($customer->perusahaan_id != null) selected @endif>Perusahaan
+                                </option>
                             </select>
                         </div>
                         <div class="company-form-group" id="company-form">
                             <div class="form-group">
                                 <label>Nama Perusahaan<span class="text-danger" data-toggle="tooltip"
-                                    title="Wajib Diisi!">*</span></label>
+                                        title="Wajib Diisi!">*</span></label>
                                 <div class="row">
                                     <div class="col-3">
                                         <select class="form-control" name="badan_hukum_id">
-                                            @foreach($badan_hukums as $badan_hukum)
-                                            <option value={{ $badan_hukum->badan_hukum_id }}>{{ $badan_hukum->name }}</option>
+                                            @foreach ($badan_hukums as $badan_hukum)
+                                                <option value="{{ $badan_hukum->badan_hukum_id }}"{{ old('badan_hukum_id', $customer->perusahaan->badan_hukum_id ?? null) == $badan_hukum->badan_hukum_id ? 'selected' : '' }}>{{ $badan_hukum->name }}</option>
                                             @endforeach
-                                        </select>
+                                        </select>  
                                     </div>
                                     <div class="col-9">
                                         <input type="text"
                                             class="form-control @error('nama_perusahaan') is-invalid @enderror"
-                                            name="nama_perusahaan" value="{{ old('nama_perusahaan') }}">
+                                            name="nama_perusahaan" value="{{ old('nama_perusahaan', $customer->perusahaan->nama ?? null) }}">
                                         @error('nama_perusahaan')
                                         <div class="invalid-feedback">
                                             Nama perusahaan perlu diisi
@@ -226,10 +242,10 @@
                             </div>
                             <div class="form-group">
                                 <label>Alamat Perusahaan<span class="text-danger" data-toggle="tooltip"
-                                    title="Wajib Diisi!">*</span></label>
+                                        title="Wajib Diisi!">*</span></label>
                                 <textarea type="text"
                                     class="form-control @error('alamat_perusahaan') is-invalid @enderror"
-                                    name="alamat_perusahaan">{{ old('alamat_perusahaan') }}</textarea>
+                                    name="alamat_perusahaan">{{ old('alamat_perusahaan', $customer->perusahaan->alamat ?? null) }}</textarea>
                                 @error('alamat_perusahaan')
                                 <div class="invalid-feedback">
                                     Alamat perusahaan perlu diisi
@@ -238,9 +254,9 @@
                             </div>
                             <div class="form-group">
                                 <label>Kota Perusahaan<span class="text-danger" data-toggle="tooltip"
-                                    title="Wajib Diisi!">*</span></label>
+                                        title="Wajib Diisi!">*</span></label>
                                 <input type="text" class="form-control @error('kota_perusahaan') is-invalid @enderror"
-                                    name="kota_perusahaan" value="{{ old('kota_perusahaan') }}">
+                                    name="kota_perusahaan" value="{{ old('kota_perusahaan', $customer->perusahaan->kota ?? null)}}">
                                 @error('kota_perusahaan')
                                 <div class="invalid-feedback">
                                     Kota perusahaan perlu diisi
@@ -249,10 +265,10 @@
                             </div>
                             <div class="form-group">
                                 <label>Provinsi Perusahaan<span class="text-danger" data-toggle="tooltip"
-                                    title="Wajib Diisi!">*</span></label>
+                                        title="Wajib Diisi!">*</span></label>
                                 <input type="text"
                                     class="form-control @error('provinsi_perusahaan') is-invalid @enderror"
-                                    name="provinsi_perusahaan">
+                                    name="provinsi_perusahaan" value="{{ old('provinsi_perusahaan', $customer->perusahaan->provinsi ?? null) }}">
                                 @error('provinsi_perusahaan')
                                 <div class="invalid-feedback">
                                     Kota perusahaan perlu diisi
@@ -269,7 +285,8 @@
                                     </div>
                                     <input type="text"
                                         class="form-control @error('telp_perusahaan') is-invalid @enderror"
-                                        name="telp_perusahaan" id="telp_perusahaan" value="{{ old('telp_perusahaan') }}">
+                                        name="telp_perusahaan" id="telp_perusahaan"
+                                        value="{{ old('telp_perusahaan', $customer->perusahaan->telp ?? null) }}">
                                     @error('telp_perusahaan')
                                     <div class="invalid-feedback">
                                         Telp perusahaan perlu diisi
@@ -285,7 +302,9 @@
                                             <i class="fas fa-fax"></i>
                                         </div>
                                     </div>
-                                    <input type="text" class="form-control @error('fax_perusahaan') is-invalid @enderror" name="fax_perusahaan" id="fax" value="{{ old('fax_perusahaan') }}">
+                                    <input type="text"
+                                        class="form-control @error('fax_perusahaan') is-invalid @enderror"
+                                        name="fax_perusahaan" id="fax" value="{{ old('fax_perusahaan', $customer->perusahaan->fax ?? null) }}">
                                     @error('fax_perusahaan')
                                     <div class="invalid-feedback">
                                         Fax perusahaan perlu diisi
@@ -297,7 +316,7 @@
                     </div>
                 </div>
                 <div class="card-footer text-center">
-                    <button class="btn btn-primary" type="submit">Tambah Data Customer</button>
+                    <button class="btn btn-primary" type="submit">Edit Data Customer</button>
                 </div>
             </form>
         </div>
@@ -310,9 +329,6 @@
 <script src="{{ asset('assets/modules/cleave-js/dist/addons/cleave-phone.id.js') }}"></script>
 <script src="{{ asset('assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
 
-
 <!-- Page Specific JS File -->
-<script src="{{ asset('assets/js/page/customer-create.js') }}"></script>
-
-
+<script src="{{ asset('assets/js/page/customer-edit.js') }}"></script>
 @endsection

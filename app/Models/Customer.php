@@ -9,10 +9,10 @@ class Customer extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'costumer_id';
+    protected $primaryKey = 'customer_id';
 
     protected $guarded = [
-        'costumer_id'
+        'customer_id'
     ];
 
     public function perusahaan(){
