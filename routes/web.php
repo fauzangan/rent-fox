@@ -21,7 +21,8 @@ Route::get('/', function () {
 Route::get('/dashboard/customers', [CustomerController::class, 'index'])->name('dashboard.customers.index');
 Route::get('/dashboard/customers/create', [CustomerController::class, 'create'])->name('dashboard.customers.create');
 Route::post('/dashboard/customers/create', [CustomerController::class, 'store'])->name('dashboard.customers.store');
-Route::get('/dashboard/customers/detail/{customer}', [CustomerController::class, 'detail'])->name('dashboard.customers.detail');
+Route::get('/dashboard/customers/detail/{customer}', [CustomerController::class, 'getCustomerDetails'])->name('dashboard.customers.detail');
 Route::get('/dashboard/customers/edit/{customer}', [CustomerController::class, 'edit'])->name('dashboard.customers.edit');
 Route::put('/dashboard/customers/update/{customer}', [CustomerController::class, 'update'])->name('dashboard.customers.update');
+Route::delete('/dashboard/customers/delete/{customer}', [CustomerController::class, 'destroy'])->name('dashboard.customers.delete');
 

@@ -94,8 +94,12 @@
                         <div class="form-group">
                             <label>Provinsi<span class="text-danger" data-toggle="tooltip"
                                 title="Wajib Diisi!">*</span></label>
-                            <input type="text" class="form-control @error('provinsi') is-invalid @enderror"
-                                name="provinsi">
+                                <select class="form-control @error('provinsi') is-invalid @enderror" name="provinsi" id="provinsi">
+                                    <option disabled selected>Pilih Provinsi</option>
+                                    @foreach($provinsis as $provinsi)
+                                    <option value="{{ $provinsi->nama }}" {{ old('provinsi') == $provinsi->nama ? 'selected' : '' }}>{{ $provinsi->nama }}</option>
+                                    @endforeach
+                                </select>
                             @error('provinsi')
                             <div class="invalid-feedback">
                                 Provinsi perlu diisi
@@ -206,10 +210,9 @@
                                     title="Wajib Diisi!">*</span></label>
                                 <div class="row">
                                     <div class="col-3">
-                                        <select class="form-control" name="badan_hukum_id">
-                                            @foreach($badan_hukums as $badan_hukum)
-                                            <option value={{ $badan_hukum->badan_hukum_id }}>{{ $badan_hukum->name }}</option>
-                                            @endforeach
+                                        <select class="form-control" name="badan_hukum">
+                                            <option value="CV." {{ old('badan_hukum') == 'CV.' ? 'selected' : '' }}>CV.</option>
+                                            <option value="PT." {{ old('badan_hukum') == 'PT.' ? 'selected' : '' }}>PT.</option>
                                         </select>
                                     </div>
                                     <div class="col-9">
@@ -250,12 +253,15 @@
                             <div class="form-group">
                                 <label>Provinsi Perusahaan<span class="text-danger" data-toggle="tooltip"
                                     title="Wajib Diisi!">*</span></label>
-                                <input type="text"
-                                    class="form-control @error('provinsi_perusahaan') is-invalid @enderror"
-                                    name="provinsi_perusahaan">
+                                    <select class="form-control @error('provinsi_perusahaan') is-invalid @enderror" name="provinsi_perusahaan" id="provinsi_perusahaan">
+                                        <option disabled selected>Pilih Provinsi</option>
+                                        @foreach($provinsis as $provinsi)
+                                        <option value="{{ $provinsi->nama }}" {{ old('provinsi_perusahaan') == $provinsi->nama ? 'selected' : '' }}>{{ $provinsi->nama }}</option>
+                                        @endforeach
+                                    </select>
                                 @error('provinsi_perusahaan')
                                 <div class="invalid-feedback">
-                                    Kota perusahaan perlu diisi
+                                    Provinsi perusahaan perlu diisi
                                 </div>
                                 @enderror
                             </div>

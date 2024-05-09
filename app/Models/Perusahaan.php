@@ -12,7 +12,7 @@ class Perusahaan extends Model
     protected $primaryKey = 'perusahaan_id';
 
     protected $fillable = [
-        'badan_hukum_id',
+        'badan_hukum',
         'nama',
         'alamat',
         'kota',
@@ -20,11 +20,6 @@ class Perusahaan extends Model
         'telp',
         'fax',
     ];
-
-    public function badanHukum(){
-        return $this->belongsTo(BadanHukum::class, 'badan_hukum_id');
-    }
-
     public function customer(){
         return $this->hasOne(Customer::class);
     }

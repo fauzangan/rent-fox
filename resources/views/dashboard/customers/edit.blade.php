@@ -46,7 +46,7 @@
                                     title="Wajib Diisi!">*</span></label>
                             <input type="text" class="form-control @error('identitas_berlaku') is-invalid @enderror"
                                 name="identitas_berlaku" placeholder="HH/BB/TTTT" id="identitas_berlaku"
-                                value="{{ old('identitas_berlaku', $customer->identitas_berlaku) }}">
+                                value="{{ old('identitas_berlaku', $customer->identitas_berlaku->format('d/m/Y')) }}">
                             @error('identitas_berlaku')
                             <div class="invalid-feedback">
                                 Identitas Berlaku Sampai, perlu diisi
@@ -222,10 +222,9 @@
                                         title="Wajib Diisi!">*</span></label>
                                 <div class="row">
                                     <div class="col-3">
-                                        <select class="form-control" name="badan_hukum_id">
-                                            @foreach ($badan_hukums as $badan_hukum)
-                                                <option value="{{ $badan_hukum->badan_hukum_id }}"{{ old('badan_hukum_id', $customer->perusahaan->badan_hukum_id ?? null) == $badan_hukum->badan_hukum_id ? 'selected' : '' }}>{{ $badan_hukum->name }}</option>
-                                            @endforeach
+                                        <select class="form-control" name="badan_hukum">
+                                            <option value="CV.">CV.</option>
+                                            <option value="PT.">PT.</option>
                                         </select>  
                                     </div>
                                     <div class="col-9">

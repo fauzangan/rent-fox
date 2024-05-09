@@ -15,6 +15,10 @@ class Customer extends Model
         'customer_id'
     ];
 
+    protected $casts = [
+        'identitas_berlaku' => 'datetime'
+    ];
+
     public function perusahaan(){
         return $this->belongsTo(Perusahaan::class, 'perusahaan_id');
     }
