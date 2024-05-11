@@ -31,15 +31,15 @@
                         </div>
                         <div class="form-group">
                             <label>Jenis Identitas<span class="text-danger" data-toggle="tooltip"
-                                title="Wajib Diisi!">*</span></label>
+                                    title="Wajib Diisi!">*</span></label>
                             <select class="form-control" name="jenis_identitas" id="jenis_identitas">
-                                <option value="KTP" {{ old('jenis_identitas') == 'KTP' ? 'selected' : '' }}>KTP</option>
-                                <option value="SIM" {{ old('jenis_identitas') == 'SIM' ? 'selected' : '' }}>SIM</option>
+                                <option value="KTP" {{ old('jenis_identitas')=='KTP' ? 'selected' : '' }}>KTP</option>
+                                <option value="SIM" {{ old('jenis_identitas')=='SIM' ? 'selected' : '' }}>SIM</option>
                             </select>
                         </div>
                         <div class="form-group" id="identitas_berlaku_form">
                             <label>ID Berlaku Sampai Tanggal<span class="text-danger" data-toggle="tooltip"
-                                title="Wajib Diisi!">*</span></label>
+                                    title="Wajib Diisi!">*</span></label>
                             <input type="text" class="form-control @error('identitas_berlaku') is-invalid @enderror"
                                 name="identitas_berlaku" placeholder="HH/BB/TTTT" id="identitas_berlaku"
                                 value="{{ old('identitas_berlaku') }}">
@@ -51,7 +51,7 @@
                         </div>
                         <div class="form-group">
                             <label>No. Identitas<span class="text-danger" data-toggle="tooltip"
-                                title="Wajib Diisi!">*</span></label>
+                                    title="Wajib Diisi!">*</span></label>
                             <input type="text" class="form-control @error('nomor_identitas') is-invalid @enderror"
                                 name="nomor_identitas" id="nomor_identitas" value="{{ old('nomor_identitas') }}">
                             @error('nomor_identitas')
@@ -72,7 +72,7 @@
                         </div>
                         <div class="form-group">
                             <label>Alamat<span class="text-danger" data-toggle="tooltip"
-                                title="Wajib Diisi!">*</span></label>
+                                    title="Wajib Diisi!">*</span></label>
                             <textarea type="text" class="form-control @error('alamat') is-invalid @enderror"
                                 name="alamat">{{ old('alamat') }}</textarea>
                             @error('alamat')
@@ -83,8 +83,9 @@
                         </div>
                         <div class="form-group">
                             <label>Kota<span class="text-danger" data-toggle="tooltip"
-                                title="Wajib Diisi!">*</span></label>
-                            <input type="text" class="form-control @error('kota') is-invalid @enderror" name="kota" value="{{ old('kota') }}">
+                                    title="Wajib Diisi!">*</span></label>
+                            <input type="text" class="form-control @error('kota') is-invalid @enderror" name="kota"
+                                value="{{ old('kota') }}">
                             @error('kota')
                             <div class="invalid-feedback">
                                 Kota perlu diisi
@@ -93,13 +94,15 @@
                         </div>
                         <div class="form-group">
                             <label>Provinsi<span class="text-danger" data-toggle="tooltip"
-                                title="Wajib Diisi!">*</span></label>
-                                <select class="form-control @error('provinsi') is-invalid @enderror" name="provinsi" id="provinsi">
-                                    <option disabled selected>Pilih Provinsi</option>
-                                    @foreach($provinsis as $provinsi)
-                                    <option value="{{ $provinsi->nama }}" {{ old('provinsi') == $provinsi->nama ? 'selected' : '' }}>{{ $provinsi->nama }}</option>
-                                    @endforeach
-                                </select>
+                                    title="Wajib Diisi!">*</span></label>
+                            <select class="form-control @error('provinsi') is-invalid @enderror" name="provinsi"
+                                id="provinsi">
+                                <option disabled selected>Pilih Provinsi</option>
+                                @foreach($provinsis as $provinsi)
+                                <option value="{{ $provinsi->nama }}" {{ old('provinsi')==$provinsi->nama ? 'selected' :
+                                    '' }}>{{ $provinsi->nama }}</option>
+                                @endforeach
+                            </select>
                             @error('provinsi')
                             <div class="invalid-feedback">
                                 Provinsi perlu diisi
@@ -144,7 +147,7 @@
                         </div>
                         <div class="form-group">
                             <label>Handphone<span class="text-danger" data-toggle="tooltip"
-                                title="Wajib Diisi!">*</span></label>
+                                    title="Wajib Diisi!">*</span></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
@@ -172,7 +175,7 @@
                         </div>
                         <div class="form-group">
                             <label>Bonafidity<span class="text-danger" data-toggle="tooltip"
-                                title="Wajib Diisi!">*</span></label>
+                                    title="Wajib Diisi!">*</span></label>
                             <select class="form-control" name="bonafidity">
                                 <option value="$">$</option>
                                 <option value="$$">$$</option>
@@ -181,7 +184,7 @@
                         </div>
                         <div class="form-group">
                             <label>Status Data<span class="text-danger" data-toggle="tooltip"
-                                title="Wajib Diisi!">*</span></label>
+                                    title="Wajib Diisi!">*</span></label>
                             <select class="form-control" name="bit_active">
                                 <option value=1>Aktif</option>
                                 <option value=0>Tidak Aktif</option>
@@ -198,21 +201,23 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Mewakili<span class="text-danger" data-toggle="tooltip"
-                                title="Wajib Diisi!">*</span></label>
+                                    title="Wajib Diisi!">*</span></label>
                             <select class="form-control" name="is_perusahaan" id="is_perusahaan">
-                                <option value=0 {{ old('is_perusahaan') == 0 ? 'selected' : '' }}>Diri Sendiri</option>
-                                <option value=1 {{ old('is_perusahaan') == 1 ? 'selected' : '' }}>Perusahaan</option>
+                                <option value=0 {{ old('is_perusahaan')==0 ? 'selected' : '' }}>Diri Sendiri</option>
+                                <option value=1 {{ old('is_perusahaan')==1 ? 'selected' : '' }}>Perusahaan</option>
                             </select>
                         </div>
                         <div class="company-form-group" id="company-form">
                             <div class="form-group">
                                 <label>Nama Perusahaan<span class="text-danger" data-toggle="tooltip"
-                                    title="Wajib Diisi!">*</span></label>
+                                        title="Wajib Diisi!">*</span></label>
                                 <div class="row">
                                     <div class="col-3">
                                         <select class="form-control" name="badan_hukum">
-                                            <option value="CV." {{ old('badan_hukum') == 'CV.' ? 'selected' : '' }}>CV.</option>
-                                            <option value="PT." {{ old('badan_hukum') == 'PT.' ? 'selected' : '' }}>PT.</option>
+                                            <option value="CV." {{ old('badan_hukum')=='CV.' ? 'selected' : '' }}>CV.
+                                            </option>
+                                            <option value="PT." {{ old('badan_hukum')=='PT.' ? 'selected' : '' }}>PT.
+                                            </option>
                                         </select>
                                     </div>
                                     <div class="col-9">
@@ -229,7 +234,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Alamat Perusahaan<span class="text-danger" data-toggle="tooltip"
-                                    title="Wajib Diisi!">*</span></label>
+                                        title="Wajib Diisi!">*</span></label>
                                 <textarea type="text"
                                     class="form-control @error('alamat_perusahaan') is-invalid @enderror"
                                     name="alamat_perusahaan">{{ old('alamat_perusahaan') }}</textarea>
@@ -241,7 +246,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Kota Perusahaan<span class="text-danger" data-toggle="tooltip"
-                                    title="Wajib Diisi!">*</span></label>
+                                        title="Wajib Diisi!">*</span></label>
                                 <input type="text" class="form-control @error('kota_perusahaan') is-invalid @enderror"
                                     name="kota_perusahaan" value="{{ old('kota_perusahaan') }}">
                                 @error('kota_perusahaan')
@@ -252,13 +257,15 @@
                             </div>
                             <div class="form-group">
                                 <label>Provinsi Perusahaan<span class="text-danger" data-toggle="tooltip"
-                                    title="Wajib Diisi!">*</span></label>
-                                    <select class="form-control @error('provinsi_perusahaan') is-invalid @enderror" name="provinsi_perusahaan" id="provinsi_perusahaan">
-                                        <option disabled selected>Pilih Provinsi</option>
-                                        @foreach($provinsis as $provinsi)
-                                        <option value="{{ $provinsi->nama }}" {{ old('provinsi_perusahaan') == $provinsi->nama ? 'selected' : '' }}>{{ $provinsi->nama }}</option>
-                                        @endforeach
-                                    </select>
+                                        title="Wajib Diisi!">*</span></label>
+                                <select class="form-control @error('provinsi_perusahaan') is-invalid @enderror"
+                                    name="provinsi_perusahaan" id="provinsi_perusahaan">
+                                    <option disabled selected>Pilih Provinsi</option>
+                                    @foreach($provinsis as $provinsi)
+                                    <option value="{{ $provinsi->nama }}" {{ old('provinsi_perusahaan')==$provinsi->nama
+                                        ? 'selected' : '' }}>{{ $provinsi->nama }}</option>
+                                    @endforeach
+                                </select>
                                 @error('provinsi_perusahaan')
                                 <div class="invalid-feedback">
                                     Provinsi perusahaan perlu diisi
@@ -275,7 +282,8 @@
                                     </div>
                                     <input type="text"
                                         class="form-control @error('telp_perusahaan') is-invalid @enderror"
-                                        name="telp_perusahaan" id="telp_perusahaan" value="{{ old('telp_perusahaan') }}">
+                                        name="telp_perusahaan" id="telp_perusahaan"
+                                        value="{{ old('telp_perusahaan') }}">
                                     @error('telp_perusahaan')
                                     <div class="invalid-feedback">
                                         Telp perusahaan perlu diisi
@@ -291,7 +299,9 @@
                                             <i class="fas fa-fax"></i>
                                         </div>
                                     </div>
-                                    <input type="text" class="form-control @error('fax_perusahaan') is-invalid @enderror" name="fax_perusahaan" id="fax" value="{{ old('fax_perusahaan') }}">
+                                    <input type="text"
+                                        class="form-control @error('fax_perusahaan') is-invalid @enderror"
+                                        name="fax_perusahaan" id="fax" value="{{ old('fax_perusahaan') }}">
                                     @error('fax_perusahaan')
                                     <div class="invalid-feedback">
                                         Fax perusahaan perlu diisi

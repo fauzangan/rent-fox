@@ -46,7 +46,12 @@
                                     title="Wajib Diisi!">*</span></label>
                             <input type="text" class="form-control @error('identitas_berlaku') is-invalid @enderror"
                                 name="identitas_berlaku" placeholder="HH/BB/TTTT" id="identitas_berlaku"
-                                value="{{ old('identitas_berlaku', $customer->identitas_berlaku->format('d/m/Y')) }}">
+                                @if($customer->identitas_berlaku != null)
+                                value="{{ old('identitas_berlaku', $customer->identitas_berlaku->format('d/m/Y')) }}"
+                                @else
+                                value="{{ old('identitas_berlaku')}}"
+                                @endif
+                                >
                             @error('identitas_berlaku')
                             <div class="invalid-feedback">
                                 Identitas Berlaku Sampai, perlu diisi

@@ -17,7 +17,7 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        $customers = Customer::paginate(4);
+        $customers = Customer::with('perusahaan')->paginate(4);
         confirmDelete("Apakah anda yakin menghapus ?", "Data yang sudah dihapus tidak dapat dikembalikan");
         return view('dashboard.customers.index', [
             'customers' => $customers,
@@ -35,7 +35,6 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
             'nama' => ['required', 'string', 'max:255'],
             'jenis_identitas' => ['required', 'string'],
@@ -62,55 +61,30 @@ class CustomerController extends Controller
             'bit_active' => ['required', 'boolean']
         ]);
 
-        $customer = DB::transaction(function () use ($validatedData) {
-            if ($validatedData['is_perusahaan']) {
-                $perusahaan = Perusahaan::create([
-                    'badan_hukum' => $validatedData['badan_hukum'],
-                    'nama' => $validatedData['nama_perusahaan'],
-                    'alamat' => $validatedData['alamat_perusahaan'],
-                    'kota' => $validatedData['kota_perusahaan'],
-                    'provinsi' => $validatedData['provinsi'],
-                    'telp' => $validatedData['fax_perusahaan'],
-                ]);
+        try {
+            // Memanggil metode createCustomer dari model
+            $customer = Customer::createCustomer($validatedData);
 
-                $validatedData['perusahaan_id'] = $perusahaan->perusahaan_id;
-            } else {
-                $validatedData['perusahaan_id'] = null;
-            }
+            // Notifikasi berhasil
+            Alert::toast('Data Customer ID: ' . $customer->customer_id . ' berhasil ditambahkan', 'success');
 
-            if ($validatedData['jenis_identitas'] == "KTP") {
-                $validatedData['identitas_berlaku'] = null;
-            }else{
-                $validatedData['identitas_berlaku'] = DateTime::createFromFormat('d/m/Y', $validatedData['identitas_berlaku'])->format('Y-m-d');
-            }
+            // Redirect ke halaman index
+            return redirect()->route('dashboard.customers.index');
+        } catch (\Exception $e) {
+            // (error handling)
+            // Log error dan tampilkan pesan kesalahan ke pengguna
+            Log::error('Error in storing customer data: ' . $e->getMessage());
 
-            return Customer::create([
-                'nama' => $validatedData['nama'],
-                'jenis_identitas' => $validatedData['jenis_identitas'],
-                'identitas_berlaku' => $validatedData['identitas_berlaku'],
-                'nomor_identitas' => $validatedData['nomor_identitas'],
-                'jabatan' => $validatedData['jabatan'],
-                'alamat' => $validatedData['alamat'],
-                'kota' => $validatedData['kota'],
-                'provinsi' => $validatedData['provinsi'],
-                'telp' => $validatedData['telp'],
-                'fax' => $validatedData['fax'],
-                'handphone' => $validatedData['handphone'],
-                'perusahaan_id' => $validatedData['perusahaan_id'],
-                'keterangan' => $validatedData['keterangan'],
-                'bonafidity' => $validatedData['bonafidity'],
-                'bit_active' => $validatedData['bit_active']
-            ]);
-        });
+            Alert::error('Terjadi kesalahan saat menambahkan data customer. Silakan coba lagi.');
 
-        //tambahkan notifikasi ke sesi
-        Alert::toast('Data Customer ID: ' . $customer->customer_id .' berhasil ditambahkan', 'success');
-        return redirect()->route('dashboard.customers.index');
+            // Redirect ke halaman sebelumnya atau halaman kesalahan
+            return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menambahkan data customer.']);
+        }
     }
 
     public function getCustomerDetails(Customer $customer)
     {
-        // Eager load relasi 'perusahaan' bersama dengan relasi 'perusahaan.badanHukum' saat mengambil data customer
+        // Eager load relasi 'perusahaan' saat mengambil data customer
         $customer->load('perusahaan');
 
         // Mengembalikan data customer dalam format JSON
@@ -152,45 +126,24 @@ class CustomerController extends Controller
             'bit_active' => ['required', 'boolean']
         ]);
 
-        DB::transaction(function () use ($customer, $validatedData) {
-            if ($customer->perusahaan_id !== null) {
-                Perusahaan::where('perusahaan_id', '=', $customer->perusahaan_id)->update([
-                    'badan_hukum' => $validatedData['badan_hukum'],
-                    'nama' => $validatedData['nama_perusahaan'],
-                    'alamat' => $validatedData['alamat_perusahaan'],
-                    'kota' => $validatedData['kota_perusahaan'],
-                    'provinsi' => $validatedData['provinsi'],
-                    'telp' => $validatedData['fax_perusahaan'],
-                ]);
-            }
+        try {
+            // Panggil metode updateCustomer dari model
+            $customer->updateCustomer($validatedData);
 
-            if ($validatedData['jenis_identitas'] == "KTP") {
-                $validatedData['identitas_berlaku'] = null;
-            }else{
-                $validatedData['identitas_berlaku'] = DateTime::createFromFormat('d/m/Y', $validatedData['identitas_berlaku'])->format('Y-m-d');
-            }
-            // Perbarui data customer
-            $customer->update([
-                'nama' => $validatedData['nama'],
-                'jenis_identitas' => $validatedData['jenis_identitas'],
-                'identitas_berlaku' => $validatedData['identitas_berlaku'],
-                'nomor_identitas' => $validatedData['nomor_identitas'],
-                'jabatan' => $validatedData['jabatan'],
-                'alamat' => $validatedData['alamat'],
-                'kota' => $validatedData['kota'],
-                'provinsi' => $validatedData['provinsi'],
-                'telp' => $validatedData['telp'],
-                'fax' => $validatedData['fax'],
-                'handphone' => $validatedData['handphone'],
-                'perusahaan_id' => $customer->perusahaan_id,
-                'keterangan' => $validatedData['keterangan'],
-                'bonafidity' => $validatedData['bonafidity'],
-                'bit_active' => $validatedData['bit_active'],
-            ]);
-        });
+            // Notifikasi berhasil
+            Alert::toast('Customer ID: ' . $customer->customer_id . ' berhasil di-update', 'success');
 
-        Alert::toast('Customer ID: ' . $customer->customer_id . ' Berhasil di Edit', 'success');
-        return redirect()->route('dashboard.customers.index');
+            // Redirect ke halaman index
+            return redirect()->route('dashboard.customers.index');
+        } catch (\Exception $e) {
+            // Tangani pengecualian
+            Log::error('Error in updating customer data: ' . $e->getMessage());
+
+            Alert::error('Terjadi kesalahan saat memperbarui data customer. Silakan coba lagi.');
+
+            // Redirect ke halaman sebelumnya atau halaman kesalahan
+            return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat memperbarui data customer.']);
+        }
     }
 
     public function destroy(Customer $customer)
@@ -205,7 +158,7 @@ class CustomerController extends Controller
                     // Hapus Customer yang berkaitan dengan ID
                     $customer->delete();
                     Perusahaan::where('perusahaan_id', '=', $perusahaanID)->delete();
-                }else {
+                } else {
                     $customer->delete();
                 }
             });

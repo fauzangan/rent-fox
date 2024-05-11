@@ -9,7 +9,6 @@
 </div>
 
 <div class="section-body">
-
   <div class="row justify-content-between my-3">
     <div class="col">
       <div class="section-title my-0">
@@ -17,7 +16,7 @@
       </div>
     </div>
     <div class="col-md-auto">
-      <a href="{{ route('dashboard.customers.create') }}" class="btn btn-primary">Tambah Customer</a>
+      <a href="{{ route('dashboard.customers.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Customer</a>
     </div>
   </div>
 
@@ -30,7 +29,7 @@
         <table class="table table-bordered table-md">
           <thead>
             <tr>
-              <th>ID <span data-toggle="tooltip" title="Id Customer"><i class="fas fa-question-circle"></i></span></th>
+              <th>ID <span data-toggle="tooltip" title="Kode Customer"><i class="fas fa-question-circle"></i></span></th>
               <th>Nama</th>
               <th>Identitas</th>
               <th>No. Identitas</th>
