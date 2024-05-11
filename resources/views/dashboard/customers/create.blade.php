@@ -320,15 +320,29 @@
     </div>
 </div>
 
+@push('styles')
+<style>
+    .form-group {
+        margin-bottom: 15px !important; 
+    }
+</style>
+@endpush
+
+@push('scripts')
 <!-- JS Libraies -->
 <script src="{{ asset('assets/modules/jquery.min.js') }}"></script>
-<script src="{{ asset('assets/modules/cleave-js/dist/cleave.min.js') }}"></script>
-<script src="{{ asset('assets/modules/cleave-js/dist/addons/cleave-phone.id.js') }}"></script>
-<script src="{{ asset('assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
-
+<script src="{{ asset('assets/modules/popper.js') }}"></script>
+<script src="{{ asset('assets/modules/tooltip.js') }}"></script>
+<script src="{{ asset('assets/modules/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
+<script src="{{ asset('assets/modules/moment.min.js') }}"></script>
+<script src="{{ asset('assets/js/stisla.js') }}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('assets/js/page/customer-create.js') }}"></script>
-
+<script src="{{ asset('assets/modules/cleave-js/dist/cleave.min.js') }}"></script>
+<script src="{{ asset('assets/modules/cleave-js/dist/addons/cleave-phone.id.js') }}"></script>
+<script src="{{ asset('assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
+@endpush
 
 @endsection

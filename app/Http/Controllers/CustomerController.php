@@ -17,7 +17,7 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        $customers = Customer::with('perusahaan')->paginate(4);
+        $customers = Customer::with('perusahaan')->orderBy('customer_id', 'desc')->paginate(4);
         confirmDelete("Apakah anda yakin menghapus ?", "Data yang sudah dihapus tidak dapat dikembalikan");
         return view('dashboard.customers.index', [
             'customers' => $customers,

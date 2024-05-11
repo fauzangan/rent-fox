@@ -31,7 +31,8 @@ return new class extends Migration
             $table->string('nama_proyek');
             $table->string('alamat_kirim');
             $table->string('keterangan');
-            $table->unsignedTinyInteger('status')->default(1);
+            $table->boolean('status_transport');
+            $table->unsignedTinyInteger('status_order')->default(1);
             $table->timestamps();
         });
     }

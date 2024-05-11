@@ -29,7 +29,7 @@
                 <table class="table table-bordered table-md">
                     <thead>
                         <tr>
-                            <th>ID <span data-toggle="tooltip" title="Kode Customer"><i class="fas fa-question-circle"></i></span></th>
+                            <th>ID <span data-toggle="tooltip" title="Kode Barang"><i class="fas fa-question-circle"></i></span></th>
                             <th>Nama Item</th>
                             <th>Harga Sewa</th>
                             <th>Satuan Waktu</th>
@@ -65,4 +65,13 @@
     </div>
 </div>
 
+@push('scripts')
+<script src="{{ asset('assets/modules/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/modules/popper.js') }}"></script>
+<script src="{{ asset('assets/modules/tooltip.js') }}"></script>
+<script src="{{ asset('assets/modules/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
+<script src="{{ asset('assets/modules/moment.min.js') }}"></script>
+<script src="{{ asset('assets/js/stisla.js') }}"></script>
+@endpush
 @endsection

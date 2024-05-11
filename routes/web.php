@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,4 +36,10 @@ Route::get('/dashboard/items/create', [ItemController::class, 'create'])->name('
 Route::post('/dashboard/items/create', [ItemController::class, 'store'])->name('dashboard.items.store');
 Route::get('/dashboard/items/edit/{item}', [ItemController::class, 'edit'])->name('dashboard.items.edit');
 Route::put('/dashboard/items/update/{item}', [ItemController::class, 'update'])->name('dashboard.items.update');
+
+// Order Route
+Route::get('/dashboard/orders', [OrderController::class, 'index'])->name('dashboard.orders.index');
+Route::get('/dashboard/orders/create', [OrderController::class, 'create'])->name('dashboard.orders.create');
+Route::get('/dashboard/orders/edit/{order}', [OrderController::class, 'edit'])->name('dashboard.orders.edit');
+Route::delete('/dashboard/orders/delete/{order}', [OrderController::class, 'destroy'])->name('dashboard.orders.delete');
 
