@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id('order_item_id');
             $table->unsignedBigInteger('order_id');
             $table->foreign('order_id')->references('order_id')->on('orders')->onDelete('cascade');
-            $table->unsignedBigInteger('item_id')->nullable();
-            $table->foreign('item_id')->references('item_id')->on('items');
+            $table->string('item_id')->nullable();
+            $table->foreign('item_id')->references('item_id')->on('items')->onDelete('set null');
             $table->string('nama_item');
             $table->unsignedBigInteger('harga_sewa');
             $table->string('satuan');
+            $table->unsignedInteger('waktu');
             $table->unsignedBigInteger('jumlah_item');
             $table->unsignedBigInteger('jumlah_harga');
             $table->timestamps();

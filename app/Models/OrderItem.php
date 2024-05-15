@@ -11,11 +11,17 @@ class OrderItem extends Model
 
     protected $primaryKey = 'order_item_id';
 
+    protected $guarded = [
+        'order_item_id'
+    ];
+
     public function order(){
-        $this->belongsTo(Order::class, 'order_id');
+        return $this->belongsTo(Order::class, 'order_id');
     }
 
     public function item(){
-        $this->belongsTo(Item::class, 'item_id');
+        return $this->belongsTo(Item::class, 'item_id');
     }
+
+
 }

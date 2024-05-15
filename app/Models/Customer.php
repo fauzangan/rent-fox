@@ -96,8 +96,9 @@ class Customer extends Model
             return $this->update($data);
         });
     }
+    
     public function perusahaan()
     {
-        return $this->belongsTo(Perusahaan::class, 'perusahaan_id');
+        return $this->hasOne(Perusahaan::class, 'perusahaan_id');
     }
 }

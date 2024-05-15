@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\CategoryItemController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\TagihanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +32,13 @@ Route::get('/dashboard/customers/edit/{customer}', [CustomerController::class, '
 Route::put('/dashboard/customers/update/{customer}', [CustomerController::class, 'update'])->name('dashboard.customers.update');
 Route::delete('/dashboard/customers/delete/{customer}', [CustomerController::class, 'destroy'])->name('dashboard.customers.delete');
 
+// Category Item Route
+Route::get('/dashboard/category-items/index', [CategoryItemController::class, 'index'])->name('dashboard.category-items.index');
+Route::get('/dashboard/category-items/create', [CategoryItemController::class, 'create'])->name('dashboard.category-items.create');
+Route::post('/dashboard/category-items/create', [CategoryItemController::class, 'store'])->name('dashboard.category-items.store');
+Route::get('/dashboard/category-items/edit/{categoryItem}', [CategoryItemController::class, 'edit'])->name('dashboard.category-items.edit');
+Route::put('/dashboard/category-items/update/{categoryItem}', [CategoryItemController::class, 'update'])->name('dashboard.category-items.update');
+
 // Items Route
 Route::get('/dashboard/items', [ItemController::class, 'index'])->name('dashboard.items.index');
 Route::get('/dashboard/items/create', [ItemController::class, 'create'])->name('dashboard.items.create');
@@ -40,6 +49,16 @@ Route::put('/dashboard/items/update/{item}', [ItemController::class, 'update'])-
 // Order Route
 Route::get('/dashboard/orders', [OrderController::class, 'index'])->name('dashboard.orders.index');
 Route::get('/dashboard/orders/create', [OrderController::class, 'create'])->name('dashboard.orders.create');
+Route::post('/dashboard/orders/create', [OrderController::class, 'store'])->name('dashboard.orders.store');
 Route::get('/dashboard/orders/edit/{order}', [OrderController::class, 'edit'])->name('dashboard.orders.edit');
 Route::delete('/dashboard/orders/delete/{order}', [OrderController::class, 'destroy'])->name('dashboard.orders.delete');
 
+// Tagihan Route
+Route::get('/dashboard/tagihans', [TagihanController::class, 'index'])->name('dashboard.tagihans.index');
+Route::get('/dashboard/tagihans/create', [TagihanController::class, 'create'])->name('dashboard.tagihans.create');
+Route::post('/dashboard/tagihans/create', [TagihanController::class, 'store'])->name('dashboard.tagihans.store');
+
+
+Route::get('/test', function(){
+    return view('test');
+});

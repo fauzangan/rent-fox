@@ -20,7 +20,29 @@
             <div class="card-body">
                 <div class="form-group">
                     <label>Nama Barang</label>
-                    <input type="text" class="form-control" name="nama_item" value="{{ old('nama_item', $item->nama_item) }}">
+                    <input type="text" class="form-control @error('nama_item') is-invalid @enderror" name="nama_item" value="{{ old('nama_item', $item->nama_item) }}">
+                    @error('nama_item')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label>Kategori<span class="text-danger" data-toggle="tooltip" title="Wajib Diisi!">*</span></label>
+                    <select class="form-control @error('category_item_id') is-invalid @enderror" name="category_item_id">
+                        @foreach($category_items as $category_item)
+                        @if($category_item->category_item_id == $item->category_item_id)
+                        <option value="{{ $category_item->category_item_id }}" selected>{{ $category_item->nama_category }}</option>
+                        @else
+                        <option value="{{ $category_item->category_item_id }}">{{ $category_item->nama_category }}</option>
+                        @endif
+                        @endforeach
+                    </select>
+                    @error('category_item_id')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label>Harga Sewa Barang</label>
@@ -30,21 +52,36 @@
                                 Rp
                             </div>
                         </div>
-                        <input type="text" class="form-control" name="harga_sewa" id="harga_sewa" value="{{ old('harga_sewa', $item->harga_sewa) }}">
+                        <input type="text" class="form-control @error('harga_sewa') is-invalid @enderror" name="harga_sewa" id="harga_sewa" value="{{ old('harga_sewa', $item->harga_sewa) }}">
+                        @error('harga_sewa')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="form-group">
                     <label>Satuan Waktu Sewa</label>
-                    <select class="form-control" name="satuan_waktu">
+                    <select class="form-control @error('satuan_waktu') is-invalid @enderror" name="satuan_waktu">
                         <option value="Bulan" @if(old('satuan_waktu', $item->satuan_waktu) == "Bulan") selected @endif>Per Bulan</option>
                         <option value="Hari" @if(old('satuan_waktu', $item->satuan_waktu) == "Hari") selected @endif>Per Hari</option>
                     </select>
+                    @error('satuan_waktu')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label>Satuan Barang</label>
-                    <select class="form-control" name="satuan_item">
-                        <option value="Buah" @if(old('satuan_waktu', $item->satuan_item) == "Buah") selected @endif>Buah</option>
+                    <select class="form-control @error('satuan_item') is-invalid @enderror" name="satuan_item">
+                        <option value="Buah" @if(old('satuan_item', $item->satuan_item) == "Buah") selected @endif>Buah</option>
                     </select>
+                    @error('satuan_item')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label>Harga Barang</label>
@@ -54,12 +91,22 @@
                                 Rp
                             </div>
                         </div>
-                        <input type="text" class="form-control" name="harga_barang" id="harga_barang" value="{{ old('harga_barang', $item->harga_barang) }}">
+                        <input type="text" class="form-control @error('harga_barang') is-invalid @enderror" name="harga_barang" id="harga_barang" value="{{ old('harga_barang', $item->harga_barang) }}">
+                        @error('harga_barang')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="form-group">
                     <label>Keterangan</label>
-                    <textarea type="text" class="form-control" name="keterangan">{{ old('harga_barang', $item->keterangan) }}</textarea>
+                    <textarea type="text" class="form-control @error('keterangan') is-invalid @enderror" name="keterangan">{{ old('harga_barang', $item->keterangan) }}</textarea>
+                    @error('keterangan')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
                 <div class="card-footer text-center">
                     <button type="submit" class="btn btn-primary">Update Item</button>

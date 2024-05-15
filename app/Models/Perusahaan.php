@@ -20,7 +20,8 @@ class Perusahaan extends Model
         'telp',
         'fax',
     ];
+
     public function customer(){
-        return $this->hasOne(Customer::class);
+        return $this->belongsTo(Customer::class);
     }
 }

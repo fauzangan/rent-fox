@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('items', function (Blueprint $table) {
-            $table->id('item_id');
+            $table->string('item_id')->primary();
+            $table->unsignedBigInteger('category_item_id');
+            $table->foreign('category_item_id')->references('category_item_id')->on('category_items');
             $table->string('nama_item');
             $table->unsignedBigInteger('harga_sewa');
             $table->string('satuan_waktu');

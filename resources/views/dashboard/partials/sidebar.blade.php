@@ -9,9 +9,23 @@
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
             <li class="{{ Request::is('/')? 'active' : '' }}"><a class="nav-link" href="/"><i class="far fa-square"></i> <span>Dashboard</span></a></li>
-            <li class="{{ Request::is('dashboard/customers*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.customers.index') }}"><i class="far fa-user"></i> <span>Manajemen Customer</span></a></li>
-            <li class="{{ Request::is('dashboard/orders*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.orders.index') }}"><i class="fas fa-chart-line"></i> <span>Manajemen Order</span></a></li>
-            <li class="{{ Request::is('dashboard/items*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.items.index') }}"><i class="fas fa-tags"></i> <span>Manajemen Item</span></a></li>
+            <li class="{{ Request::is('dashboard/customers*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.customers.index') }}"><i class="far fa-user"></i> <span>Menu Customer</span></a></li>
+            <li class="{{ Request::is('dashboard/orders*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.orders.index') }}"><i class="fas fa-receipt "></i> <span>Menu Order</span></a></li>
+            <li class="dropdown {{ Request::is('dashboard/items*', 'dashboard/category-items*')? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-archive"></i><span>Menu Items</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="{{ route('dashboard.items.index') }}">Items</a></li>
+                    <li><a class="nav-link" href="{{ route('dashboard.category-items.index') }}">Kategori Item</a></li>
+                </ul>
+            </li>
+            <li class="{{ Request::is('dashboard/tagihans*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.tagihans.index') }}"><i class="fas fa-file-invoice-dollar"></i> <span>Menu Tagihan</span></a></li>
+            <li class="dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-warehouse"></i><span>Menu Inventori</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="#">Gudang Harian</a></li>
+                    <li><a class="nav-link" href="#">Stock</a></li>
+                </ul>
+            </li>
             {{-- <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
                 <ul class="dropdown-menu">

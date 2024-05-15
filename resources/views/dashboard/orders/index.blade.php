@@ -26,15 +26,15 @@
             <h4>Order Table</h4>
         </div>
         <div class="card-body">
-            <div class="table-responsive">
+            <div class="table-responsive text-nowrap">
                 <table class="table table-bordered table-md">
                     <thead>
                         <tr>
-                            <th>ID <span data-toggle="tooltip" title="Kode Order"><i
+                            <th>Kode Order <span data-toggle="tooltip" title="Kode Order"><i
                                         class="fas fa-question-circle"></i></span></th>
                             <th>Tanggal Order</th>
                             <th>Tanggal Kirim</th>
-                            <th>Cust ID</th>
+                            <th>Kode Cust</th>
                             <th>Nama Cust</th>
                             <th>Alamat Cust</th>
                             <th>Kota Cust</th>
@@ -47,7 +47,7 @@
                             <th>Keterangan</th>
                             <th>Transport</th>
                             <th>Status Order</th>
-                            <th>Handle</th>
+                            <th class="sticky-aksi-head text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,15 +61,21 @@
                             <td>{{ $order->alamat_customer }}</td>
                             <td>{{ $order->kota_customer }}</td>
                             <td>{{ $order->telp_customer }}</td>
-                            <td>{{ $order->perusahaan->badan_hukum }}</td>
+                            <td>{{ $order->badan_hukum }}</td>
                             <td>{{ $order->nama_perusahaan }}</td>
                             <td>{{ $order->kirim_kepada }}</td>
                             <td>{{ $order->nama_proyek }}</td>
                             <td>{{ $order->alamat_kirim }}</td>
                             <td>{{ $order->keterangan }}</td>
-                            <td>{{ $order->status_transport }}</td>
-                            <td>{{ $order->status_order }}</td>
                             <td>
+                                @if($order->status_transport == 1)
+                                Oleh ASR
+                                @else
+                                Mandiri
+                                @endif
+                            </td>
+                            <td>{{ $order->status_order }}</td>
+                            <td class="sticky-aksi-col">
                                 <button class="btn btn-info" id="detail-button" data-id={{ $order->order_id
                                     }}>Detail</button>
                                 <a href="{{ route('dashboard.orders.edit', ['order' => $order->order_id]) }}"
@@ -90,6 +96,26 @@
         </div>
     </div>
 </div>
+
+@push('styles')
+<style>
+    .sticky-aksi-head {
+        position: sticky;
+        right: 0;
+        z-index: 999;
+        background-color: #f5f5f5 !important;
+        /* Warna latar belakang */
+    }
+
+    .sticky-aksi-col {
+        position: sticky;
+        right: 0;
+        z-index: 999;
+        background-color: #ffffff !important;
+        /* Warna latar belakang */
+    }
+</style>
+@endpush
 
 @push('scripts')
 <!-- JS Libraies -->

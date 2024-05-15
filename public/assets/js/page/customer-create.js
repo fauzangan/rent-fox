@@ -37,8 +37,6 @@ $(document).ready(function () {
     // Trigger change event untuk memastikan visibilitas saat halaman dimuat
     $("#is_perusahaan").trigger("change");
 
-    // Jenis Identitas
-    $("#jenis_identitas").trigger("change");
     $("#jenis_identitas").on("change", function () {
         var selectedValue = $(this).val();
 

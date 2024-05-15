@@ -1,10 +1,10 @@
 @extends('dashboard.layouts.main')
 @section('content')
 <div class="section-header">
-    <h1>Manajemen Item</h1>
+    <h1>Manajemen Kategori Items</h1>
     <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active"><a href="/">Dashboard</a></div>
-        <div class="breadcrumb-item">Manajemen Item</div>
+        <div class="breadcrumb-item">Kategori Items</div>
     </div>
 </div>
 
@@ -12,45 +12,39 @@
     <div class="row justify-content-between my-3">
         <div class="col">
             <div class="section-title my-0">
-                Data Semua Item
+                Data Semua Kategori Item
             </div>
         </div>
         <div class="col-md-auto">
-            <a href="{{ route('dashboard.items.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Item</a>
+            <a href="{{ route('dashboard.category-items.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Tagihan</a>
         </div>
     </div>
 
     <div class="card">
         <div class="card-header">
-            <h4>Item Table</h4>
+            <h4>Tagihan Table</h4>
         </div>
         <div class="card-body">
-            <div class="table-responsive">
+            <div class="table-responsive text-nowrap">
                 <table class="table table-bordered table-md">
                     <thead>
                         <tr>
-                            <th>ID <span data-toggle="tooltip" title="Kode Barang"><i class="fas fa-question-circle"></i></span></th>
-                            <th>Nama Item</th>
-                            <th>Kategori Item</th>
-                            <th>Harga Sewa</th>
-                            <th>Satuan Waktu</th>
-                            <th>Harga Barang</th>
+                            <th>ID <span data-toggle="tooltip" title="Kode Tagihan"><i class="fas fa-question-circle"></i></span></th>
+                            <th>Nama Kategori</th>
+                            <th>Prefiks Kode Item</th>
                             <th>Keterangan</th>
-                            <th>Handle</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($items as $item)
+                        @foreach($category_items as $category_item)
                         <tr>
-                            <td>{{ $item->item_id }}</td>
-                            <td>{{ $item->nama_item }}</td>
-                            <td>{{ $item->categoryItem->nama_category }}</td>
-                            <td>Rp {{ number_format($item->harga_sewa,2,",",".") }}</td>
-                            <td>{{ $item->satuan_waktu }}</td>
-                            <td>Rp {{ number_format($item->harga_barang,2,",",".") }}</td>
-                            <td>{{ $item->keterangan }}</td>
+                            <td>{{ $category_item->category_item_id }}</td>
+                            <td>{{ $category_item->nama_category }}</td>
+                            <td>{{ $category_item->prefiks }}</td>
+                            <td>{{ $category_item->keterangan }}</td>
                             <td>
-                                <a href="{{ route('dashboard.items.edit', ['item' => $item->item_id]) }}" class="btn btn-warning">Edit</a>
+                                <a href="{{ route('dashboard.category-items.edit', ['categoryItem' => $category_item->category_item_id]) }}" class="btn btn-warning">Edit</a>
                                 <a href="" class="btn btn-danger" data-confirm-delete="true">Delete</a>
                             </td>
                         </tr>
@@ -61,13 +55,14 @@
         </div>
         <div class="card-footer text-right">
             <nav class="d-inline-block">
-                {{ $items->links() }}
+                
             </nav>
         </div>
     </div>
 </div>
 
 @push('scripts')
+<!-- JS Libraies -->
 <script src="{{ asset('assets/modules/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/modules/popper.js') }}"></script>
 <script src="{{ asset('assets/modules/tooltip.js') }}"></script>
@@ -75,5 +70,7 @@
 <script src="{{ asset('assets/modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
 <script src="{{ asset('assets/modules/moment.min.js') }}"></script>
 <script src="{{ asset('assets/js/stisla.js') }}"></script>
+
+<!-- Specific JS File -->
 @endpush
 @endsection

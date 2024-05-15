@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CategoryItem;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -10,18 +11,20 @@ use RealRashid\SweetAlert\Facades\Alert;
 class ItemController extends Controller
 {
     public function index() {
-        $items = Item::paginate(2);
+        $items = Item::with('categoryItem')->paginate(10);
         return view('dashboard.items.index', ['items' => $items]);
     }
 
     public function create() {
-        return view('dashboard.items.create');
+        $category_items = CategoryItem::all();
+        return view('dashboard.items.create', ['category_items' => $category_items]);
     }
 
     public function store(Request $request){
         
         $validatedData = $request->validate([
             'nama_item' => ['required', 'string', 'max:255'],
+            'category_item_id' => ['required'],
             'harga_sewa' => ['required', 'string'],
             'satuan_waktu' => ['required', 'string'],
             'satuan_item' => ['required', 'string'],
@@ -30,11 +33,11 @@ class ItemController extends Controller
         ]);
         
         try {
-            // Memanggil metode createCustomer dari model
+            // Memanggil metode createItem dari model
             $item = Item::createItem($validatedData);
 
             // Notifikasi berhasil
-            Alert::toast('Data Item ID: ' . $item->item_id . ' berhasil ditambahkan', 'success');
+            Alert::success('Data Item ID: ' . $item->item_id . ' berhasil ditambahkan', 'success');
 
             // Redirect ke halaman index
             return redirect()->route('dashboard.items.index');
@@ -51,7 +54,8 @@ class ItemController extends Controller
     }
 
     public function edit(Item $item){
-        return view('dashboard.items.edit', ['item' => $item]);
+        $categoryItem = CategoryItem::all();
+        return view('dashboard.items.edit', ['item' => $item, 'category_items' => $categoryItem]);
     }
 
     public function update(Request $request, Item $item){
@@ -69,7 +73,7 @@ class ItemController extends Controller
             $item->updateItem($validatedData);
 
             // Notifikasi berhasil
-            Alert::toast('Data Item ID: ' . $item->item_id . ' berhasil diedit', 'success');
+            Alert::success('Data Item ID: ' . $item->item_id . ' berhasil diedit', 'success');
 
             // Redirect ke halaman index
             return redirect()->route('dashboard.items.index');

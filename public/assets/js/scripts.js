@@ -551,7 +551,7 @@ $(function() {
   if(jQuery().daterangepicker) {
     if($(".datepicker").length) {
       $('.datepicker').daterangepicker({
-        locale: {format: 'YYYY-MM-DD'},
+        locale: {format: 'DD/MM/YYYY'},
         singleDatePicker: true,
       });
     }
