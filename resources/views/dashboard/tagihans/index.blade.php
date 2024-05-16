@@ -43,27 +43,32 @@
                             <th>Jumlah Tagihan</th>
                             <th>Status Tagihan</th>
                             <th>Keterangan</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        @foreach($tagihans as $tagihan)
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{ $tagihan->tagihan_id }}</td>
+                            <td>{{ $tagihan->order->order_id }}</td>
+                            <td>{{ $tagihan->order->customer_id }}</td>
+                            <td>{{ $tagihan->order->nama_customer }}</td>
+                            <td>{{ $tagihan->order->badan_hukum }}</td>
+                            <td>{{ $tagihan->order->nama_perusahaan }}</td>
+                            <td>{{ $tagihan->order->nama_proyek }}</td>
+                            <td>{{ $tagihan->tanggal_ditagihkan }}</td>
+                            <td>{{ $tagihan->jenisTagihan->nama_tagihan }}</td>
+                            <td>{{ $tagihan->jatuh_tempo_1 }}</td>
+                            <td>{{ $tagihan->jatuh_tempo_2 }}</td>
+                            <td>Rp {{ number_format($tagihan->jumlah_tagihan,0 ,",","."). ',-' }}</td>
+                            <td>{{ $tagihan->statusTagihan->nama_status }}</td>
+                            <td>{{ $tagihan->keterangan }}</td>
+                            <td>
+                                <a href="{{ route('dashboard.tagihans.edit', ['tagihan' => $tagihan->tagihan_id]) }}" class="btn btn-warning">Edit</a>
+                                <a href="" class="btn btn-danger" data-confirm-delete="true">Delete</a>
+                            </td>
                         </tr>
-                        
+                        @endforeach
                     </tbody>
                 </table>
             </div>

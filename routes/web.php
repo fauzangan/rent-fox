@@ -45,6 +45,7 @@ Route::get('/dashboard/items/create', [ItemController::class, 'create'])->name('
 Route::post('/dashboard/items/create', [ItemController::class, 'store'])->name('dashboard.items.store');
 Route::get('/dashboard/items/edit/{item}', [ItemController::class, 'edit'])->name('dashboard.items.edit');
 Route::put('/dashboard/items/update/{item}', [ItemController::class, 'update'])->name('dashboard.items.update');
+Route::delete('/dashboard/items/delete/{item}', [ItemController::class, 'destroy'])->name('dashboard.items.delete');
 
 // Order Route
 Route::get('/dashboard/orders', [OrderController::class, 'index'])->name('dashboard.orders.index');
@@ -57,6 +58,8 @@ Route::delete('/dashboard/orders/delete/{order}', [OrderController::class, 'dest
 Route::get('/dashboard/tagihans', [TagihanController::class, 'index'])->name('dashboard.tagihans.index');
 Route::get('/dashboard/tagihans/create', [TagihanController::class, 'create'])->name('dashboard.tagihans.create');
 Route::post('/dashboard/tagihans/create', [TagihanController::class, 'store'])->name('dashboard.tagihans.store');
+Route::get('/dashboard/tagihans/edit/{tagihan}', [TagihanController::class, 'edit'])->name('dashboard.tagihans.edit');
+Route::put('/dashboard/tagihans/update/{tagihan}', [TagihanController::class, 'update'])->name('dashboard.tagihans.update');
 
 
 Route::get('/test', function(){

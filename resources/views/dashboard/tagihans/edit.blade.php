@@ -1,20 +1,21 @@
 @extends('dashboard.layouts.main')
 @section('content')
 <div class="section-header">
-    <h1>Tambah Tagihan</h1>
+    <h1>Edit Tagihan</h1>
     <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active"><a href="/">Dashboard</a></div>
         <div class="breadcrumb-item"><a href="{{ route('dashboard.tagihans.index') }}">Manajemen Tagihan</a></div>
-        <div class="breadcrumb-item">Tambah Tagihan</div>
+        <div class="breadcrumb-item">Edit Tagihan</div>
     </div>
 </div>
 
 <div class="section-body">
     <div class="card">
         <div class="card-header">
-            <h4>Form Tambah Tagihan</h4>
+            <h4>Form Edit Tagihan</h4>
         </div>
-        <form action="{{ route('dashboard.tagihans.create') }}" method="POST" id="form-tagihan">
+        <form action="{{ route('dashboard.tagihans.update', ['tagihan' => $tagihan->tagihan_id]) }}" method="POST">
+            @method('PUT')
             @csrf
             <div class="card-body">
                 <div class="row">
@@ -22,20 +23,8 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                    <label>Kode Order<span class="text-danger" data-toggle="tooltip"
-                                            title="Wajib Diisi!">*</span></label>
-                                    <select class="form-control select2 @error('order_id') is-invalid @enderror"
-                                        name="order_id" id="order_id">
-                                        <option disabled selected>Pilih Kode Order</option>
-                                        @foreach($orders as $order)
-                                        <option value="{{ $order->order_id }}" {{ old('order_id')==$order->order_id ?
-                                            'selected' : '' }} data-customer_id="{{ $order->customer_id }}"
-                                            data-nama_customer="{{ $order->nama_customer }}" data-badan_hukum="{{
-                                            $order->badan_hukum?? '' }}" data-nama_perusahaan="{{
-                                            $order->nama_perusahaan?? '' }}" data-proyek="{{ $order->nama_proyek }}">{{
-                                            $order->order_id }}</option>
-                                        @endforeach
-                                    </select>
+                                    <label>Kode Order</label>
+                                    <input type="text" class="form-control" name="order_id" value="{{ old('order_id', $tagihan->order_id) }}" readonly>
                                     @error('order_id')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -45,7 +34,7 @@
                                 <div class="col">
                                     <label>Kode Customer</label>
                                     <input type="text" name="customer_id" class="form-control @error('customer_id') is-invalid @enderror"
-                                        id="customer_id" readonly value="{{ old('customer_id') }}">
+                                        id="customer_id" readonly value="{{ old('customer_id', $tagihan->order->customer_id) }}">
                                     @error('customer_id')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -57,7 +46,7 @@
                         <div class="form-group">
                             <label>Nama Customer</label>
                             <input type="text" name="nama_customer" class="form-control @error('nama_customer') is-invalid @enderror"
-                                id="nama_customer" readonly value="{{ old('nama_customer') }}">
+                                id="nama_customer" readonly value="{{ old('nama_customer', $tagihan->order->nama_customer) }}">
                             @error('nama_customer')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -69,7 +58,7 @@
                             <div class="row">
                                 <div class="col-3 pr-1">
                                     <input type="text" name="badan_hukum" class="form-control @error('badan_hukum') is-invalid @enderror"
-                                        id="badan_hukum" readonly value="{{ old('badan_hukum') }}">
+                                        id="badan_hukum" readonly value="{{ old('badan_hukum', $tagihan->order->badan_hukum) }}">
                                     @error('badan_hukum')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -79,7 +68,7 @@
                                 <div class="col-9 pl-1">
                                     <input type="text"
                                         name="nama_perusahaan" class="form-control @error('nama_perusahaan') is-invalid @enderror"
-                                        id="nama_perusahaan" readonly value="{{ old('nama_perusahaan') }}">
+                                        id="nama_perusahaan" readonly value="{{ old('nama_perusahaan', $tagihan->order->nama_perusahaan) }}">
                                     @error('nama_perusahaan')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -91,7 +80,7 @@
                         <div class="form-group">
                             <label>Nama Proyek</label>
                             <input type="text" name="nama_proyek" class="form-control @error('nama_proyek') is-invalid @enderror"
-                                id="nama_proyek" readonly value="{{ old('nama_proyek') }}">
+                                id="nama_proyek" readonly value="{{ old('nama_proyek', $tagihan->order->nama_proyek) }}">
                             @error('nama_proyek')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -105,9 +94,7 @@
                                 name="jenis_tagihan_id" id="jenis_tagihan_id">
                                 <option value="" disabled selected>Pilih Jenis Tagihan</option>
                                 @foreach($jenis_tagihans as $jenis_tagihan)
-                                <option value="{{ $jenis_tagihan->jenis_tagihan_id }}" {{
-                                    old('jenis_tagihan_id')==$jenis_tagihan->jenis_tagihan_id ? 'selected' : '' }}
-                                    >{{$jenis_tagihan->nama_tagihan }}</option>
+                                <option value="{{ $jenis_tagihan->jenis_tagihan_id }}" {{ old('jenis_tagihan_id', $tagihan->jenis_tagihan_id)==$jenis_tagihan->jenis_tagihan_id ? 'selected' : '' }}>{{$jenis_tagihan->nama_tagihan }}</option>
                                 @endforeach
                             </select>
                             @error('jenis_tagihan_id')
@@ -130,7 +117,7 @@
                                 <input type="text"
                                     class="form-control @error('tanggal_ditagihkan') is-invalid @enderror"
                                     id="tanggal_ditagihkan" name="tanggal_ditagihkan"
-                                    value="{{ old('tanggal_ditagihkan') }}">
+                                    value="{{ old('tanggal_ditagihkan', $tagihan->tanggal_ditagihkan) }}">
                                 @error('tanggal_ditagihkan')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -148,7 +135,7 @@
                                     </div>
                                 </div>
                                 <input type="text" class="form-control @error('jatuh_tempo_1') is-invalid @enderror"
-                                    id="jatuh_tempo_1" name="jatuh_tempo_1" value="{{ old('jatuh_tempo_1') }}">
+                                    id="jatuh_tempo_1" name="jatuh_tempo_1" value="{{ old('jatuh_tempo_1', $tagihan->jatuh_tempo_1) }}">
                                 @error('jatuh_tempo_1')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -166,7 +153,7 @@
                                     </div>
                                 </div>
                                 <input type="text" class="form-control @error('jatuh_tempo_2') is-invalid @enderror"
-                                    id="jatuh_tempo_2" name="jatuh_tempo_2" value="{{ old('jatuh_tempo_2') }}">
+                                    id="jatuh_tempo_2" name="jatuh_tempo_2" value="{{ old('jatuh_tempo_2', $tagihan->jatuh_tempo_2) }}">
                                 @error('jatuh_tempo_2')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -183,7 +170,7 @@
                                 <option value="" disabled selected>Pilih Status Tagihan</option>
                                 @foreach($status_tagihans as $status_tagihan)
                                 <option value="{{ $status_tagihan->status_tagihan_id }}" {{
-                                    old('status_tagihan_id')==$status_tagihan->status_tagihan_id ? 'selected' : '' }}
+                                    old('status_tagihan_id', $tagihan->status_tagihan_id)==$status_tagihan->status_tagihan_id ? 'selected' : '' }}
                                     >{{ $status_tagihan->nama_status }}</option>
                                 @endforeach
                             </select>
@@ -204,7 +191,7 @@
                                 </div>
                                 <input type="text" name="jumlah_tagihan" id="jumlah_tagihan"
                                     class="form-control @error('jumlah_tagihan') is-invalid @enderror"
-                                    value="{{ old('jumlah_tagihan') }}">
+                                    value="{{ old('jumlah_tagihan', $tagihan->jumlah_tagihan) }}">
                                 @error('jumlah_tagihan')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -217,7 +204,7 @@
                         <div class="form-group">
                             <label>Keterangan</label>
                             <textarea type="text" class="form-control @error('keterangan') is-invalid @enderror"
-                                name="keterangan" id="keterangan">{{ old('keterangan') }}</textarea>
+                                name="keterangan" id="keterangan">{{ old('keterangan', $tagihan->keterangan) }}</textarea>
                             @error('keterangan')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -227,8 +214,13 @@
                         <div class="form-group">
                             <label>Apakah DP ?</label>
                             <select class="form-control @error('is_dp') is-invalid @enderror" name="is_dp" id="is_dp">
-                                <option value="0" {{ old('is_dp')=='0' ? 'selected' : '' }}>Tidak</option>
-                                <option value="1" {{ old('is_dp')=='1' ? 'selected' : '' }}>Ya</option>
+                                @if(isset($tagihan->total_dp))
+                                <option value="0">Tidak</option>
+                                <option value="1" selected>Ya</option>
+                                @else
+                                <option value="0" selected>Tidak</option>
+                                <option value="1">Ya</option>
+                                @endif
                             </select>
                             @error('is_dp')
                             <div class="invalid-feedback">
@@ -245,7 +237,7 @@
                                             Rp
                                         </div>
                                     </div>
-                                    <input type="text" name="total_dp" class="form-control @error('total_dp') is-invalid @enderror" value="{{ old('total_dp') }}" id="total_dp">
+                                    <input type="text" name="total_dp" class="form-control @error('total_dp') is-invalid @enderror" value="{{ old('total_dp', $tagihan->total_dp)?? '' }}" id="total_dp">
                                     @error('total_dp')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -261,10 +253,10 @@
                                             Rp
                                         </div>
                                     </div>
-                                    <input type="text" name="dp1" id="dp_1"
-                                        class="form-control @error('dp1') is-invalid @enderror"
-                                        value="{{ old('dp1') }}">
-                                    @error('dp1')
+                                    <input type="text" name="dp_1" id="dp_1"
+                                        class="form-control @error('dp_1') is-invalid @enderror"
+                                        value="{{ old('dp_1', $tagihan->dp_1)?? '' }}">
+                                    @error('dp_1')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -279,10 +271,10 @@
                                             Rp
                                         </div>
                                     </div>
-                                    <input type="text" name="dp2" id="dp_2"
-                                        class="form-control @error('dp2') is-invalid @enderror"
-                                        value="{{ old('dp2') }}">
-                                    @error('dp2')
+                                    <input type="text" name="dp_2" id="dp_2"
+                                        class="form-control @error('dp_2') is-invalid @enderror"
+                                        value="{{ old('dp_2', $tagihan->dp_2)?? '' }}">
+                                    @error('dp_2')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -297,10 +289,10 @@
                                             Rp
                                         </div>
                                     </div>
-                                    <input type="text" name="dp3" id="dp_3"
-                                        class="form-control @error('dp3') is-invalid @enderror"
-                                        value="{{ old('dp3') }}">
-                                    @error('dp3')
+                                    <input type="text" name="dp_3" id="dp_3"
+                                        class="form-control @error('dp_3') is-invalid @enderror"
+                                        value="{{ old('dp_3', $tagihan->dp_3)?? '' }}">
+                                    @error('dp_3')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -312,7 +304,7 @@
                 </div>
             </div>
             <div class="card-footer text-center">
-                <button type="submit" class="btn btn-primary">Tambah Tagihan Baru</button>
+                <button type="submit" class="btn btn-primary">Edit Tagihan</button>
             </div>
         </form>
     </div>

@@ -14,6 +14,6 @@ class StatusTagihan extends Model
     protected $guarded = ['status_tagihan_id'];
 
     public function tagihans(){
-        return $this->hasMany(Tagihan::class);
+        return $this->hasMany(Tagihan::class, 'status_tagihan_id', 'status_tagihan_id');
     }
 }

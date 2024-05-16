@@ -86,7 +86,7 @@
 </div>
 
 @push('style')
-<link rel="stylesheet" href="{{ asset('assets/modules/izitoast/css/iziToast.min.css') }}">
+
 @endpush
 
 @push('scripts')
@@ -100,7 +100,6 @@
 <script src="{{ asset('assets/js/stisla.js') }}"></script>
 
 <!-- Spesific Page -->
-<script src="{{ asset('assets/modules/izitoast/js/iziToast.min.js') }}"></script>
 <script src="{{ asset('assets/js/page/customer-index.js') }}"></script>
 @endpush
 

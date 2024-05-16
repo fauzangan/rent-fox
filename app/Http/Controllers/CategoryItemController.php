@@ -65,9 +65,9 @@ class CategoryItemController extends Controller
             'keterangan' => ['sometimes', 'nullable', 'string'],
         ]);
 
+        $categoryItem->update($validatedData);
         try {
             // Memanggil metode createCustomer dari model
-            $categoryItem->update($validatedData);
 
             // Notifikasi berhasil
             Alert::success('Data Kategori Item ID: ' . $categoryItem->category_item_id . ' berhasil diedit', 'success');

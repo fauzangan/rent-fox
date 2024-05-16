@@ -19,6 +19,10 @@ return new class extends Migration
             $table->foreign('item_id')->references('item_id')->on('items')->onDelete('set null');
             $table->string('nama_item');
             $table->unsignedBigInteger('harga_sewa');
+            $table->unsignedBigInteger('harga_barang');
+            $table->unsignedBigInteger('x_ringan');
+            $table->float('x_berat');
+            $table->float('hilang');
             $table->string('satuan');
             $table->unsignedInteger('waktu');
             $table->unsignedBigInteger('jumlah_item');

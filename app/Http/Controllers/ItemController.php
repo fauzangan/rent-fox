@@ -2,26 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CategoryItem;
 use App\Models\Item;
+use App\Models\CategoryItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ItemController extends Controller
 {
-    public function index() {
-        $items = Item::with('categoryItem')->paginate(10);
+    public function index()
+    {
+        $items = Item::with(['categoryItem', 'logistik'])->paginate(10);
+        confirmDelete("Apakah anda yakin menghapus Item ?", "Data yang berelasi akan ikut terhapus dan tidak bisa dikembalikan");
         return view('dashboard.items.index', ['items' => $items]);
     }
 
-    public function create() {
+    public function create()
+    {
         $category_items = CategoryItem::all();
         return view('dashboard.items.create', ['category_items' => $category_items]);
     }
 
-    public function store(Request $request){
-        
+    public function store(Request $request)
+    {
+        // dd($request);
         $validatedData = $request->validate([
             'nama_item' => ['required', 'string', 'max:255'],
             'category_item_id' => ['required'],
@@ -29,12 +34,16 @@ class ItemController extends Controller
             'satuan_waktu' => ['required', 'string'],
             'satuan_item' => ['required', 'string'],
             'harga_barang' => ['required', 'string'],
+            'x_ringan' => ['required'],
+            'x_berat' => ['required', 'integer'],
+            'hilang' => ['required', 'integer'],
+            'stock_awal' => ['required', 'integer'],
             'keterangan' => ['sometimes', 'nullable'],
         ]);
-        
+
+        $item = Item::createItem($validatedData);
         try {
             // Memanggil metode createItem dari model
-            $item = Item::createItem($validatedData);
 
             // Notifikasi berhasil
             Alert::success('Data Item ID: ' . $item->item_id . ' berhasil ditambahkan', 'success');
@@ -53,18 +62,25 @@ class ItemController extends Controller
         }
     }
 
-    public function edit(Item $item){
+    public function edit(Item $item)
+    {
         $categoryItem = CategoryItem::all();
         return view('dashboard.items.edit', ['item' => $item, 'category_items' => $categoryItem]);
     }
 
-    public function update(Request $request, Item $item){
+    public function update(Request $request, Item $item)
+    {
         $validatedData = $request->validate([
             'nama_item' => ['required', 'string', 'max:255'],
+            'category_item_id' => ['required', 'exists:category_items,category_item_id'],
             'harga_sewa' => ['required', 'string'],
             'satuan_waktu' => ['required', 'string'],
             'satuan_item' => ['required', 'string'],
             'harga_barang' => ['required', 'string'],
+            'x_ringan' => ['required'],
+            'x_berat' => ['required'],
+            'hilang' => ['required'],
+            'total_log' => ['sometimes', 'nullable'],
             'keterangan' => ['sometimes', 'nullable'],
         ]);
 
@@ -87,5 +103,23 @@ class ItemController extends Controller
             // Redirect ke halaman sebelumnya atau halaman kesalahan
             return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat mengedit data item.']);
         }
+    }
+
+    public function destroy(Item $item)
+    {
+        try {
+            // Hapus Item
+            $item->delete();
+
+            // Memberikan feedback kepada pengguna
+            alert()->success('Delete Berhasil', 'item ID: ' . $item->item_id . ' telah dihapus!');
+        } catch (\Exception $e) {
+            // Menangani kesalahan jika terjadi selama penghapusan
+            alert()->error('Delete Gagal', 'Terjadi kesalahan saat menghapus item.');
+
+            // Anda dapat melakukan log kesalahan di sini jika perlu
+            Log::error('Kesalahan saat menghapus item: ' . $e->getMessage());
+        }
+        return back();
     }
 }

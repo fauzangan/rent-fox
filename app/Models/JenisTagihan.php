@@ -15,6 +15,6 @@ class JenisTagihan extends Model
 
 
     public function tagihans(){
-        return $this->hasMany(Tagihan::class);
+        return $this->hasMany(Tagihan::class, 'jenis_tagihan_id', 'jenis_tagihan_id');
     }
 }

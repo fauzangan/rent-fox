@@ -21,18 +21,28 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label>Tanggal Order</label>
-                            <input type="text" class="form-control datepicker" name="tanggal_order">
+                            <input type="text" class="form-control @error('tanggal_order') is-invalid @enderror" name="tanggal_order" id="tanggal_order" value="{{ old('tanggal_order') }}">
+                            @error('tanggal_order')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>Tanggal Kirim</label>
-                            <input type="text" class="form-control datepicker" name="tanggal_kirim">
+                            <input type="text" class="form-control @error('tanggal_kirim') is-invalid @enderror" name="tanggal_kirim" id="tanggal_kirim" value="{{ old('tanggal_kirim') }}">
+                            @error('tanggal_kirim')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>Kode Customer</label>
-                            <select class="form-control select2" id="customer_select" name="customer_id">
+                            <select class="form-control select2 @error('customer_id') is-invalid @enderror" id="customer_select" name="customer_id">
                                 <option selected disabled>Pilih Customer</option>
                                 @foreach($customers as $customer)
-                                <option value={{ $customer->customer_id }} data-nama="{{ $customer->nama }}" data-identitas_customer="{{ $customer->nomor_identitas }}"
+                                <option value="{{ $customer->customer_id }}" {{ old('customer_id') == $customer->customer_id ? 'selected' : '' }} data-nama="{{ $customer->nama }}" data-identitas_customer="{{ $customer->nomor_identitas }}"
                                     data-alamat="{{
                                     $customer->alamat }}" data-kota="{{ $customer->kota }}" data-telp="{{ $customer->telp
                                     }}" data-fax="{{ $customer->fax }}" data-handphone="{{ $customer->handphone }}"
@@ -48,110 +58,197 @@
                                     }}</option>
                                 @endforeach
                             </select>
+                            @error('customer_id')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>Nama Customer</label>
-                            <input type="text" class="form-control" name="nama_customer" id="nama_customer" value=""
-                                readonly>
+                            <input type="text" class="form-control @error('nama_customer') is-invalid @enderror" name="nama_customer" id="nama_customer" value="{{ old('nama_customer') }}" readonly>
+                            @error('nama_customer')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>No Identitas</label>
-                            <input type="text" class="form-control" name="identitas_customer" id="identitas_customer" value=""
-                                readonly>
+                            <input type="text" class="form-control @error('identitas_customer') is-invalid @enderror" name="identitas_customer" id="identitas_customer" value="{{ old('identitas_customer') }}" readonly>
+                            @error('identitas_customer')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>Alamat Customer</label>
-                            <textarea type="text" class="form-control" name="alamat_customer" id="alamat_customer"
-                                value="" readonly></textarea>
+                            <textarea type="text" class="form-control @error('alamat_customer') is-invalid @enderror" name="alamat_customer" id="alamat_customer" value="{{ old('alamat_customer') }}" readonly></textarea>
+                            @error('alamat_customer')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="form-group">
                             <label>Kota Customer</label>
-                            <input type="text" class="form-control" name="kota_customer" id="kota_customer" value=""
-                                readonly>
+                            <input type="text" class="form-control @error('kota_customer') is-invalid @enderror" name="kota_customer" id="kota_customer" value="{{ old('kota_customer') }}" readonly>
+                            @error('kota_customer')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>         
                         <div class="form-group">
                             <label>Telp Customer</label>
-                            <input type="text" class="form-control" name="telp_customer" id="telp_customer" value=""
-                                readonly>
+                            <input type="text" class="form-control @error('telp_customer') is-invalid @enderror" name="telp_customer" id="telp_customer" value="{{ old('telp_customer') }}" readonly>
+                            @error('telp_customer')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>Fax Customer</label>
-                            <input type="text" class="form-control" name="fax_customer" id="fax_customer" value=""
-                                readonly>
+                            <input type="text" class="form-control @error('fax_customer') is-invalid @enderror" name="fax_customer" id="fax_customer" value="{{ old('fax_customer') }}" readonly>
+                            @error('fax_customer')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>Handphone Customer</label>
-                            <input type="text" class="form-control" name="handphone" id="handphone" value=""
-                                readonly>
+                            <input type="text" class="form-control @error('handphone') is-invalid @enderror" name="handphone" id="handphone" value="{{ old('handphone') }}" readonly>
+                            @error('handphone')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>Perusahaan</label>
                             <div class="row">
                                 <div class="col-3 pr-1">
-                                    <input type="text" class="form-control" name="badan_hukum" id="badan_hukum" value=""
-                                        readonly>
+                                    <input type="text" class="form-control @error('badan_hukum') is-invalid @enderror" name="badan_hukum" id="badan_hukum" value="{{ old('badan_hukum') }}" readonly>
+                                    @error('badan_hukum')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                                 <div class="col-9 pl-1">
-                                    <input type="text" class="form-control" name="nama_perusahaan" id="nama_perusahaan"
-                                        value="" readonly>
+                                    <input type="text" class="form-control @error('nama_perusahaan') is-invalid @enderror" name="nama_perusahaan" id="nama_perusahaan" value="{{ old('nama_perusahaan') }}" readonly>
+                                    @error('nama_perusahaan')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Alamat Perusahaan</label>
-                            <textarea type="text" class="form-control" name="alamat_perusahaan" id="alamat_perusahaan"
-                                value="" readonly></textarea>
+                            <textarea type="text" class="form-control @error('alamat_perusahaan') is-invalid @enderror" name="alamat_perusahaan" id="alamat_perusahaan" value="{{ old('alamat_perusahaan') }}" readonly></textarea>
+                            @error('alamat_perusahaan')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="form-group">
                             <label>Kota Perusahaan</label>
-                            <input type="text" class="form-control" name="kota_perusahaan" id="kota_perusahaan" value=""
-                                readonly>
+                            <input type="text" class="form-control @error('kota_perusahaan') is-invalid @enderror" name="kota_perusahaan" id="kota_perusahaan" value="{{ old('kota_perusahaan') }}" readonly>
+                            @error('kota_perusahaan')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>Telp Perusahaan</label>
-                            <input type="text" class="form-control" name="telp_perusahaan" id="telp_perusahaan" value=""
-                                readonly>
+                            <input type="text" class="form-control @error('telp_perusahaan') is-invalid @enderror" name="telp_perusahaan" id="telp_perusahaan" value="{{ old('telp_perusahaan') }}" readonly>
+                            @error('telp_perusahaan')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>Fax Perusahaan</label>
-                            <input type="text" class="form-control" name="fax_perusahaan" id="fax_perusahaan" value=""
-                                readonly>
+                            <input type="text" class="form-control @error('fax_perusahaan') is-invalid @enderror" name="fax_perusahaan" id="fax_perusahaan" value="{{ old('fax_perusahaan') }}" readonly>
+                            @error('fax_perusahaan')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>Kirim Kepada</label>
-                            <input type="text" class="form-control" name="kirim_kepada" id="kirim_kepada">
+                            <input type="text" class="form-control @error('kirim_kepada') is-invalid @enderror" name="kirim_kepada" id="kirim_kepada" value="{{ old('kirim_kepada') }}">
+                            @error('kirim_kepada')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>Alamat Kirim</label>
-                            <textarea type="text" class="form-control" name="alamat_kirim" id="alamat_kirim"></textarea>
+                            <textarea type="text" class="form-control @error('alamat_kirim') is-invalid @enderror" name="alamat_kirim" id="alamat_kirim">{{ old('alamat_kirim') }}</textarea>
+                            @error('alamat_kirim')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>Nama Proyek</label>
-                            <textarea type="text" class="form-control" name="nama_proyek" id="nama_proyek"></textarea>
+                            <textarea type="text" class="form-control @error('nama_proyek') is-invalid @enderror" name="nama_proyek" id="nama_proyek">{{ old('nama_proyek') }}</textarea>
+                            @error('nama_proyek')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="form-group">
                             <label>Status Transport</label>
-                            <select class="form-control" name="status_transport" id="status_transport">
-                                <option value=1>Oleh ASR</option>
-                                <option value=0>Mandiri</option>
+                            <select class="form-control @error('status_transport') is-invalid @enderror" name="status_transport" id="status_transport">
+                                <option value=1 {{ old('status_transport') == '1'? 'selected' : '' }}>Oleh ASR</option>
+                                <option value=0 {{ old('status_transport') == '0'? 'selected' : '' }}>Mandiri</option>
                             </select>
+                            @error('status_transport')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>Status Order</label>
-                            <select class="form-control" name="status_order" id="status_order">
-                                <option value=1>Aktif</option>
-                                <option value=0>Non Aktif</option>
+                            <select class="form-control @error('status_order') is-invalid @enderror" name="status_order" id="status_order">
+                                <option value=1 {{ old('status_order') == '1'? 'selected' : '' }}>Aktif</option>
+                                <option value=0 {{ old('status_order') == '0'? 'selected' : '' }}>Non Aktif</option>
                             </select>
+                            @error('status_order')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>Keterangan</label>
-                            <textarea type="text" class="form-control" name="keterangan" id="keterangan"></textarea>
+                            <textarea type="text" class="form-control @error('keterangan') is-invalid @enderror" name="keterangan" id="keterangan">{{ old('keterangan') }}</textarea>
+                            @error('keterangan')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -169,6 +266,7 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/modules/bootstrap-daterangepicker/daterangepicker.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/modules/izitoast/css/iziToast.min.css') }}">
 <style>
     .form-group {
         margin-bottom: 15px !important;
@@ -188,102 +286,9 @@
 <script src="{{ asset('assets/modules/select2/dist/js/select2.min.js') }}"></script>
 <script src="{{ asset('assets/modules/cleave-js/dist/cleave.min.js') }}"></script>
 <script src="{{ asset('assets/modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
-<script>
-    $(document).ready(function(){
-        $("#customer_select").change(function(){
-            let nama = $(this).find('option:selected').data('nama');
-            let identitas_customer = $(this).find('option:selected').data('identitas_customer');
-            let alamat = $(this).find('option:selected').data('alamat');
-            let kota = $(this).find('option:selected').data('kota');
-            let telp = $(this).find('option:selected').data('telp');
-            let fax = $(this).find('option:selected').data('fax');
-            let handphone = $(this).find('option:selected').data('handphone');
-            let badan_hukum = $(this).find('option:selected').data('badan_hukum');
-            let nama_perusahaan = $(this).find('option:selected').data('nama_perusahaan');
-            let alamat_perusahaan = $(this).find('option:selected').data('alamat_perusahaan');
-            let kota_perusahaan = $(this).find('option:selected').data('kota_perusahaan');
-            let telp_perusahaan = $(this).find('option:selected').data('telp_perusahaan');
-            let fax_perusahaan = $(this).find('option:selected').data('fax_perusahaan');
-            
-            // Isi nilai input dengan data customer yang dipilih
-            $('#nama_customer').val(nama);
-            $('#identitas_customer').val(identitas_customer);
-            $('#alamat_customer').text(alamat);
-            $('#kota_customer').val(kota);
-            $('#telp_customer').val(telp);
-            $('#fax_customer').val(fax);
-            $('#handphone').val(handphone);
-            $('#badan_hukum').val(badan_hukum);
-            $('#nama_perusahaan').val(nama_perusahaan);
-            $('#alamat_perusahaan').text(alamat_perusahaan);
-            $('#kota_perusahaan').val(kota_perusahaan);
-            $('#telp_perusahaan').val(telp_perusahaan);
-            $('#fax_perusahaan').val(fax_perusahaan);
-        }); 
-    });
-</script>
-<script>
-$(document).ready(function() {
-    function formatRupiah(angka) {
-        var reverse = angka.toString().split('').reverse().join(''),
-        ribuan = reverse.match(/\d{1,3}/g);
-        ribuan = ribuan.join('.').split('').reverse().join('');
-        return ribuan;
-    }
-    // Fungsi untuk menambah formulir item baru
-    $("#add-form-item").click(function() {
-        var newItemForm = $(".form-item").first().clone(); // Salin formulir item pertama
-        newItemForm.find('select,input').val(''); // Reset nilai input/select di formulir baru
-        newItemForm.find('.jumlah-item').val(1);
-        newItemForm.find('.waktu').val(1);
-        $("#form-container").append(newItemForm); // Tambahkan formulir baru ke dalam kontainer
-        
-        // Tampilkan tombol hapus formulir jika jumlah formulir lebih dari 1
-        if ($('.form-item').length > 1) {
-            $('.delete-form-btn').show();
-        }
-    });
-
-    // Fungsi untuk menghapus formulir item
-    $(document).on("click", ".delete-form-btn", function() {
-        var formsCount = $('.form-item').length;
-        if (formsCount > 1) { // Pastikan setidaknya ada satu formulir tersisa
-            $(this).closest('.form-item').remove(); // Hapus formulir
-        } else {
-            alert("Tidak dapat menghapus formulir terakhir.");
-        }
-        
-        // Sembunyikan tombol hapus formulir jika jumlah formulir tinggal satu
-        if ($('.form-item').length === 1) {
-            $('.delete-form-btn').hide();
-        }
-    });
-
-    // Fungsi untuk mengatur nilai field berdasarkan pilihan item
-    $(document).on("change", ".select-item", function() {
-        let container = $(this).closest('.form-item');
-        let harga_sewa = $(this).find('option:selected').data('harga_sewa');
-        let satuan_waktu = $(this).find('option:selected').data('satuan_waktu');
-        let satuan_item = $(this).find('option:selected').data('satuan_item');
-        let jumlah_item = container.find('.jumlah-item').val();
-
-        container.find('.harga-sewa').val(harga_sewa);
-        container.find('.satuan-waktu').val("Per " + satuan_waktu);
-        container.find('.satuan-item').val(satuan_item);
-        container.find('.jumlah').val(formatRupiah(parseInt(harga_sewa) * parseInt(jumlah_item)));
-    });
-
-    $(document).on("change", ".jumlah-item", function(){
-        let container = $(this).closest('.form-item');
-        let jumlah_item = container.find('.jumlah-item').val();
-        let harga_sewa = container.find('.harga-sewa').val();
-
-        container.find('.jumlah').val(formatRupiah(parseInt(harga_sewa) * parseInt(jumlah_item)));
-    });
-
-    
-});
-</script>
+<script src="{{ asset('assets/modules/izitoast/js/iziToast.min.js') }}"></script>
+<script src="{{ asset('assets/js/page/order-create.js') }}"></script>
+<script src="{{ asset('assets/js/page/order-create-items.js') }}"></script>
 @endpush
 
 @endsection

@@ -53,6 +53,10 @@ class Order extends Model
                         'item_id' => $item->item_id,
                         'nama_item' => $item->nama_item,
                         'harga_sewa' => $item->harga_sewa,
+                        'harga_barang' => $item->harga_barang,
+                        'x_ringan' => $item->x_ringan,
+                        'x_berat' => $item->x_berat,
+                        'hilang' => $item->hilang,
                         'satuan' => $item->satuan_item,
                         'waktu' => $data['waktus'][$i],
                         'jumlah_item' => $data['jumlah_items'][$i],
@@ -65,10 +69,10 @@ class Order extends Model
     }
 
     public function orderItems() {
-        return $this->hasMany(OrderItem::class);
+        return $this->hasMany(OrderItem::class, 'order_id', 'order_id');
     }
 
     public function tagihans(){
-        return $this->hasMany(Tagihan::class);
+        return $this->hasMany(Tagihan::class, 'order_id', 'order_id');
     }
 }

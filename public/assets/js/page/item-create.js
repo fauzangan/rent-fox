@@ -9,3 +9,9 @@ new Cleave('#harga_barang', {
     numeralDecimalMark: ',',
     delimiter: '.'
 });
+
+new Cleave('#x_ringan', {
+    numeral: true,
+    numeralDecimalMark: ',',
+    delimiter: '.'
+});

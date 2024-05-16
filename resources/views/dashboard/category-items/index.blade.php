@@ -16,13 +16,13 @@
             </div>
         </div>
         <div class="col-md-auto">
-            <a href="{{ route('dashboard.category-items.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Tagihan</a>
+            <a href="{{ route('dashboard.category-items.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Kategori</a>
         </div>
     </div>
 
     <div class="card">
         <div class="card-header">
-            <h4>Tagihan Table</h4>
+            <h4>Kategori Item Table</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive text-nowrap">
