@@ -24,31 +24,14 @@ class Customer extends Model
     public static function createCustomer($data)
     {
         return DB::transaction(function () use ($data) {
-            // Jika is_perusahaan benar, buat Perusahaan
-            if ($data['is_perusahaan'] != "0") {
-                $perusahaan = Perusahaan::create([
-                    'badan_hukum' => $data['badan_hukum'],
-                    'nama' => $data['nama_perusahaan'],
-                    'alamat' => $data['alamat_perusahaan'],
-                    'kota' => $data['kota_perusahaan'],
-                    'provinsi' => $data['provinsi_perusahaan'],
-                    'telp' => $data['telp_perusahaan'],
-                    'fax' => $data['fax_perusahaan'],
-                ]);
-                $data['perusahaan_id'] = $perusahaan->perusahaan_id;
-            }  else {
-                $data['perusahaan_id'] = null;
-            }
-            
             // Handle identitas_berlaku berdasarkan jenis identitas
             if ($data['jenis_identitas'] == 'KTP') {
                 $data['identitas_berlaku'] = null;
             } else {
                 $data['identitas_berlaku'] = DateTime::createFromFormat('d/m/Y', $data['identitas_berlaku'])->format('Y-m-d');
             }
-            
-            // Buat Customer
-            return Customer::create([
+
+            $customer = Customer::create([
                 'nama' => $data['nama'],
                 'jenis_identitas' => $data['jenis_identitas'],
                 'identitas_berlaku' => $data['identitas_berlaku'],
@@ -60,11 +43,26 @@ class Customer extends Model
                 'telp' => $data['telp'],
                 'fax' => $data['fax'],
                 'handphone' => $data['handphone'],
-                'perusahaan_id' => $data['perusahaan_id'],
                 'keterangan' => $data['keterangan'],
                 'bonafidity' => $data['bonafidity'],
                 'bit_active' => $data['bit_active']
             ]);
+
+            if ($data['is_perusahaan'] != "0") {
+                Perusahaan::create([
+                    'badan_hukum' => $data['badan_hukum'],
+                    'customer_id' => $customer->customer_id,
+                    'nama' => $data['nama_perusahaan'],
+                    'alamat' => $data['alamat_perusahaan'],
+                    'kota' => $data['kota_perusahaan'],
+                    'provinsi' => $data['provinsi_perusahaan'],
+                    'telp' => $data['telp_perusahaan'],
+                    'fax' => $data['fax_perusahaan'],
+                ]);
+            } 
+            
+            // Buat Customer
+            return $customer;
             // return self::create($data);
         });
     }
@@ -99,6 +97,10 @@ class Customer extends Model
     
     public function perusahaan()
     {
-        return $this->hasOne(Perusahaan::class, 'perusahaan_id');
+        return $this->hasOne(Perusahaan::class, 'customer_id', 'customer_id');
+    }
+
+    public function orders(){
+        return $this->hasMany(Order::class, 'customer_id', 'customer_id');
     }
 }

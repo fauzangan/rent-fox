@@ -22,8 +22,9 @@ class ItemSeeder extends Seeder
                 'satuan_waktu' => 'Bulan',
                 'harga_barang' => 1500,
                 'x_ringan' => 9000,
-                'x_berat' => 0.9,
-                'hilang' => 1,
+                'x_berat' => 90,
+                'hilang' => 100,
+                'stock_awal' => 2000,
                 'keterangan' => '-' 
             ],
             [
@@ -34,8 +35,9 @@ class ItemSeeder extends Seeder
                 'satuan_waktu' => 'Bulan',
                 'harga_barang' => 280000,
                 'x_ringan' => 9000,
-                'x_berat' => 0.9,
-                'hilang' => 1,
+                'x_berat' => 90,
+                'hilang' => 120,
+                'stock_awal' => 2000,
                 'keterangan' => '-' 
             ],
             [
@@ -46,8 +48,9 @@ class ItemSeeder extends Seeder
                 'satuan_waktu' => 'Bulan',
                 'harga_barang' => 75000,
                 'x_ringan' => 9000,
-                'x_berat' => 0.9,
-                'hilang' => 1,
+                'x_berat' => 90,
+                'hilang' => 100,
+                'stock_awal' => 2000,
                 'keterangan' => '-' 
             ],
             [
@@ -58,8 +61,9 @@ class ItemSeeder extends Seeder
                 'satuan_waktu' => 'Bulan',
                 'harga_barang' => 75000,
                 'x_ringan' => 9000,
-                'x_berat' => 0.9,
-                'hilang' => 1,
+                'x_berat' => 80,
+                'hilang' => 100,
+                'stock_awal' => 2000,
                 'keterangan' => '-' 
             ],
             [
@@ -70,8 +74,9 @@ class ItemSeeder extends Seeder
                 'satuan_waktu' => 'Bulan',
                 'harga_barang' => 200000,
                 'x_ringan' => 9000,
-                'x_berat' => 0.9,
-                'hilang' => 1,
+                'x_berat' => 90,
+                'hilang' => 90,
+                'stock_awal' => 2000,
                 'keterangan' => '-' 
             ],
             [
@@ -82,8 +87,9 @@ class ItemSeeder extends Seeder
                 'satuan_waktu' => 'Bulan',
                 'harga_barang' => 70000,
                 'x_ringan' => 9000,
-                'x_berat' => 0.9,
-                'hilang' => 1,
+                'x_berat' => 90,
+                'hilang' => 90,
+                'stock_awal' => 2000,
                 'keterangan' => '-' 
             ],
             [
@@ -94,8 +100,9 @@ class ItemSeeder extends Seeder
                 'satuan_waktu' => 'Bulan',
                 'harga_barang' => 1500,
                 'x_ringan' => 9000,
-                'x_berat' => 0.9,
-                'hilang' => 1,
+                'x_berat' => 90,
+                'hilang' => 90,
+                'stock_awal' => 2000,
                 'keterangan' => '-' 
             ],
             [
@@ -106,8 +113,9 @@ class ItemSeeder extends Seeder
                 'satuan_waktu' => 'Bulan',
                 'harga_barang' => 10000,
                 'x_ringan' => 9000,
-                'x_berat' => 0.9,
-                'hilang' => 1,
+                'x_berat' => 90,
+                'hilang' => 90,
+                'stock_awal' => 2000,
                 'keterangan' => '-' 
             ],
             [
@@ -118,8 +126,9 @@ class ItemSeeder extends Seeder
                 'satuan_waktu' => 'Bulan',
                 'harga_barang' => 145000,
                 'x_ringan' => 9000,
-                'x_berat' => 0.9,
-                'hilang' => 1,
+                'x_berat' => 90,
+                'hilang' => 90,
+                'stock_awal' => 2000,
                 'keterangan' => '-' 
             ],
             [
@@ -130,8 +139,9 @@ class ItemSeeder extends Seeder
                 'satuan_waktu' => 'Bulan',
                 'harga_barang' => 225000,
                 'x_ringan' => 9000,
-                'x_berat' => 0.9,
-                'hilang' => 1,
+                'x_berat' => 90,
+                'hilang' => 90,
+                'stock_awal' => 2000,
                 'keterangan' => '-' 
             ],
             [
@@ -142,8 +152,9 @@ class ItemSeeder extends Seeder
                 'satuan_waktu' => 'Bulan',
                 'harga_barang' => 235000,
                 'x_ringan' => 9000,
-                'x_berat' => 0.9,
-                'hilang' => 1,
+                'x_berat' => 90,
+                'hilang' => 90,
+                'stock_awal' => 2000,
                 'keterangan' => '-' 
             ],
             [
@@ -154,14 +165,15 @@ class ItemSeeder extends Seeder
                 'satuan_waktu' => 'Bulan',
                 'harga_barang' => 280000,
                 'x_ringan' => 9000,
-                'x_berat' => 0.9,
-                'hilang' => 1,
+                'x_berat' => 90,
+                'hilang' => 100,
+                'stock_awal' => 2000,
                 'keterangan' => '-' 
             ],
         ];
 
         foreach($items as $item){
-            Item::create($item);
+            Item::createItem($item);
         }
     }
 }

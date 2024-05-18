@@ -24,8 +24,6 @@ return new class extends Migration
             $table->string('telp')->default('-')->nullable();
             $table->string('fax')->default('-')->nullable();
             $table->string('handphone')->unique();
-            $table->unsignedBigInteger('perusahaan_id')->nullable();
-            $table->foreign('perusahaan_id')->references('perusahaan_id')->on('perusahaans');
             $table->text('keterangan')->default("-")->nullable();
             $table->string('bonafidity');
             $table->boolean('bit_active')->default(1);

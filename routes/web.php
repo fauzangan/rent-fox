@@ -3,6 +3,8 @@
 use App\Http\Controllers\CategoryItemController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\LogistikController;
+use App\Http\Controllers\LogistikHarianController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TagihanController;
 use Illuminate\Support\Facades\Route;
@@ -60,6 +62,14 @@ Route::get('/dashboard/tagihans/create', [TagihanController::class, 'create'])->
 Route::post('/dashboard/tagihans/create', [TagihanController::class, 'store'])->name('dashboard.tagihans.store');
 Route::get('/dashboard/tagihans/edit/{tagihan}', [TagihanController::class, 'edit'])->name('dashboard.tagihans.edit');
 Route::put('/dashboard/tagihans/update/{tagihan}', [TagihanController::class, 'update'])->name('dashboard.tagihans.update');
+
+// Logistik Route
+Route::get('/dashboard/logistiks', [LogistikController::class, 'index'])->name('dashboard.logistiks.index');
+
+// Logistik Harian Route
+Route::get('/dashboard/logistik-harians/create', [LogistikHarianController::class, 'create'])->name('dashboard.logistik-harians.create');
+Route::get('/dashboard/logistik-harians/getOrderItem/{orderId}', [LogistikHarianController::class, 'getOrderItems'])->name('dashboard.logistik-harians.getOrderItem');
+Route::get('/dashboard/logistik-harians/getCustomerOrders/{customerId}', [LogistikHarianController::class, 'getCustomerOrders'])->name('dashboard.logistik-harians.getCustomerOrder');
 
 
 Route::get('/test', function(){

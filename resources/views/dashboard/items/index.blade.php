@@ -39,6 +39,7 @@
                             <th>Claim<br> Rusak Berat</th>
                             <th>Claim<br> Hilang</th>
                             <th>Keterangan</th>
+                            <th>Tanggal Diupdate</th>
                             <th class="sticky-aksi-head text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -59,6 +60,7 @@
                             <td>{{ $item->x_berat*100 }}%</td>
                             <td>{{ $item->hilang*100 }}%</td>
                             <td>{{ $item->keterangan }}</td>
+                            <td>{{ $item->updated_at->translatedFormat('d F Y') }}</td>
                             <td class="sticky-aksi-col">
                                 <a href="{{ route('dashboard.items.edit', ['item' => $item->item_id]) }}" class="btn btn-warning">Edit</a>
                                 <a href="{{ route('dashboard.items.delete', ['item' => $item->item_id]) }}" class="btn btn-danger" data-confirm-delete="true">Delete</a>

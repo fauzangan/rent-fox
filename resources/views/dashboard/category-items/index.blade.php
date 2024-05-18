@@ -32,7 +32,9 @@
                             <th>ID <span data-toggle="tooltip" title="Kode Tagihan"><i class="fas fa-question-circle"></i></span></th>
                             <th>Nama Kategori</th>
                             <th>Prefiks Kode Item</th>
+                            <th>Total Items</th>
                             <th>Keterangan</th>
+                            <th>Tanggal Diupdate</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -42,7 +44,9 @@
                             <td>{{ $category_item->category_item_id }}</td>
                             <td>{{ $category_item->nama_category }}</td>
                             <td>{{ $category_item->prefiks }}</td>
+                            <td>{{ $category_item->items->count() }}</td>
                             <td>{{ $category_item->keterangan }}</td>
+                            <td>{{ $category_item->updated_at->translatedFormat('d F Y') }}</td>
                             <td>
                                 <a href="{{ route('dashboard.category-items.edit', ['categoryItem' => $category_item->category_item_id]) }}" class="btn btn-warning">Edit</a>
                                 <a href="" class="btn btn-danger" data-confirm-delete="true">Delete</a>

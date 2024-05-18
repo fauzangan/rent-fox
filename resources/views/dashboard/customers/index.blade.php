@@ -49,12 +49,18 @@
               <td>{{ $customer->nomor_identitas }}</td>
               <td>
                 @if($customer->bit_active)
-                <div class="badge badge-success">Aktif</div>
+                <div class="badge badge-success" style="color: black">Aktif</div>
                 @else
                 <div class="badge badge-danger">Non Aktif</div>
                 @endif
               </td>
-              <td>{{ $customer->bonafidity }}</td>
+              <td>
+                @if($customer->bonafidity != 'del')
+                <div class="badge badge-success" style="color: black">{{ $customer->bonafidity }}</div>
+                @else
+                <div class="badge badge-danger">{{ $customer->bonafidity }}</div>
+                @endif
+              </td>
               @if($customer->perusahaan != null)
               <td>{{ $customer->perusahaan->badan_hukum }}</td>
               <td>{{ $customer->perusahaan->nama }}</td>

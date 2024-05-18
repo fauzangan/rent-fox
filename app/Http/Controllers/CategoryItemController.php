@@ -12,7 +12,7 @@ class CategoryItemController extends Controller
 {
     public function index()
     {
-        $category_items = CategoryItem::all();
+        $category_items = CategoryItem::with('items')->get();
         return view('dashboard.category-items.index', ['category_items' => $category_items]);
     }
 

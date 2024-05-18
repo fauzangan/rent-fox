@@ -13,6 +13,7 @@ class Perusahaan extends Model
 
     protected $fillable = [
         'badan_hukum',
+        'customer_id',
         'nama',
         'alamat',
         'kota',
@@ -22,6 +23,6 @@ class Perusahaan extends Model
     ];
 
     public function customer(){
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 }

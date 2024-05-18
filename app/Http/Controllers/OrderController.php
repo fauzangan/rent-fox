@@ -58,9 +58,9 @@ class OrderController extends Controller
             'jumlah_hargas' => ['required']
         ]);
 
+        $order = Order::createOrderWithItems($validatedData);
         try {
             // Memanggil metode createCustomer dari model
-            $order = Order::createOrderWithItems($validatedData);
 
             // Notifikasi berhasil
             Alert::success('Data Order ID: ' . $order->order_id . ' berhasil ditambahkan', 'success');
