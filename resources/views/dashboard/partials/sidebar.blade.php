@@ -12,7 +12,7 @@
             <li class="menu-header" style="color: black">Order Rental</li>
             <li class="{{ Request::is('dashboard/customers*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.customers.index') }}"><i class="far fa-user"></i> <span>Menu Customer</span></a></li>
             <li class="{{ Request::is('dashboard/orders*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.orders.index') }}"><i class="fas fa-receipt "></i> <span>Menu Order</span></a></li>
-            <li class=""><a class="nav-link" href=""><i class="fas fa-calendar-alt"></i> <span>Reservasi</span></a></li>
+            <li class="{{ Request::is('dashboard/reservasis*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.reservasis.index') }}"><i class="fas fa-calendar-alt"></i> <span>Reservasi</span></a></li>
             <li class="dropdown {{ Request::is('dashboard/items*', 'dashboard/category-items*')? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-archive"></i><span>Menu Items</span></a>
                 <ul class="dropdown-menu">
@@ -21,14 +21,18 @@
                 </ul>
             </li>
             <li class="{{ Request::is('dashboard/tagihans*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.tagihans.index') }}"><i class="fas fa-file-invoice-dollar"></i> <span>Menu Tagihan</span></a></li>
-            <li class="dropdown {{ Request::is('dashboard/logistiks*', 'dashboard/logistik-harians*')? 'active' : '' }}">
+            <li class="menu-header" style="color: black">Logistik</li>
+            <li class="{{ Request::is('dashboard/logistik-harians*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.logistik-harians.index') }}"><i class="fas fa-shipping-fast"></i> <span>Logistik Harian</span></a></li>
+            <li class=""><a class="nav-link" href="#"><i class="fas fa-dolly-flatbed"></i> <span>Total Logistik</span></a></li>
+            <li class="{{ Request::is('dashboard/logistiks*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.logistiks.index') }}"><i class="fas fa-warehouse"></i> <span>Stock</span></a></li>
+            {{-- <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-warehouse"></i><span>Menu Inventori</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="{{ route('dashboard.logistik-harians.create') }}">Harian Gudang</a></li>
+                    <li><a class="nav-link" href="">Harian Gudang</a></li>
                     <li><a class="nav-link" href="">Harian Total Log</a></li>
-                    <li><a class="nav-link" href="{{ route('dashboard.logistiks.index') }}">Stock</a></li>
+                    <li><a class="nav-link" href="">Stock</a></li>
                 </ul>
-            </li>
+            </li> --}}
             {{-- <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
                 <ul class="dropdown-menu">

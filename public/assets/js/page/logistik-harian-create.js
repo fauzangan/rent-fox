@@ -4,7 +4,7 @@ $(document).ready(function () {
         var customerId = $(this).find("option:selected").data("customer_id");
         if (orderId) {
             $.ajax({
-                url: "/dashboard/logistik-harians/getOrderItem/" + orderId,
+                url: "/dashboard/logistik-harians/getOrder/" + orderId,
                 type: "GET",
                 dataType: "json",
                 success: function (data) {
@@ -14,7 +14,7 @@ $(document).ready(function () {
                     );
                     if (data.length > 0) {
                         var options = "";
-                        $.each(data, function (key, item) {
+                        $.each(data[0].order_items, function (key, item) {
                             options +=
                                 '<option value="' +
                                 item.item_id +
@@ -27,8 +27,9 @@ $(document).ready(function () {
                         selectItemId.append(options);
 
                         $("#orderItemsTable").slideDown();
+                        $('#biodataCustomer').slideDown();
                         var rows = "";
-                        $.each(data, function (key, item) {
+                        $.each(data[0].order_items, function (key, item) {
                             rows += "<tr>";
                             rows += "<td>" + item.item_id + "</td>";
                             rows += "<td>" + item.nama_item + "</td>";
@@ -36,13 +37,21 @@ $(document).ready(function () {
                             rows += "</tr>";
                         });
                         $("#orderItemsTable tbody").html(rows);
+                        $('#customerIdInfo').text(data[0].customer_id);
+                        $('#customerNamaInfo').text(data[0].nama_customer);
+                        $('#customerPerusahaanInfo').text((data[0].badan_hukum?? '-') +' '+ (data[0].nama_perusahaan??' '));
+                        $('#customerProyekInfo').text(data[0].nama_proyek);
+                        $('#customerAlamatKirimInfo').text(data[0].alamat_kirim);
                     } else {
                         $("#orderItemsTable").slideUp();
+                        $('#biodataCustomer').slideUp();
                     }
                 },
             });
         } else {
             $("#orderItemsTable").slideUp();
+            $("#itemOrderLogistik").slideUp();
+            $('#biodataCustomer').slideUp();
             $("#selectItemId").html(
                 "<option selected disabled>Pilih Item</option>"
             );
@@ -102,6 +111,34 @@ $(document).ready(function () {
                     });
 
                     if (itemId != null) {
+                        $.ajax({
+                            url: '/dashboard/logistik-harians/getLogistikHarians/' + orderId,
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function (data) {
+                                if (data.length > 0) {
+                                $("#itemOrderLogistik").slideDown();
+                                var rows = "";
+                                $.each(data, function(key, item) {
+                                    if(item.logistik.item_id == itemId){
+                                        rows += "<tr>";
+                                        rows += "<td>" + item.logistik.item_id + "</td>";
+                                        rows += "<td>" + item.baik + "</td>";
+                                        rows += "<td>" + item.x_ringan + "</td>";
+                                        rows += "<td>" + item.x_berat + "</td>";
+                                        rows += "<td>" + item.jumlah_item + "</td>";
+                                        rows += "<td>" + item.status_logistik.nama_status + "</td>";
+                                        rows += "<td>" + item.order_id + "</td>";
+                                        rows += "</tr>";
+                                    }
+                                });
+                                $("#itemOrderLogistik tbody").html(rows);
+                            }else {
+                                $("#itemOrderLogistik").slideUp();
+                            }
+                            }
+                        });
+
                         $.ajax({
                             url:
                                 "/dashboard/logistik-harians/getCustomerOrders/" +

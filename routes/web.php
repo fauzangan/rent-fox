@@ -6,6 +6,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LogistikController;
 use App\Http\Controllers\LogistikHarianController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ReservasiController;
 use App\Http\Controllers\TagihanController;
 use Illuminate\Support\Facades\Route;
 
@@ -67,10 +68,19 @@ Route::put('/dashboard/tagihans/update/{tagihan}', [TagihanController::class, 'u
 Route::get('/dashboard/logistiks', [LogistikController::class, 'index'])->name('dashboard.logistiks.index');
 
 // Logistik Harian Route
+Route::get('/dashboard/logistik-harians/index', [LogistikHarianController::class, 'index'])->name('dashboard.logistik-harians.index');
+Route::get('/dashboard/logistik-harians/edit/{logistikHarian}', [LogistikHarianController::class, 'edit'])->name('dashboard.logistik-harians.edit');
+Route::put('/dashboard/logistik-harians/update/{logistikHarian}', [LogistikHarianController::class, 'update'])->name('dashboard.logistik-harians.update');
 Route::get('/dashboard/logistik-harians/create', [LogistikHarianController::class, 'create'])->name('dashboard.logistik-harians.create');
+Route::post('/dashboard/logistik-harians/create', [LogistikHarianController::class, 'store'])->name('dashboard.logistik-harians.store');
+Route::get('/dashboard/logistik-harians/getLogistikHarians/{orderId}', [LogistikHarianController::class, 'getLogistikHarian'])->name('dashboard.logistik-harians.getLogistikHarian');
+Route::get('/dashboard/logistik-harians/getOrder/{orderId}', [LogistikHarianController::class, 'getOrder'])->name('dashboard.logistik-harians.getOrder');
 Route::get('/dashboard/logistik-harians/getOrderItem/{orderId}', [LogistikHarianController::class, 'getOrderItems'])->name('dashboard.logistik-harians.getOrderItem');
 Route::get('/dashboard/logistik-harians/getCustomerOrders/{customerId}', [LogistikHarianController::class, 'getCustomerOrders'])->name('dashboard.logistik-harians.getCustomerOrder');
 
+
+// Reservasi
+Route::get('/dashboard/reservasis', [ReservasiController::class, 'index'])->name('dashboard.reservasis.index');
 
 Route::get('/test', function(){
     return view('test');

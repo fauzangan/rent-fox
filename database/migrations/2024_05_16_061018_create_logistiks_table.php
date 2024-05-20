@@ -19,13 +19,7 @@ return new class extends Migration
             $table->bigInteger('total_log')->default(0);
             $table->bigInteger('claim_hilang')->default(0);
             $table->bigInteger('total_stock')->default(0);
-            $table->bigInteger('baik')->default(0);
-            $table->bigInteger('x_ringan')->default(0);
-            $table->bigInteger('x_berat')->default(0);
-            $table->bigInteger('total_rental')->default(0);
-            $table->bigInteger('stock_gudang')->default(0);
             $table->bigInteger('reserve')->default(0);
-            $table->bigInteger('stock_ready')->default(0);
             $table->timestamps();
         });
     }

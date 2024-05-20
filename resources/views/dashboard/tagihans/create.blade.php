@@ -119,8 +119,7 @@
                     </div>
                     <div class="col">
                         <div class="form-group">
-                            <label>Tanggal Ditagihkan<span class="text-danger" data-toggle="tooltip"
-                                    title="Wajib Diisi!">*</span></label>
+                            <label>Tanggal Ditagihkan<span class="text-danger" data-toggle="tooltip" title="Wajib Diisi!">*</span></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">

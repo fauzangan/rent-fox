@@ -72,6 +72,10 @@ class Order extends Model
         return $this->hasMany(OrderItem::class, 'order_id', 'order_id');
     }
 
+    public function customer() {
+        return $this->belongsTo(Customer::class, 'customer_id', 'customer_id');
+    }
+
     public function tagihans(){
         return $this->hasMany(Tagihan::class, 'order_id', 'order_id');
     }

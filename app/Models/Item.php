@@ -117,7 +117,6 @@ class Item extends Model
                 'item_id' => $item->item_id,
                 'stock_awal' => $data['stock_awal'],
                 'total_stock' => $data['stock_awal'],
-                'stock_ready' => $data['stock_awal'],
             ]);
 
             return $item;

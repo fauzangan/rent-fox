@@ -17,7 +17,7 @@
 <div class="card">
     <div class="card-body p-0">
         <div class="table-responsive text-nowrap">
-            <table class="table table-bordered table-md">
+            <table class="table table-bordered table-hover table-md">
                 <thead>
                     <tr class="text-center">
                         <th style="background-color: #1a1aff; color:#f8f9fa">Kode Item</th>
@@ -50,8 +50,8 @@
                         <td>{{ $logistik->baik }}</td>
                         <td>{{ $logistik->x_ringan }}</td>
                         <td>{{ $logistik->x_berat }}</td>
+                        <td>{{ $logistik->total_harian_log }}</td>
                         <td>{{ $logistik->total_rental }}</td>
-                        <td>0</td>
                         <td>{{ $logistik->stock_gudang }}</td>
                         <td>{{ $logistik->reserve }}</td>
                         <td>{{ $logistik->stock_ready }}</td>

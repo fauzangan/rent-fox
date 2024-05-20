@@ -117,7 +117,7 @@
                                 <input type="text"
                                     class="form-control @error('tanggal_ditagihkan') is-invalid @enderror"
                                     id="tanggal_ditagihkan" name="tanggal_ditagihkan"
-                                    value="{{ old('tanggal_ditagihkan', $tagihan->tanggal_ditagihkan) }}">
+                                    value="{{ old('tanggal_ditagihkan', $tagihan->tanggal_ditagihkan->format('d/m/Y')) }}">
                                 @error('tanggal_ditagihkan')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -135,7 +135,7 @@
                                     </div>
                                 </div>
                                 <input type="text" class="form-control @error('jatuh_tempo_1') is-invalid @enderror"
-                                    id="jatuh_tempo_1" name="jatuh_tempo_1" value="{{ old('jatuh_tempo_1', $tagihan->jatuh_tempo_1) }}">
+                                    id="jatuh_tempo_1" name="jatuh_tempo_1" value="{{ old('jatuh_tempo_1', $tagihan->jatuh_tempo_1->format('d/m/Y')) }}">
                                 @error('jatuh_tempo_1')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -153,7 +153,7 @@
                                     </div>
                                 </div>
                                 <input type="text" class="form-control @error('jatuh_tempo_2') is-invalid @enderror"
-                                    id="jatuh_tempo_2" name="jatuh_tempo_2" value="{{ old('jatuh_tempo_2', $tagihan->jatuh_tempo_2) }}">
+                                    id="jatuh_tempo_2" name="jatuh_tempo_2" value="{{ old('jatuh_tempo_2', $tagihan->jatuh_tempo_2->format('d/m/Y')) }}">
                                 @error('jatuh_tempo_2')
                                 <div class="invalid-feedback">
                                     {{ $message }}
