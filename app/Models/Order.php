@@ -15,6 +15,11 @@ class Order extends Model
 
     protected $guarded = ['order_id'];
 
+    protected $casts = [
+        'tanggal_order' => 'date',
+        'tanggal_kirim' => 'date'
+    ];
+
     public static function createOrderWithItems($data){
         $data['tanggal_order'] = DateTime::createFromFormat('d/m/Y', $data['tanggal_order'])->format('Y-m-d');
         $data['tanggal_kirim'] = DateTime::createFromFormat('d/m/Y', $data['tanggal_kirim'])->format('Y-m-d');
@@ -66,6 +71,72 @@ class Order extends Model
             }
             return $order;
         });
+    }
+
+    public static function updateOrderWithItem($order , $data){
+        $data['tanggal_order'] = DateTime::createFromFormat('d/m/Y', $data['tanggal_order'])->format('Y-m-d');
+        $data['tanggal_kirim'] = DateTime::createFromFormat('d/m/Y', $data['tanggal_kirim'])->format('Y-m-d');
+
+        DB::transaction(function() use($order, $data) {
+            $order->update([
+                'tanggal_order' => $data['tanggal_order'],
+                'tanggal_kirim' => $data['tanggal_kirim'],
+                'customer_id' => $data['customer_id'],
+                'nama_customer' => $data['nama_customer'],
+                'identitas_customer' => $data['identitas_customer'],
+                'alamat_customer' => $data['alamat_customer'],
+                'kota_customer' => $data['kota_customer'],
+                'telp_customer' => $data['telp_customer'],
+                'fax_customer' => $data['fax_customer'],
+                'handphone' => $data['handphone'],
+                'badan_hukum' => $data['badan_hukum'],
+                'nama_perusahaan' => $data['nama_perusahaan'],
+                'alamat_perusahaan' => $data['alamat_perusahaan'],
+                'kota_perusahaan' => $data['kota_perusahaan'],
+                'telp_perusahaan' => $data['telp_perusahaan'],
+                'fax_perusahaan' => $data['fax_perusahaan'],
+                'kirim_kepada' => $data['kirim_kepada'],
+                'alamat_kirim' => $data['alamat_kirim'],
+                'nama_proyek' => $data['nama_proyek'],
+                'status_transport' => $data['status_transport'],
+                'status_order' => $data['status_order'],
+                'keterangan' => $data['keterangan'],
+            ]);
+
+            $existingItems = [];
+
+            for($i = 0; $i < count($data['items']); $i++){
+                $existingItem = $order->orderItems()->where('item_id', $data['items'][$i])->first();
+                $item = Item::where('item_id', '=', $data['items'][$i])->first();
+                // dd($existingItem);
+                if($existingItem){
+                    $existingItem->update([
+                        'waktu' => $data['waktus'][$i],
+                        'jumlah_item' => $data['jumlah_items'][$i],
+                        'jumlah_harga' => $data['jumlah_hargas'][$i]
+                    ]);
+                    $existingItems[] = $data['items'][$i];
+                } else {
+                    $order->orderItems()->create([
+                        'order_id' => $order->order_id,
+                        'item_id' => $item->item_id,
+                        'nama_item' => $item->nama_item,
+                        'harga_sewa' => $item->harga_sewa,
+                        'harga_barang' => $item->harga_barang,
+                        'x_ringan' => $item->x_ringan,
+                        'x_berat' => $item->x_berat,
+                        'hilang' => $item->hilang,
+                        'satuan' => $item->satuan_item,
+                        'waktu' => $data['waktus'][$i],
+                        'jumlah_item' => $data['jumlah_items'][$i],
+                        'jumlah_harga' => $data['jumlah_hargas'][$i]
+                    ]);
+                    $existingItems[] = $data['items'][$i];
+                }
+            }
+            $order->orderItems()->whereNotIn('item_id', $existingItems)->delete();
+        });
+        return $order;
     }
 
     public function orderItems() {

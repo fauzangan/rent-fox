@@ -53,7 +53,7 @@
                         <td>{{ $logistik->total_harian_log }}</td>
                         <td>{{ $logistik->total_rental }}</td>
                         <td>{{ $logistik->stock_gudang }}</td>
-                        <td>{{ $logistik->reserve }}</td>
+                        <td>{{ $logistik->reservasi }}</td>
                         <td>{{ $logistik->stock_ready }}</td>
                     </tr>
                     @endforeach

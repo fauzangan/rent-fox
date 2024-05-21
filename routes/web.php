@@ -55,6 +55,7 @@ Route::get('/dashboard/orders', [OrderController::class, 'index'])->name('dashbo
 Route::get('/dashboard/orders/create', [OrderController::class, 'create'])->name('dashboard.orders.create');
 Route::post('/dashboard/orders/create', [OrderController::class, 'store'])->name('dashboard.orders.store');
 Route::get('/dashboard/orders/edit/{order}', [OrderController::class, 'edit'])->name('dashboard.orders.edit');
+Route::put('/dashboard/orders/update/{order}', [OrderController::class, 'update'])->name('dashboard.orders.update');
 Route::delete('/dashboard/orders/delete/{order}', [OrderController::class, 'destroy'])->name('dashboard.orders.delete');
 
 // Tagihan Route
@@ -81,6 +82,9 @@ Route::get('/dashboard/logistik-harians/getCustomerOrders/{customerId}', [Logist
 
 // Reservasi
 Route::get('/dashboard/reservasis', [ReservasiController::class, 'index'])->name('dashboard.reservasis.index');
+Route::get('/dashboard/reservasis/create', [ReservasiController::class,'create'])->name('dashboard.reservasis.create');
+Route::post('/dashboard/reservasis/create', [ReservasiController::class,'store'])->name('dashboard.reservasis.store');
+Route::get('/dashboard/reservasis/edit/{reservasi}', [ReservasiController::class, 'edit'])->name('dashboard.reservasis.edit');
 
 Route::get('/test', function(){
     return view('test');

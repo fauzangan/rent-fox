@@ -23,16 +23,30 @@ $(document).ready(function(){
         let tanggalOrder = $("#tanggal_order").val();
         let tanggalKirim = $("#tanggal_kirim").val();
 
-        if (
-            !moment(tanggalOrder, "DD/MM/YYYY", true).isValid() ||
-            !moment(tanggalKirim, "DD/MM/YYYY", true).isValid() 
-        ) {
+        if (!moment(tanggalOrder, "DD/MM/YYYY", true).isValid() || !moment(tanggalKirim, "DD/MM/YYYY", true).isValid()) 
+        {
             e.preventDefault();
             iziToast.error({
                 title: "Input Tanggal Salah/Kosong",
                 message:
                     "Tanggal tidak valid. Format yang benar adalah Hari/Bulan/Tahun.",
                 position: "topRight",
+            });
+        }
+
+        let valid = true;
+        $('.select-item').each(function() {
+            if ($(this).val() === null || $(this).val() === 'Pilih Item') {
+                valid = false;
+            }
+        });
+
+        if (!valid) {
+            e.preventDefault();
+            iziToast.error({
+                title: 'Item Order',
+                message: 'Item Order harus diisi!',
+                position: 'topRight'
             });
         }
     });

@@ -54,8 +54,8 @@
                         @foreach($orders as $order)
                         <tr>
                             <td>{{ $order->order_id }}</td>
-                            <td>{{ $order->tanggal_order }}</td>
-                            <td>{{ $order->tanggal_kirim }}</td>
+                            <td>{{ $order->tanggal_order->format('d/m/Y') }}</td>
+                            <td>{{ $order->tanggal_kirim->format('d/m/Y') }}</td>
                             <td>{{ $order->customer_id }}</td>
                             <td>{{ $order->nama_customer }}</td>
                             <td>{{ $order->alamat_customer }}</td>

@@ -16,7 +16,7 @@ class LogistikHarian extends Model
     protected $guarded = ['logistik_harian_id'];
 
     protected $casts = [
-        'tanggal_transaksi' => 'datetime'
+        'tanggal_transaksi' => 'date'
     ];
 
     public function logistik(){

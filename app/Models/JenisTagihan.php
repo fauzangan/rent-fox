@@ -14,9 +14,9 @@ class JenisTagihan extends Model
     protected $guarded = ['jenis_tagihan_id'];
 
     protected $casts = [
-        'tanggal_ditagihkan' => 'datetime',
-        'jatuh_tempo_1' => 'datetime',
-        'jatuh_tempo_2' => 'datetime',
+        'tanggal_ditagihkan' => 'date',
+        'jatuh_tempo_1' => 'date',
+        'jatuh_tempo_2' => 'date',
     ];
 
     public function tagihans(){

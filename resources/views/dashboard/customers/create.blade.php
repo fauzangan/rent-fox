@@ -146,16 +146,14 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Handphone<span class="text-danger" data-toggle="tooltip"
-                                    title="Wajib Diisi!">*</span></label>
+                            <label>Handphone<span class="text-danger" data-toggle="tooltip" title="Wajib Diisi!">*</span></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
                                         <i class="fas fa-mobile"></i>
                                     </div>
                                 </div>
-                                <input type="text" class="form-control @error('handphone') is-invalid @enderror"
-                                    name="handphone" id="handphones" value="{{ old('handphone') }}">
+                                <input type="text" class="form-control @error('handphone') is-invalid @enderror" name="handphone" id="handphones" value="{{ old('handphone') }}">
                                 @error('handphone')
                                 <div class="invalid-feedback">
                                     {{ $message }}

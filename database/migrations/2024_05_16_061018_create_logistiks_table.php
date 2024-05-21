@@ -19,7 +19,6 @@ return new class extends Migration
             $table->bigInteger('total_log')->default(0);
             $table->bigInteger('claim_hilang')->default(0);
             $table->bigInteger('total_stock')->default(0);
-            $table->bigInteger('reserve')->default(0);
             $table->timestamps();
         });
     }

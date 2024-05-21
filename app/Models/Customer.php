@@ -18,7 +18,7 @@ class Customer extends Model
     ];
 
     protected $casts = [
-        'identitas_berlaku' => 'datetime'
+        'identitas_berlaku' => 'date'
     ];
 
     public static function createCustomer($data)
