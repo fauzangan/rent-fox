@@ -85,6 +85,7 @@ Route::get('/dashboard/reservasis', [ReservasiController::class, 'index'])->name
 Route::get('/dashboard/reservasis/create', [ReservasiController::class,'create'])->name('dashboard.reservasis.create');
 Route::post('/dashboard/reservasis/create', [ReservasiController::class,'store'])->name('dashboard.reservasis.store');
 Route::get('/dashboard/reservasis/edit/{reservasi}', [ReservasiController::class, 'edit'])->name('dashboard.reservasis.edit');
+Route::put('/dashboard/reservasis/update/{reservasi}', [ReservasiController::class, 'update'])->name('dashboard.reservasis.update');
 
 Route::get('/test', function(){
     return view('test');

@@ -62,8 +62,8 @@
                             <td>{{ $reservasi->proyek }}</td>
                             <td>{{ $reservasi->keterangan?? '-' }}</td>
                             <td class="sticky-aksi-col">
-                                <a href="" class="btn btn-info">Detail</a>
-                                <a href="" class="btn btn-warning">Edit</a>
+                                <a href="#" class="btn btn-info">Detail</a>
+                                <a href="{{ route('dashboard.reservasis.edit', ['reservasi' => $reservasi->reservasi_id]) }}" class="btn btn-warning">Edit</a>
                                 <a href="" class="btn btn-danger" data-confirm-delete="true">Delete</a>
                             </td>
                         </tr>

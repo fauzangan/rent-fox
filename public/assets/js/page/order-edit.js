@@ -22,20 +22,37 @@ $(document).ready(function(){
     $("form").on("submit", function (e) {
         let tanggalOrder = $("#tanggal_order").val();
         let tanggalKirim = $("#tanggal_kirim").val();
-
-        if (
-            !moment(tanggalOrder, "DD/MM/YYYY", true).isValid() ||
-            !moment(tanggalKirim, "DD/MM/YYYY", true).isValid() 
-        ) {
+    
+        // Validasi tanggal
+        if (!moment(tanggalOrder, "DD/MM/YYYY", true).isValid() || !moment(tanggalKirim, "DD/MM/YYYY", true).isValid()) {
             e.preventDefault();
             iziToast.error({
                 title: "Input Tanggal Salah/Kosong",
-                message:
-                    "Tanggal tidak valid. Format yang benar adalah Hari/Bulan/Tahun.",
+                message: "Tanggal tidak valid. Format yang benar adalah Hari/Bulan/Tahun.",
                 position: "topRight",
             });
+            return; // Menghentikan eksekusi lebih lanjut jika validasi gagal
         }
-
+    
+        // Validasi item order
+        let valid = true;
+        $('.select-item').each(function() {
+            if ($(this).val() === null || $(this).val() === 'Pilih Item') {
+                valid = false;
+            }
+        });
+    
+        if (!valid) {
+            e.preventDefault();
+            iziToast.error({
+                title: 'Item Order',
+                message: 'Item Order harus diisi!',
+                position: 'topRight'
+            });
+            return; // Menghentikan eksekusi lebih lanjut jika validasi gagal
+        }
+    
+        // Jika semua validasi lolos, tampilkan konfirmasi
         e.preventDefault(); // Mencegah submit form secara default
         Swal.fire({
             title: 'Anda yakin untuk mengedit?',
@@ -51,7 +68,6 @@ $(document).ready(function(){
                 e.currentTarget.submit(); // Melanjutkan submit form jika user mengkonfirmasi
             }
         });
-
     });
 
 

@@ -6,6 +6,8 @@ use DateTime;
 use App\Models\Item;
 use App\Models\Order;
 use App\Models\Customer;
+use App\Models\StatusOrder;
+use App\Models\StatusTransport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -14,7 +16,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class OrderController extends Controller
 {
     public function index(){
-        $orders = Order::orderBy('order_id', 'desc')->paginate(5);
+        $orders = Order::with(['customer','statusOrder', 'statusTransport'])->orderBy('order_id', 'desc')->paginate(5);
         return view('dashboard.orders.index', [
             'orders' => $orders
         ]);
@@ -22,15 +24,18 @@ class OrderController extends Controller
 
     public function create(){
         $customers = Customer::with('perusahaan')->get();
+        $statusOrders = StatusOrder::all();
+        $statusTransports = StatusTransport::all();
         $items = Item::all();
         return view('dashboard.orders.create', [
             'customers' => $customers,
-            'items' => $items
+            'items' => $items,
+            'status_orders' => $statusOrders,
+            'status_transports' => $statusTransports
         ]);
     }
 
     public function store(Request $request){
-        // dd($request);
         $validatedData = $request->validate([
             'tanggal_order' => ['required', 'string'],
             'tanggal_kirim' => ['required', 'string'],
@@ -51,8 +56,8 @@ class OrderController extends Controller
             'kirim_kepada' => ['required', 'string', 'max:255'],
             'alamat_kirim' => ['required', 'string'],
             'nama_proyek' => ['required', 'string', 'max:255'],
-            'status_transport' => ['required'],
-            'status_order' => ['required'],
+            'status_transport_id' => ['required'],
+            'status_order_id' => ['required'],
             'keterangan' => ['sometimes', 'nullable'],
             'items' => ['required'],
             'jumlah_items' => ['required'],
@@ -83,12 +88,16 @@ class OrderController extends Controller
 
     public function edit(Order $order){
         $customers = Customer::with('perusahaan')->get();
+        $statusOrders = StatusOrder::all();
+        $statusTransports = StatusTransport::all();
         $items = Item::all();
         $order->load('orderItems');
         return view('dashboard.orders.edit', [
             'order' => $order,
             'items' => $items,
             'customers' => $customers,
+            'status_orders' => $statusOrders,
+            'status_transports' => $statusTransports
         ]);
     }
 
@@ -113,8 +122,8 @@ class OrderController extends Controller
             'kirim_kepada' => ['required', 'string', 'max:255'],
             'alamat_kirim' => ['required', 'string'],
             'nama_proyek' => ['required', 'string', 'max:255'],
-            'status_transport' => ['required'],
-            'status_order' => ['required'],
+            'status_transport_id' => ['required'],
+            'status_order_id' => ['required'],
             'keterangan' => ['sometimes', 'nullable'],
             'items' => ['required'],
             'jumlah_items' => ['required'],

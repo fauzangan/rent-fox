@@ -14,12 +14,12 @@ $(document).ready(function() {
     function initializeFormFields(container) {
         let selectItem = container.find('.select-item');
         let hargaSewa = selectItem.find('option:selected').data('harga_sewa');
-        let satuanWaktu = selectItem.find('option:selected').data('satuan_waktu') || '';
+        let satuanWaktu = selectItem.find('option:selected').data('satuan_waktu');
         let satuanItem = selectItem.find('option:selected').data('satuan_item');
         let jumlahItem = container.find('.jumlah-item').val();
 
         container.find('.harga-sewa').val(hargaSewa);
-        container.find('.satuan-waktu').val((satuanWaktu) ? ("Per " + satuanWaktu) : '');
+        container.find('.satuan-waktu').val("Per " + satuanWaktu);
         container.find('.satuan-item').val(satuanItem);
         if(satuanWaktu == 'Bulan'){
             container.find('.jumlah').val(formatRupiah(parseInt(hargaSewa) * parseInt(jumlahItem)));
@@ -54,11 +54,7 @@ $(document).ready(function() {
         if (formsCount > 1) { // Pastikan setidaknya ada satu formulir tersisa
             $(this).closest('.form-item').remove(); // Hapus formulir
         } else {
-            iziToast.error({
-                title: 'Tidak Bisa Dihapus',
-                message: 'Minimal 1 pemesanan item pada Order',
-                position: 'topRight'
-            });
+            alert("Tidak dapat menghapus formulir terakhir.");
         }
         
         updateDeleteButtonVisibility();

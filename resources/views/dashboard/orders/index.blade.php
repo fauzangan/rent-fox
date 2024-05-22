@@ -67,14 +67,18 @@
                             <td>{{ $order->nama_proyek }}</td>
                             <td>{{ $order->alamat_kirim }}</td>
                             <td>{{ $order->keterangan }}</td>
+                            <td>{{ $order->statusTransport->nama_status }}</td>
                             <td>
-                                @if($order->status_transport == 1)
-                                Oleh ASR
+                                @if($order->statusOrder->status_order_id == 1)
+                                <span class="badge badge-success" style="color: black">{{ $order->statusOrder->nama_status }}</span>
+                                @elseif($order->statusOrder->status_order_id == 2)
+                                <span class="badge badge-info" style="color: black">{{ $order->statusOrder->nama_status }}</span>
+                                @elseif($order->statusOrder->status_order_id == 3)
+                                <span class="badge badge-warning" style="color: black">{{ $order->statusOrder->nama_status }}</span>
                                 @else
-                                Mandiri
+                                <span class="badge badge-danger">{{ $order->statusOrder->nama_status }}</span>
                                 @endif
                             </td>
-                            <td>{{ $order->status_order }}</td>
                             <td class="sticky-aksi-col">
                                 <button class="btn btn-info" id="detail-button" data-id={{ $order->order_id
                                     }}>Detail</button>

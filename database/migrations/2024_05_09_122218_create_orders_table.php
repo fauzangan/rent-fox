@@ -34,8 +34,10 @@ return new class extends Migration
             $table->string('nama_proyek');
             $table->string('alamat_kirim');
             $table->string('keterangan');
-            $table->boolean('status_transport');
-            $table->unsignedTinyInteger('status_order')->default(1);
+            $table->unsignedBigInteger('status_transport_id')->nullable();
+            $table->foreign('status_transport_id')->references('status_transport_id')->on('status_transports')->onDelete('set null');
+            $table->unsignedBigInteger('status_order_id')->nullable();
+            $table->foreign('status_order_id')->references('status_order_id')->on('status_orders')->onDelete('set null');
             $table->timestamps();
         });
     }

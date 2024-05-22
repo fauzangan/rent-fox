@@ -29,11 +29,7 @@ $(document).ready(function() {
         if (formsCount > 1) { // Pastikan setidaknya ada satu formulir tersisa
             $(this).closest('.form-item').remove(); // Hapus formulir
         } else {
-            iziToast.error({
-                title: 'Tidak Bisa Dihapus',
-                message: 'Minimal 1 pemesanan item pada Order',
-                position: 'topRight'
-            });
+            alert("Tidak dapat menghapus formulir terakhir.");
         }
         
         updateDeleteButtonVisibility();
@@ -48,7 +44,7 @@ $(document).ready(function() {
         let jumlah_item = container.find('.jumlah-item').val();
 
         container.find('.harga-sewa').val(harga_sewa);
-        container.find('.satuan-waktu').val("Per " + satuanWaktu );
+        container.find('.satuan-waktu').val("Per " + satuan_waktu);
         container.find('.satuan-item').val(satuan_item);
         if(satuan_waktu == 'Bulan'){
             container.find('.jumlah').val(formatRupiah(parseInt(harga_sewa) * parseInt(jumlah_item)));
@@ -64,4 +60,5 @@ $(document).ready(function() {
 
         container.find('.jumlah').val(formatRupiah(parseInt(harga_sewa) * parseInt(jumlah_item)));
     });
+
 });

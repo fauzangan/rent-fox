@@ -220,11 +220,12 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label>Status Transport</label>
-                            <select class="form-control @error('status_transport') is-invalid @enderror" name="status_transport" id="status_transport">
-                                <option value=1 {{ old('status_transport', $order->status_transport) == '1'? 'selected' : '' }}>Oleh ASR</option>
-                                <option value=0 {{ old('status_transport', $order->status_transport) == '0'? 'selected' : '' }}>Mandiri</option>
+                            <select class="form-control @error('status_transport_id') is-invalid @enderror" name="status_transport_id" id="status_transport_id">
+                                @foreach($status_transports as $status_transport)
+                                <option value="{{ $status_transport->status_transport_id }}" {{ old('status_transport_id', $order->status_transport_id) == $status_transport->status_transport_id ? 'selected' : '' }}>{{ $status_transport->nama_status }}</option>
+                                @endforeach
                             </select>
-                            @error('status_transport')
+                            @error('status_transport_id')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -232,11 +233,12 @@
                         </div>
                         <div class="form-group">
                             <label>Status Order</label>
-                            <select class="form-control @error('status_order') is-invalid @enderror" name="status_order" id="status_order">
-                                <option value=1 {{ old('status_order', $order->status_order) == '1'? 'selected' : '' }}>Aktif</option>
-                                <option value=0 {{ old('status_order', $order->status_order) == '0'? 'selected' : '' }}>Non Aktif</option>
+                            <select class="form-control @error('status_order_id') is-invalid @enderror" name="status_order_id" id="status_order_id">
+                                @foreach($status_orders as $status_order)
+                                <option value="{{ $status_order->status_order_id }}" {{ old('status_order_id', $order->status_order_id) == $status_order->status_order_id ? 'selected' : '' }}>{{ $status_order->nama_status }}</option>
+                                @endforeach
                             </select>
-                            @error('status_order')
+                            @error('status_order_id')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>

@@ -20,8 +20,7 @@ return new class extends Migration
             $table->string('item_id');
             $table->foreign('item_id')->references('item_id')->on('items')->onDelete('cascade');
             $table->unsignedBigInteger('jumlah_item');
-            $table->float('discount')->nullable()->default(0);
-            $table->unsignedBigInteger('jumlah_harga_disc')->default(0);
+            $table->unsignedSmallInteger('waktu')->default(1);
             $table->unsignedBigInteger('jumlah_harga');
             $table->timestamps();
         });

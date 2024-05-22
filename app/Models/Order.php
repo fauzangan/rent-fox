@@ -20,6 +20,26 @@ class Order extends Model
         'tanggal_kirim' => 'date'
     ];
 
+    public function orderItems() {
+        return $this->hasMany(OrderItem::class, 'order_id', 'order_id');
+    }
+
+    public function customer() {
+        return $this->belongsTo(Customer::class, 'customer_id', 'customer_id');
+    }
+
+    public function tagihans(){
+        return $this->hasMany(Tagihan::class, 'order_id', 'order_id');
+    }
+
+    public function statusOrder() {
+        return $this->belongsTo(StatusOrder::class, 'status_order_id', 'status_order_id');
+    }
+
+    public function statusTransport() {
+        return $this->belongsTo(StatusTransport::class, 'status_transport_id', 'status_transport_id');
+    }
+
     public static function createOrderWithItems($data){
         $data['tanggal_order'] = DateTime::createFromFormat('d/m/Y', $data['tanggal_order'])->format('Y-m-d');
         $data['tanggal_kirim'] = DateTime::createFromFormat('d/m/Y', $data['tanggal_kirim'])->format('Y-m-d');
@@ -45,9 +65,9 @@ class Order extends Model
                 'kirim_kepada' => $data['kirim_kepada'],
                 'nama_proyek' => $data['nama_proyek'],
                 'alamat_kirim' => $data['alamat_kirim'],
+                'status_transport_id' => $data['status_transport_id'],
+                'status_order_id' => $data['status_order_id'],
                 'keterangan' => $data['keterangan'],
-                'status_transport' => $data['status_transport'],
-                'status_order' => $data['status_order'],
             ]);
 
             if(isset($data['items'])){
@@ -98,8 +118,8 @@ class Order extends Model
                 'kirim_kepada' => $data['kirim_kepada'],
                 'alamat_kirim' => $data['alamat_kirim'],
                 'nama_proyek' => $data['nama_proyek'],
-                'status_transport' => $data['status_transport'],
-                'status_order' => $data['status_order'],
+                'status_transport_id' => $data['status_transport_id'],
+                'status_order_id' => $data['status_order_id'],
                 'keterangan' => $data['keterangan'],
             ]);
 
@@ -139,15 +159,5 @@ class Order extends Model
         return $order;
     }
 
-    public function orderItems() {
-        return $this->hasMany(OrderItem::class, 'order_id', 'order_id');
-    }
-
-    public function customer() {
-        return $this->belongsTo(Customer::class, 'customer_id', 'customer_id');
-    }
-
-    public function tagihans(){
-        return $this->hasMany(Tagihan::class, 'order_id', 'order_id');
-    }
+    
 }
