@@ -25,6 +25,10 @@ class Logistik extends Model
         return $this->hasMany(ReservasiItem::class, 'logistik_id', 'logistik_id');
     }
 
+    public function totalLogistiks(){
+        return $this->hasMany(TotalLogistik::class, 'logistik_id', 'logistik_id');
+    }
+
     // Accessors
     // public function getBaikAttribute()
     // {

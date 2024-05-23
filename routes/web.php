@@ -8,6 +8,7 @@ use App\Http\Controllers\LogistikHarianController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReservasiController;
 use App\Http\Controllers\TagihanController;
+use App\Http\Controllers\TotalLogistikController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -86,6 +87,13 @@ Route::get('/dashboard/reservasis/create', [ReservasiController::class,'create']
 Route::post('/dashboard/reservasis/create', [ReservasiController::class,'store'])->name('dashboard.reservasis.store');
 Route::get('/dashboard/reservasis/edit/{reservasi}', [ReservasiController::class, 'edit'])->name('dashboard.reservasis.edit');
 Route::put('/dashboard/reservasis/update/{reservasi}', [ReservasiController::class, 'update'])->name('dashboard.reservasis.update');
+
+// Total Logistik
+Route::get('/dashboard/total-logistiks', [TotalLogistikController::class, 'index'])->name('dashboard.total-logistiks.index');
+Route::get('/dashboard/total-logistiks/create', [TotalLogistikController::class, 'create'])->name('dashboard.total-logistiks.create');
+Route::post('/dashboard/total-logistiks/create', [TotalLogistikController::class, 'store'])->name('dashboard.total-logistiks.store');
+Route::get('/dashboard/total-logistiks/edit/{totalLogistik}', [TotalLogistikController::class, 'edit'])->name('dashboard.total-logistiks.edit');
+Route::put('/dashboard/total-logistiks/update/{totalLogistik}', [TotalLogistikController::class, 'update'])->name('dashboard.total-logistiks.update');
 
 Route::get('/test', function(){
     return view('test');

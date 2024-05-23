@@ -43,6 +43,9 @@ class Order extends Model
     public static function createOrderWithItems($data){
         $data['tanggal_order'] = DateTime::createFromFormat('d/m/Y', $data['tanggal_order'])->format('Y-m-d');
         $data['tanggal_kirim'] = DateTime::createFromFormat('d/m/Y', $data['tanggal_kirim'])->format('Y-m-d');
+        for($i = 0; $i < count($data['jumlah_hargas']); $i++){
+            $data['jumlah_hargas'][$i] = $data['jumlah_hargas'][$i] = (int)str_replace(',', '.', str_replace('.', '', $data['jumlah_hargas'][$i]));
+        } 
 
         return DB::transaction(function() use($data){
             $order = Order::create([
@@ -96,6 +99,9 @@ class Order extends Model
     public static function updateOrderWithItem($order , $data){
         $data['tanggal_order'] = DateTime::createFromFormat('d/m/Y', $data['tanggal_order'])->format('Y-m-d');
         $data['tanggal_kirim'] = DateTime::createFromFormat('d/m/Y', $data['tanggal_kirim'])->format('Y-m-d');
+        for($i = 0; $i < count($data['jumlah_hargas']); $i++){
+            $data['jumlah_hargas'][$i] = $data['jumlah_hargas'][$i] = (int)str_replace(',', '.', str_replace('.', '', $data['jumlah_hargas'][$i]));
+        } 
 
         DB::transaction(function() use($order, $data) {
             $order->update([

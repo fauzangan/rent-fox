@@ -23,7 +23,7 @@
             <li class="{{ Request::is('dashboard/tagihans*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.tagihans.index') }}"><i class="fas fa-file-invoice-dollar"></i> <span>Menu Tagihan</span></a></li>
             <li class="menu-header" style="color: black">Logistik</li>
             <li class="{{ Request::is('dashboard/logistik-harians*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.logistik-harians.index') }}"><i class="fas fa-shipping-fast"></i> <span>Logistik Harian</span></a></li>
-            <li class=""><a class="nav-link" href="#"><i class="fas fa-dolly-flatbed"></i> <span>Total Logistik</span></a></li>
+            <li class="{{ Request::is('dashboard/total-logistiks*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.total-logistiks.index') }}"><i class="fas fa-dolly-flatbed"></i> <span>Total Logistik</span></a></li>
             <li class="{{ Request::is('dashboard/logistiks*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.logistiks.index') }}"><i class="fas fa-warehouse"></i> <span>Stock</span></a></li>
             {{-- <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-warehouse"></i><span>Menu Inventori</span></a>

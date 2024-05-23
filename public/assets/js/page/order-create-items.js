@@ -48,7 +48,7 @@ $(document).ready(function() {
         let jumlah_item = container.find('.jumlah-item').val();
 
         container.find('.harga-sewa').val(harga_sewa);
-        container.find('.satuan-waktu').val("Per " + satuanWaktu );
+        container.find('.satuan-waktu').val("Per " + satuan_waktu );
         container.find('.satuan-item').val(satuan_item);
         if(satuan_waktu == 'Bulan'){
             container.find('.jumlah').val(formatRupiah(parseInt(harga_sewa) * parseInt(jumlah_item)));

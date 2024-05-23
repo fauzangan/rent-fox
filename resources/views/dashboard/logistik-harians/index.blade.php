@@ -49,10 +49,10 @@
                         @foreach($logistik_harians as $logistik_harian)
                         <tr>
                             <td>{{ $logistik_harian->logistik_harian_id }}</td>
-                            <td>{{ $logistik_harian->created_at->toDateString() }}</td>
+                            <td>{{ $logistik_harian->created_at->format('d/m/Y') }}</td>
                             <td>{{ $logistik_harian->statusLogistik->nama_status }}</td>
                             <td>{{ $logistik_harian->order_id }}</td>
-                            <td>{{ $logistik_harian->tanggal_transaksi }}</td>
+                            <td>{{ $logistik_harian->tanggal_transaksi->format('d/m/Y') }}</td>
                             <td>{{ $logistik_harian->order->customer_id }}</td>
                             <td>{{ $logistik_harian->keterangan?? '-' }}</td>
                             <td>{{ $logistik_harian->logistik->item_id }}</td>

@@ -259,7 +259,7 @@
                 <div class="section-title">Edit Items Order</div>
                 @include('dashboard.orders.partials.edit-item-order-form')
                 <div class="card-footer text-center">
-                    <button type="submit" class="btn btn-warning"><i class="fas fa-edit"></i> Edit Order</button>
+                    <button type="submit" class="btn btn-warning"><i class="fas fa-edit"></i> Edit Data Order</button>
                 </div>
             </form>
         </div>
