@@ -193,11 +193,10 @@
                         <div class="form-group">
                             <label>Status Data<span class="text-danger" data-toggle="tooltip"
                                     title="Wajib Diisi!">*</span></label>
-                            <select class="form-control" name="bit_active">
-                                <option value=1 {{ old('bit_active', $customer->bit_active) == 1 ? 'selected' : ''
-                                    }}>Aktif</option>
-                                <option value=0 {{ old('bit_active', $customer->bit_active) == 0 ? 'selected' : ''
-                                    }}>Tidak Aktif</option>
+                            <select class="form-control" name="status_customer_id">
+                                @foreach($status_customers as $status_customer)
+                                <option value="{{ $status_customer->status_customer_id }}" {{ old('status_customer_id', $customer->status_customer_id) == $status_customer->status_customer_id ? 'selected' : '' }}>{{ $status_customer->nama_status }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">

@@ -36,7 +36,7 @@ class CustomerSeeder extends Seeder
                 'fax_perusahaan' => '021 9423441',
                 'keterangan' => 'Memesan Scafolding',
                 'bonafidity' => '$$',
-                'bit_active' => 1, 
+                'status_customer_id' => 1, 
             ],
             [
                 'nama' => 'Mita Ayu Lestari',
@@ -53,7 +53,7 @@ class CustomerSeeder extends Seeder
                 'surat_kuasa' => "0",
                 'keterangan' => 'Memesan Scafolding',
                 'bonafidity' => '$$',
-                'bit_active' => 1, 
+                'status_customer_id' => 1, 
             ],
             [
                 'nama' => 'Ahmad Faisal Yunianto',
@@ -78,7 +78,7 @@ class CustomerSeeder extends Seeder
                 'fax_perusahaan' => '021 9423531',
                 'keterangan' => 'Memesan Scafolding',
                 'bonafidity' => '$$',
-                'bit_active' => 1, 
+                'status_customer_id' => 1, 
             ],
         ];
 

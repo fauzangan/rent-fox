@@ -22,6 +22,76 @@
     </div>
 
     <div class="card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <h4>Filter Data</h4>
+            <button class="btn btn-primary" type="button" id="filterButton"><i class="fa fa-plus" id="filterIcon"></i></button>
+        </div>
+        <div class="card-body" id="filterForm" style="display: none">
+            <form action="{{ route('dashboard.customers.index') }}" method="GET">
+                @csrf
+                <div class="row align-items-center">
+                    <div class="col-1 pr-0">
+                        <div class="form-group">
+                            <label>Kode Order</label>
+                            <input type="text" id="order_id" name="order_id" value="{{ request('order_id') }}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-1 pr-0">
+                        <div class="form-group">
+                            <label>Kode Cust</label>
+                            <input type="text" id="customer_id" name="customer_id" value="{{ request('customer_id') }}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col pr-0">
+                        <div class="form-group">
+                            <label>Nama Cust</label>
+                            <input type="text" id="nomor_identitas" name="nomor_identitas" value="{{ request('nomor_identitas') }}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col pr-0">
+                        <div class="form-group">
+                            <label>Tanggal Order</label>
+                            <input type="text" id="handphone" name="handphone" value="{{ request('handphone') }}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col pr-0">
+                        <div class="form-group">
+                            <label>Tanggal Kirim</label>
+                            <input type="text" id="nama_perusahaan" name="nama_perusahaan" value="{{ request('nama_perusahaan') }}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col pr-0">
+                        <div class="form-group">
+                            <label>Transport</label>
+                            <select class="form-control" id="status_transport_id" name="status_transport_id">
+                                <option selected></option>
+                                @foreach($status_transports as $status_transport)
+                                <option value="{{ $status_transport->status_transport_id }}" {{ request('status_transport_id') == $status_transport->status_transport_id ? 'selected' : '' }}>{{ $status_transport->nama_status }}</option>
+                                @endforeach
+                            </select>
+                          </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Status Order</label>
+                            <select class="form-control" id="status_order_id" name="status_order_id">
+                                <option selected></option>
+                                @foreach($status_orders as $status_order)
+                                <option value="{{ $status_order->status_order_id }}" {{ request('status_order_id') == $status_order->status_order_id ? 'selected' : '' }}>{{ $status_order->nama_status }}</option>
+                                @endforeach
+                            </select>
+                          </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right py-0 pr-0">
+                    <button type="reset" class="btn btn-warning">Reset</button>
+                    <button type="submit" class="btn btn-info"><i class="fa fa-search"></i> Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
         <div class="card-header">
             <h4>Order Table</h4>
         </div>
@@ -56,13 +126,23 @@
                             <td>{{ $order->order_id }}</td>
                             <td>{{ $order->tanggal_order->format('d/m/Y') }}</td>
                             <td>{{ $order->tanggal_kirim->format('d/m/Y') }}</td>
+                            @if(!is_null($order->customer_id))
                             <td>{{ $order->customer_id }}</td>
-                            <td>{{ $order->nama_customer }}</td>
-                            <td>{{ $order->alamat_customer }}</td>
-                            <td>{{ $order->kota_customer }}</td>
-                            <td>{{ $order->telp_customer }}</td>
-                            <td>{{ $order->badan_hukum }}</td>
-                            <td>{{ $order->nama_perusahaan }}</td>
+                            <td>{{ $order->customer->nama }}</td>
+                            <td>{{ $order->customer->alamat }}</td>
+                            <td>{{ $order->customer->kota }}</td>
+                            <td>{{ $order->customer->telp ?? '-' }}</td>
+                            <td>{{ $order->customer->perusahaan->badan_hukum ?? '-' }}</td>
+                            <td>{{ $order->customer->perusahaan->nama ?? '-' }}</td>
+                            @else
+                            <td><div class="badge badge-danger">dihapus</div></td>
+                            <td><div class="badge badge-danger">dihapus</div></td>
+                            <td><div class="badge badge-danger">dihapus</div></td>
+                            <td><div class="badge badge-danger">dihapus</div></td>
+                            <td><div class="badge badge-danger">dihapus</div></td>
+                            <td><div class="badge badge-danger">dihapus</div></td>
+                            <td><div class="badge badge-danger">dihapus</div></td>
+                            @endif
                             <td>{{ $order->kirim_kepada }}</td>
                             <td>{{ $order->nama_proyek }}</td>
                             <td>{{ $order->alamat_kirim }}</td>
@@ -132,6 +212,34 @@
 <script src="{{ asset('assets/js/stisla.js') }}"></script>
 
 <!-- Specific JS File -->
+<script>
+    $(document).ready(function() {
+        // Function to get query string value
+        function getQueryStringParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
 
+        // Check if any of the specified query strings exist
+        const fields = ['item_id', 'nama_item', 'category_item_id'];
+        let formShouldShow = false;
+        
+        fields.forEach(field => {
+            if (getQueryStringParameter(field)) {
+                formShouldShow = true;
+            }
+        });
+
+        if (formShouldShow) {
+            $('#filterForm').show();
+            $('#filterIcon').toggleClass('fa-plus fa-minus');
+        }
+
+        $('#filterButton').click(function() {
+            $('#filterForm').toggle('slow', 'swing');
+            $('#filterIcon').toggleClass('fa-plus fa-minus');
+        });
+    });
+</script>
 @endpush
 @endsection

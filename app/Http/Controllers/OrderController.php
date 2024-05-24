@@ -17,8 +17,12 @@ class OrderController extends Controller
 {
     public function index(){
         $orders = Order::with(['customer','statusOrder', 'statusTransport'])->orderBy('order_id', 'desc')->paginate(5);
+        $statusOrders = StatusOrder::all();
+        $statusTransports = StatusTransport::all();
         return view('dashboard.orders.index', [
-            'orders' => $orders
+            'orders' => $orders,
+            'status_orders' => $statusOrders,
+            'status_transports' => $statusTransports,
         ]);
     }
 
@@ -39,26 +43,14 @@ class OrderController extends Controller
         $validatedData = $request->validate([
             'tanggal_order' => ['required', 'string'],
             'tanggal_kirim' => ['required', 'string'],
-            'customer_id' => ['required'],
-            'nama_customer' => ['required', 'string'],
-            'identitas_customer' => ['required', 'string'],
-            'alamat_customer' => ['required', 'string'],
-            'kota_customer' => ['required', 'string'],
-            'telp_customer' => ['sometimes', 'nullable'],
-            'fax_customer' => ['sometimes', 'nullable'],
-            'handphone' => ['required', 'string'],
-            'badan_hukum' => ['sometimes', 'nullable', 'string'],
-            'nama_perusahaan' => ['sometimes', 'nullable', 'string'],
-            'alamat_perusahaan' => ['sometimes', 'nullable', 'string'],
-            'kota_perusahaan' => ['sometimes', 'nullable', 'string'],
-            'telp_perusahaan' => ['sometimes', 'nullable', 'string'],
-            'fax_perusahaan' => ['sometimes', 'nullable', 'string'],
+            'customer_id' => ['required', 'integer'],
             'kirim_kepada' => ['required', 'string', 'max:255'],
             'alamat_kirim' => ['required', 'string'],
             'nama_proyek' => ['required', 'string', 'max:255'],
-            'status_transport_id' => ['required'],
-            'status_order_id' => ['required'],
-            'keterangan' => ['sometimes', 'nullable'],
+            'status_transport_id' => ['required', 'integer'],
+            'status_order_id' => ['required', 'integer'],
+            'keterangan' => ['sometimes', 'nullable', 'string'],
+            'memo' => ['sometimes', 'nullable', 'string'],
             'items' => ['required'],
             'jumlah_items' => ['required'],
             'waktus' => ['required'],

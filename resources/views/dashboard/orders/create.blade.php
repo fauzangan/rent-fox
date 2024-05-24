@@ -66,7 +66,7 @@
                         </div>
                         <div class="form-group">
                             <label>Nama Customer</label>
-                            <input type="text" class="form-control @error('nama_customer') is-invalid @enderror" name="nama_customer" id="nama_customer" value="{{ old('nama_customer') }}" readonly>
+                            <input type="text" class="form-control @error('nama_customer') is-invalid @enderror"  id="nama_customer" readonly>
                             @error('nama_customer')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -75,7 +75,7 @@
                         </div>
                         <div class="form-group">
                             <label>No Identitas</label>
-                            <input type="text" class="form-control @error('identitas_customer') is-invalid @enderror" name="identitas_customer" id="identitas_customer" value="{{ old('identitas_customer') }}" readonly>
+                            <input type="text" class="form-control @error('identitas_customer') is-invalid @enderror" id="identitas_customer" readonly>
                             @error('identitas_customer')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -84,7 +84,7 @@
                         </div>
                         <div class="form-group">
                             <label>Alamat Customer</label>
-                            <textarea type="text" class="form-control @error('alamat_customer') is-invalid @enderror" name="alamat_customer" id="alamat_customer" value="{{ old('alamat_customer') }}" readonly></textarea>
+                            <textarea type="text" class="form-control @error('alamat_customer') is-invalid @enderror" id="alamat_customer" readonly></textarea>
                             @error('alamat_customer')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -95,7 +95,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label>Kota Customer</label>
-                            <input type="text" class="form-control @error('kota_customer') is-invalid @enderror" name="kota_customer" id="kota_customer" value="{{ old('kota_customer') }}" readonly>
+                            <input type="text" class="form-control @error('kota_customer') is-invalid @enderror" id="kota_customer" readonly>
                             @error('kota_customer')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -104,7 +104,7 @@
                         </div>         
                         <div class="form-group">
                             <label>Telp Customer</label>
-                            <input type="text" class="form-control @error('telp_customer') is-invalid @enderror" name="telp_customer" id="telp_customer" value="{{ old('telp_customer') }}" readonly>
+                            <input type="text" class="form-control @error('telp_customer') is-invalid @enderror" id="telp_customer" readonly>
                             @error('telp_customer')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -113,7 +113,7 @@
                         </div>
                         <div class="form-group">
                             <label>Fax Customer</label>
-                            <input type="text" class="form-control @error('fax_customer') is-invalid @enderror" name="fax_customer" id="fax_customer" value="{{ old('fax_customer') }}" readonly>
+                            <input type="text" class="form-control @error('fax_customer') is-invalid @enderror" id="fax_customer" readonly>
                             @error('fax_customer')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -122,7 +122,7 @@
                         </div>
                         <div class="form-group">
                             <label>Handphone Customer</label>
-                            <input type="text" class="form-control @error('handphone') is-invalid @enderror" name="handphone" id="handphone" value="{{ old('handphone') }}" readonly>
+                            <input type="text" class="form-control @error('handphone') is-invalid @enderror" id="handphone" readonly>
                             @error('handphone')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -133,7 +133,7 @@
                             <label>Perusahaan</label>
                             <div class="row">
                                 <div class="col-3 pr-1">
-                                    <input type="text" class="form-control @error('badan_hukum') is-invalid @enderror" name="badan_hukum" id="badan_hukum" value="{{ old('badan_hukum') }}" readonly>
+                                    <input type="text" class="form-control @error('badan_hukum') is-invalid @enderror" id="badan_hukum" readonly>
                                     @error('badan_hukum')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -141,7 +141,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-9 pl-1">
-                                    <input type="text" class="form-control @error('nama_perusahaan') is-invalid @enderror" name="nama_perusahaan" id="nama_perusahaan" value="{{ old('nama_perusahaan') }}" readonly>
+                                    <input type="text" class="form-control @error('nama_perusahaan') is-invalid @enderror" id="nama_perusahaan" readonly>
                                     @error('nama_perusahaan')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -152,7 +152,7 @@
                         </div>
                         <div class="form-group">
                             <label>Alamat Perusahaan</label>
-                            <textarea type="text" class="form-control @error('alamat_perusahaan') is-invalid @enderror" name="alamat_perusahaan" id="alamat_perusahaan" value="{{ old('alamat_perusahaan') }}" readonly></textarea>
+                            <textarea type="text" class="form-control @error('alamat_perusahaan') is-invalid @enderror" id="alamat_perusahaan" readonly></textarea>
                             @error('alamat_perusahaan')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -163,7 +163,7 @@
                     <div class="col-3">
                         <div class="form-group">
                             <label>Kota Perusahaan</label>
-                            <input type="text" class="form-control @error('kota_perusahaan') is-invalid @enderror" name="kota_perusahaan" id="kota_perusahaan" value="{{ old('kota_perusahaan') }}" readonly>
+                            <input type="text" class="form-control @error('kota_perusahaan') is-invalid @enderror" id="kota_perusahaan" readonly>
                             @error('kota_perusahaan')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -172,7 +172,7 @@
                         </div>
                         <div class="form-group">
                             <label>Telp Perusahaan</label>
-                            <input type="text" class="form-control @error('telp_perusahaan') is-invalid @enderror" name="telp_perusahaan" id="telp_perusahaan" value="{{ old('telp_perusahaan') }}" readonly>
+                            <input type="text" class="form-control @error('telp_perusahaan') is-invalid @enderror" id="telp_perusahaan" readonly>
                             @error('telp_perusahaan')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -181,7 +181,7 @@
                         </div>
                         <div class="form-group">
                             <label>Fax Perusahaan</label>
-                            <input type="text" class="form-control @error('fax_perusahaan') is-invalid @enderror" name="fax_perusahaan" id="fax_perusahaan" value="{{ old('fax_perusahaan') }}" readonly>
+                            <input type="text" class="form-control @error('fax_perusahaan') is-invalid @enderror" id="fax_perusahaan" readonly>
                             @error('fax_perusahaan')
                             <div class="invalid-feedback">
                                 {{ $message }}

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use DateTime;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -45,7 +46,7 @@ class Customer extends Model
                 'handphone' => $data['handphone'],
                 'keterangan' => $data['keterangan'],
                 'bonafidity' => $data['bonafidity'],
-                'bit_active' => $data['bit_active']
+                'status_customer_id' => $data['status_customer_id']
             ]);
 
             if ($data['is_perusahaan'] != "0") {
@@ -59,8 +60,8 @@ class Customer extends Model
                     'telp' => $data['telp_perusahaan'],
                     'fax' => $data['fax_perusahaan'],
                 ]);
-            } 
-            
+            }
+
             // Buat Customer
             return $customer;
             // return self::create($data);
@@ -94,13 +95,70 @@ class Customer extends Model
             return $this->update($data);
         });
     }
-    
+
+    public function scopeFilterByCustomerId(Builder $query, $customerId)
+    {
+        if ($customerId) {
+            $query->where('customer_id', 'like', '%' . $customerId . '%');
+        }
+    }
+
+    public function scopeFilterByName(Builder $query, $nama)
+    {
+        if ($nama) {
+            $query->where('nama', 'like', '%' . $nama . '%');
+        }
+    }
+
+    public function scopeFilterByNomorIdentitas(Builder $query, $nomorIdentitas)
+    {
+        if ($nomorIdentitas) {
+            $query->where('nomor_identitas', 'like', '%' . $nomorIdentitas . '%');
+        }
+    }
+
+    public function scopeFilterByHandphone(Builder $query, $handphone)
+    {
+        if ($handphone) {
+            $query->where('handphone', 'like', '%' . $handphone . '%');
+        }
+    }
+
+    public function scopeFilterByPerusahaan(Builder $query, $perusahaan)
+    {
+        if ($perusahaan){
+            $query->whereHas('perusahaan', function ($q) use ($perusahaan){
+                $q->where('nama', 'like', '%'.$perusahaan.'%');
+            });
+        }
+    }
+
+    public function scopeFilterByBonafidity(Builder $query, $bonafidity)
+    {
+        if ($bonafidity) {
+            $query->where('bonafidity', '=', $bonafidity);
+        }
+    }
+
+    public function scopeFilterByStatusCustomer(Builder $query, $statusCustomerId)
+    {
+        if ($statusCustomerId) {
+            $query->where('status_customer_id', '=', $statusCustomerId);
+        }
+    }
+
     public function perusahaan()
     {
         return $this->hasOne(Perusahaan::class, 'customer_id', 'customer_id');
     }
 
-    public function orders(){
+    public function orders()
+    {
         return $this->hasMany(Order::class, 'customer_id', 'customer_id');
+    }
+
+    public function statusCustomer()
+    {
+        return $this->belongsTo(StatusCustomer::class, 'status_customer_id', 'status_customer_id');
     }
 }

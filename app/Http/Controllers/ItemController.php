@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ItemFilterRequest;
 use App\Models\Item;
 use App\Models\CategoryItem;
 use Illuminate\Http\Request;
@@ -11,11 +12,21 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class ItemController extends Controller
 {
-    public function index()
+    public function index(ItemFilterRequest $request)
     {
-        $items = Item::with(['categoryItem', 'logistik'])->paginate(10);
+        $categoryItems = CategoryItem::all();
+        $items = Item::query()
+        ->with(['categoryItem', 'logistik'])
+        ->filterByItemId($request->input('item_id'))
+        ->filterByName($request->input('nama_item'))
+        ->filterByCategoryItemId($request->input('category_item_id'))
+        ->paginate(10)
+        ->appends($request->except('page'));
         confirmDelete("Apakah anda yakin menghapus Item ?", "Data yang berelasi akan ikut terhapus dan tidak bisa dikembalikan");
-        return view('dashboard.items.index', ['items' => $items]);
+        return view('dashboard.items.index', [
+            'items' => $items,
+            'category_items' => $categoryItems
+        ]);
     }
 
     public function create()

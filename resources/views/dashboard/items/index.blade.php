@@ -21,12 +21,53 @@
     </div>
 
     <div class="card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <h4>Filter Data</h4>
+            <button class="btn btn-primary" type="button" id="filterButton"><i class="fa fa-plus" id="filterIcon"></i></button>
+        </div>
+        <div class="card-body" id="filterForm" style="display: none">
+            <form action="{{ route('dashboard.items.index') }}" method="GET">
+                @csrf
+                <div class="row align-items-center">
+                    <div class="col-2 pr-0">
+                        <div class="form-group">
+                            <label>Kode Item</label>
+                            <input type="text" id="item_id" name="item_id" value="{{ request('item_id') }}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col pr-0">
+                        <div class="form-group">
+                            <label>Nama Item</label>
+                            <input type="text" id="nama_item" name="nama_item" value="{{ request('nama_item') }}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col pr-0">
+                        <div class="form-group">
+                            <label>Kategori Item</label>
+                            <select class="form-control" id="category_item_id" name="category_item_id">
+                                <option selected></option>
+                                @foreach($category_items as $category_item)
+                                <option value="{{ $category_item->category_item_id }}" {{ request('category_item_id') == $category_item->category_item_id ? 'selected' : '' }}>{{ $category_item->nama_category }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right py-0 pr-0">
+                    <button type="reset" class="btn btn-warning">Reset</button>
+                    <button type="submit" class="btn btn-info"><i class="fa fa-search"></i> Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
         <div class="card-header">
             <h4>Item Table</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive text-nowrap">
-                <table class="table table-bordered table-md">
+                <table class="table table-hover table-bordered table-md">
                     <thead>
                         <tr>
                             <th>ID <span data-toggle="tooltip" title="Kode Barang"><i class="fas fa-question-circle"></i></span></th>
@@ -53,12 +94,22 @@
                             @else
                                 <td><span class="badge badge-danger">Not Set</span></td>
                             @endif
-                            <td>Rp {{ number_format($item->harga_sewa,0,",",".").',-' }}</td>
+                            <td>
+                                <span class="badge" style="background-color: #0080ff; color:white">Rp {{ number_format($item->harga_sewa,0,",",".").',-' }}</span>
+                            </td>
                             <td>Per {{ $item->satuan_waktu }}</td>
-                            <td>Rp {{ number_format($item->harga_barang,0,",",".").',-' }}</td>
-                            <td>Rp {{ number_format($item->x_ringan,0,",",".").',-' }}</td>
-                            <td>{{ $item->x_berat*100 }}%</td>
-                            <td>{{ $item->hilang*100 }}%</td>
+                            <td>
+                                <span class="badge" style="background-color: #0000b3; color:white">Rp {{ number_format($item->harga_barang,0,",",".").',-' }}</span>
+                            </td>
+                            <td>
+                                <span class="badge" style="background-color: #ff9933; color:white">Rp {{ number_format($item->x_ringan,0,",",".").',-' }}</td></span>
+                                
+                            <td>
+                                <span class="badge" style="background-color: #ff8000; color:white">{{ $item->x_berat*100 }}%</td></span>    
+                            </td>
+                            <td>
+                                <span class="badge" style="background-color: #e67300; color:white">{{ $item->hilang*100 }}%</td></span>
+                            </td>
                             <td>{{ $item->keterangan }}</td>
                             <td>{{ $item->updated_at->translatedFormat('d F Y') }}</td>
                             <td class="sticky-aksi-col">
@@ -107,5 +158,34 @@
 <script src="{{ asset('assets/modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
 <script src="{{ asset('assets/modules/moment.min.js') }}"></script>
 <script src="{{ asset('assets/js/stisla.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        // Function to get query string value
+        function getQueryStringParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Check if any of the specified query strings exist
+        const fields = ['item_id', 'nama_item', 'category_item_id'];
+        let formShouldShow = false;
+        
+        fields.forEach(field => {
+            if (getQueryStringParameter(field)) {
+                formShouldShow = true;
+            }
+        });
+
+        if (formShouldShow) {
+            $('#filterForm').show();
+            $('#filterIcon').toggleClass('fa-plus fa-minus');
+        }
+
+        $('#filterButton').click(function() {
+            $('#filterForm').toggle('slow', 'swing');
+            $('#filterIcon').toggleClass('fa-plus fa-minus');
+        });
+    });
+</script>
 @endpush
 @endsection

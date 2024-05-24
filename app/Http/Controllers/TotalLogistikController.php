@@ -91,7 +91,7 @@ class TotalLogistikController extends Controller
             $totalLogistik->updateTotalLogistik($validatedData);
 
             // Notifikasi berhasil
-            Alert::success('Data Total Logistik ASR ID: ' . $totalLogistik->total_logistik_id . ' berhasil ditambahkan', 'success');
+            Alert::success('Data Total Logistik ASR ID: ' . $totalLogistik->total_logistik_id . ' berhasil diedit', 'success');
 
             // Redirect ke halaman index
             return redirect()->route('dashboard.total-logistiks.index');
@@ -100,10 +100,10 @@ class TotalLogistikController extends Controller
             // Log error dan tampilkan pesan kesalahan ke pengguna
             Log::error('Error in creating total logistik data: ' . $e->getMessage());
 
-            Alert::error('Terjadi kesalahan saat menambahkan data Logistik ASR. Silakan coba lagi.');
+            Alert::error('Terjadi kesalahan saat mengedit data Logistik ASR. Silakan coba lagi.');
 
             // Redirect ke halaman sebelumnya atau halaman kesalahan
-            return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menambahkan data logistik asr.']);
+            return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat mengedit data logistik asr.']);
         }
     }
 }

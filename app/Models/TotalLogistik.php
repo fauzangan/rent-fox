@@ -45,8 +45,6 @@ class TotalLogistik extends Model
             // ambil data logistik
             $logistik = Logistik::with('totalLogistiks')->where('logistik_id', $totalLogistik->logistik_id)->first();
             
-            
-
             // Perhitungan Logistik untuk total Log dan claim Hilang
             $totalLog = $logistik->totalLogistiks()->where('data_total_logistik_id', 1)->sum('jumlah_item');
             $claimHilang = $logistik->totalLogistiks()->where('data_total_logistik_id', 2)->sum('jumlah_item');

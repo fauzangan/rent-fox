@@ -72,7 +72,7 @@ class LogistikHarian extends Model
     }
 
     public function updateLogistikHarian($data)
-{
+    {
     $data['tanggal_transaksi'] = DateTime::createFromFormat('d/m/Y', $data['tanggal_transaksi'])->format('Y-m-d');
     
     // Adjust values based on status_logistik_id

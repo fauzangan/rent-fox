@@ -26,7 +26,8 @@ return new class extends Migration
             $table->string('handphone')->unique();
             $table->text('keterangan')->default("-")->nullable();
             $table->string('bonafidity');
-            $table->boolean('bit_active')->default(1);
+            $table->unsignedBigInteger('status_customer_id')->nullable();
+            $table->foreign('status_customer_id')->references('status_customer_id')->on('status_customers')->onDelete('set null');
             $table->timestamps();
         });
     }

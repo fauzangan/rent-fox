@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -43,6 +44,26 @@ class Item extends Model
         return $this->hasOne(Logistik::class, 'item_id', 'item_id');
     }
 
+    public function scopeFilterByItemId(Builder $query, $itemId)
+    {
+        if ($itemId) {
+            $query->where('item_id', '=', $itemId);
+        }
+    }
+
+    public function scopeFilterByName(Builder $query, $namaItem)
+    {
+        if ($namaItem) {
+            $query->where('nama_item', 'like', '%' . $namaItem . '%');
+        }
+    }
+
+    public function scopeFilterByCategoryItemId(Builder $query, $categoryItemId)
+    {
+        if ($categoryItemId) {
+            $query->where('category_item_id', '=', $categoryItemId);
+        }
+    }
 
     // Override the boot method to add logic before creating a new item
     protected static function boot()
