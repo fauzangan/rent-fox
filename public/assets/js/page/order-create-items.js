@@ -10,6 +10,28 @@ $(document).ready(function() {
         $('.delete-form-btn').show(); // Tombol delete selalu terlihat
     }
 
+    function checkForDuplicateItems() {
+        let itemCodes = [];
+        let hasDuplicate = false;
+        $('.select-item').each(function() {
+            let itemCode = $(this).val();
+            if (itemCodes.includes(itemCode)) {
+                hasDuplicate = true;
+                return false; // keluar dari each loop
+            }
+            itemCodes.push(itemCode);
+        });
+        return hasDuplicate;
+    }
+
+    function showDuplicateItemToast() {
+        iziToast.error({
+            title: 'Item Duplikat/Kosong',
+            message: 'Terdapat item yang duplikat/kosong pada formulir item order!',
+            position: 'topRight'
+        });
+    }
+
     updateDeleteButtonVisibility(); // Panggil fungsi ini saat halaman pertama kali dimuat
 
     // Fungsi untuk menambah formulir item baru
@@ -19,6 +41,11 @@ $(document).ready(function() {
         newItemForm.find('.jumlah-item').val(1);
         newItemForm.find('.waktu').val(1);
         $("#form-container").append(newItemForm); // Tambahkan formulir baru ke dalam kontainer
+
+        if (checkForDuplicateItems()) {
+            newItemForm.remove(); // Hapus form jika duplikat ditemukan
+            showDuplicateItemToast();
+        }
         
         updateDeleteButtonVisibility();
     });
@@ -54,6 +81,15 @@ $(document).ready(function() {
             container.find('.jumlah').val(formatRupiah(parseInt(harga_sewa) * parseInt(jumlah_item)));
         }else{
             container.find('.jumlah').val(formatRupiah(parseInt(harga_sewa*30) * parseInt(jumlah_item)));
+        }
+
+        if (checkForDuplicateItems()) {
+            $(this).val(''); // Reset the value if duplicate found
+            container.find('.harga-sewa').val('')
+            container.find('.jumlah').val('')
+            container.find('.satuan-waktu').val('');
+            container.find('.satuan-item').val('');
+            showDuplicateItemToast();
         }
     });
 

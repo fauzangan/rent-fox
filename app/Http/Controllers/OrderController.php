@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderFilterRequest;
 use DateTime;
 use App\Models\Item;
 use App\Models\Order;
@@ -15,8 +16,21 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class OrderController extends Controller
 {
-    public function index(){
-        $orders = Order::with(['customer','statusOrder', 'statusTransport'])->orderBy('order_id', 'desc')->paginate(5);
+    public function index(OrderFilterRequest $request){
+        $orders = Order::query()
+            ->with(['customer.perusahaan','statusOrder', 'statusTransport'])
+            ->filterByOrderId($request->input('order_id'))
+            ->filterByCustomerId($request->input('customer_id'))
+            ->filterByCustomerName($request->input('nama'))
+            ->filterByPerusahaanName($request->input('perusahaan'))
+            ->filterByStatusTransportId($request->input('status_transport_id'))
+            ->filterByStatusOrderId($request->input('status_order_id'))
+            ->filterByTanggalOrder($request->input('tanggal_order'))
+            ->filterByTanggalKirim($request->input('tanggal_kirim'))
+            ->orderBy('order_id', 'desc')
+            ->paginate(5)
+            ->appends($request->except('page'));
+
         $statusOrders = StatusOrder::all();
         $statusTransports = StatusTransport::all();
         return view('dashboard.orders.index', [

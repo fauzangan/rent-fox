@@ -24,40 +24,37 @@
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h4>Filter Data</h4>
-            <button class="btn btn-primary" type="button" id="filterButton"><i class="fa fa-plus" id="filterIcon"></i></button>
+            <button class="btn btn-primary" type="button" id="filterButton"><i class="fa fa-plus"
+                    id="filterIcon"></i></button>
         </div>
         <div class="card-body" id="filterForm" style="display: none">
-            <form action="{{ route('dashboard.customers.index') }}" method="GET">
-                @csrf
+            <form action="{{ route('dashboard.orders.index') }}" method="GET">
                 <div class="row align-items-center">
                     <div class="col-1 pr-0">
                         <div class="form-group">
                             <label>Kode Order</label>
-                            <input type="text" id="order_id" name="order_id" value="{{ request('order_id') }}" class="form-control">
+                            <input type="text" id="order_id" name="order_id" value="{{ request('order_id') }}"
+                                class="form-control">
                         </div>
                     </div>
                     <div class="col-1 pr-0">
                         <div class="form-group">
                             <label>Kode Cust</label>
-                            <input type="text" id="customer_id" name="customer_id" value="{{ request('customer_id') }}" class="form-control">
+                            <input type="text" id="customer_id" name="customer_id" value="{{ request('customer_id') }}"
+                                class="form-control">
                         </div>
                     </div>
                     <div class="col pr-0">
                         <div class="form-group">
                             <label>Nama Cust</label>
-                            <input type="text" id="nomor_identitas" name="nomor_identitas" value="{{ request('nomor_identitas') }}" class="form-control">
+                            <input type="text" id="nama" name="nama" value="{{ request('nama') }}" class="form-control">
                         </div>
                     </div>
                     <div class="col pr-0">
                         <div class="form-group">
-                            <label>Tanggal Order</label>
-                            <input type="text" id="handphone" name="handphone" value="{{ request('handphone') }}" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col pr-0">
-                        <div class="form-group">
-                            <label>Tanggal Kirim</label>
-                            <input type="text" id="nama_perusahaan" name="nama_perusahaan" value="{{ request('nama_perusahaan') }}" class="form-control">
+                            <label>Perusahaan</label>
+                            <input type="text" id="perusahaan" name="perusahaan" value="{{ request('perusahaan') }}"
+                                class="form-control">
                         </div>
                     </div>
                     <div class="col pr-0">
@@ -66,10 +63,12 @@
                             <select class="form-control" id="status_transport_id" name="status_transport_id">
                                 <option selected></option>
                                 @foreach($status_transports as $status_transport)
-                                <option value="{{ $status_transport->status_transport_id }}" {{ request('status_transport_id') == $status_transport->status_transport_id ? 'selected' : '' }}>{{ $status_transport->nama_status }}</option>
+                                <option value="{{ $status_transport->status_transport_id }}" {{
+                                    request('status_transport_id')==$status_transport->status_transport_id ? 'selected'
+                                    : '' }}>{{ $status_transport->nama_status }}</option>
                                 @endforeach
                             </select>
-                          </div>
+                        </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
@@ -77,15 +76,46 @@
                             <select class="form-control" id="status_order_id" name="status_order_id">
                                 <option selected></option>
                                 @foreach($status_orders as $status_order)
-                                <option value="{{ $status_order->status_order_id }}" {{ request('status_order_id') == $status_order->status_order_id ? 'selected' : '' }}>{{ $status_order->nama_status }}</option>
+                                <option value="{{ $status_order->status_order_id }}" {{
+                                    request('status_order_id')==$status_order->status_order_id ? 'selected' : '' }}>{{
+                                    $status_order->nama_status }}</option>
                                 @endforeach
                             </select>
-                          </div>
+                        </div>
                     </div>
                 </div>
-                <div class="card-footer text-right py-0 pr-0">
-                    <button type="reset" class="btn btn-warning">Reset</button>
-                    <button type="submit" class="btn btn-info"><i class="fa fa-search"></i> Search</button>
+                <div class="row align-items-center">
+                    <div class="col pr-0">
+                        <div class="form-group">
+                            <label>Tanggal Order</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-calendar"></i>
+                                    </div>
+                                </div>
+                                <input type="text" name="tanggal_order" id="tanggal_order"
+                                    value="{{ request('tanggal_order') }}" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col pr-0">
+                        <div class="form-group">
+                            <label>Tanggal Kirim</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-calendar"></i>
+                                    </div>
+                                </div>
+                                <input type="text" name="tanggal_kirim" id="tanggal_kirim" value="{{ request('tanggal_kirim') }}" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-auto pt-2">
+                        <button type="reset" class="btn btn-warning">Reset</button>
+                        <button type="submit" class="btn btn-info"><i class="fa fa-search"></i> Search</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -135,13 +165,27 @@
                             <td>{{ $order->customer->perusahaan->badan_hukum ?? '-' }}</td>
                             <td>{{ $order->customer->perusahaan->nama ?? '-' }}</td>
                             @else
-                            <td><div class="badge badge-danger">dihapus</div></td>
-                            <td><div class="badge badge-danger">dihapus</div></td>
-                            <td><div class="badge badge-danger">dihapus</div></td>
-                            <td><div class="badge badge-danger">dihapus</div></td>
-                            <td><div class="badge badge-danger">dihapus</div></td>
-                            <td><div class="badge badge-danger">dihapus</div></td>
-                            <td><div class="badge badge-danger">dihapus</div></td>
+                            <td>
+                                <div class="badge badge-danger">dihapus</div>
+                            </td>
+                            <td>
+                                <div class="badge badge-danger">dihapus</div>
+                            </td>
+                            <td>
+                                <div class="badge badge-danger">dihapus</div>
+                            </td>
+                            <td>
+                                <div class="badge badge-danger">dihapus</div>
+                            </td>
+                            <td>
+                                <div class="badge badge-danger">dihapus</div>
+                            </td>
+                            <td>
+                                <div class="badge badge-danger">dihapus</div>
+                            </td>
+                            <td>
+                                <div class="badge badge-danger">dihapus</div>
+                            </td>
                             @endif
                             <td>{{ $order->kirim_kepada }}</td>
                             <td>{{ $order->nama_proyek }}</td>
@@ -150,11 +194,14 @@
                             <td>{{ $order->statusTransport->nama_status }}</td>
                             <td>
                                 @if($order->statusOrder->status_order_id == 1)
-                                <span class="badge badge-success" style="color: black">{{ $order->statusOrder->nama_status }}</span>
+                                <span class="badge badge-success" style="color: black">{{
+                                    $order->statusOrder->nama_status }}</span>
                                 @elseif($order->statusOrder->status_order_id == 2)
-                                <span class="badge badge-info" style="color: black">{{ $order->statusOrder->nama_status }}</span>
+                                <span class="badge badge-info" style="color: black">{{ $order->statusOrder->nama_status
+                                    }}</span>
                                 @elseif($order->statusOrder->status_order_id == 3)
-                                <span class="badge badge-warning" style="color: black">{{ $order->statusOrder->nama_status }}</span>
+                                <span class="badge badge-warning" style="color: black">{{
+                                    $order->statusOrder->nama_status }}</span>
                                 @else
                                 <span class="badge badge-danger">{{ $order->statusOrder->nama_status }}</span>
                                 @endif
@@ -182,6 +229,8 @@
 </div>
 
 @push('styles')
+<link rel="stylesheet" href="{{ asset('assets/modules/bootstrap-daterangepicker/daterangepicker.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/modules/izitoast/css/iziToast.min.css') }}">
 <style>
     .sticky-aksi-head {
         position: sticky;
@@ -198,6 +247,10 @@
         background-color: #ffffff !important;
         /* Warna latar belakang */
     }
+
+    .form-group {
+        margin-bottom: 15px !important;
+    }
 </style>
 @endpush
 
@@ -212,6 +265,8 @@
 <script src="{{ asset('assets/js/stisla.js') }}"></script>
 
 <!-- Specific JS File -->
+<script src="{{ asset('assets/modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+<script src="{{ asset('assets/modules/izitoast/js/iziToast.min.js') }}"></script>
 <script>
     $(document).ready(function() {
         // Function to get query string value
@@ -221,7 +276,7 @@
         }
 
         // Check if any of the specified query strings exist
-        const fields = ['item_id', 'nama_item', 'category_item_id'];
+        const fields = ['order_id', 'customer_id', 'nama', 'perusahaan', 'status_transport_id', 'status_order_id', 'tanggal_order', 'tanggal_kirim'];
         let formShouldShow = false;
         
         fields.forEach(field => {
@@ -239,6 +294,75 @@
             $('#filterForm').toggle('slow', 'swing');
             $('#filterIcon').toggleClass('fa-plus fa-minus');
         });
+
+        /* Pengaturan Tanggal Order dan Tanggal Kirim Input */
+        $("#tanggal_order, #tanggal_kirim").daterangepicker({
+            locale: { format: "DD/MM/YYYY" },
+            autoUpdateInput: false,
+        });
+        $("#tanggal_order, #tanggal_kirim").attr("placeholder", "");
+
+        $("#tanggal_order, #tanggal_kirim").on("apply.daterangepicker", function (ev, picker) {
+            $(this).val(picker.startDate.format("DD/MM/YYYY") + " - " + picker.endDate.format("DD/MM/YYYY"));
+        });
+
+        $("#tanggal_order, #tanggal_kirim").on("cancel.daterangepicker", function (ev, picker) {
+            $(this).val("");
+        });
+
+        $("#filterForm").on("submit", function(e) {
+        let tanggal_order = $("#tanggal_order").val();
+        let tanggal_kirim = $("#tanggal_kirim").val();
+        let datePattern = /^\d{2}\/\d{2}\/\d{4} - \d{2}\/\d{2}\/\d{4}$/;
+
+        if(tanggal_order){
+            if (!datePattern.test(tanggal_order)) {
+                e.preventDefault();
+                iziToast.error({
+                    title: 'Tanggal tidak valid',
+                    message: 'Harap masukkan tanggal yang benar!',
+                    position: 'topRight'
+                });
+            } else {
+                let dates = tanggal_order.split(" - ");
+                let startDate = moment(dates[0], "DD/MM/YYYY", true);
+                let endDate = moment(dates[1], "DD/MM/YYYY", true);
+
+                if (!startDate.isValid() || !endDate.isValid()) {
+                    e.preventDefault();
+                    iziToast.error({
+                        title: 'Tanggal tidak valid',
+                        message: 'Harap masukkan tanggal yang benar!',
+                        position: 'topRight'
+                    });
+                }
+            }
+        }
+        if(tanggal_kirim){
+            if (!datePattern.test(tanggal_kirim)) {
+                e.preventDefault();
+                iziToast.error({
+                    title: 'Tanggal tidak valid',
+                    message: 'Harap masukkan tanggal yang benar!',
+                    position: 'topRight'
+                });
+            } else {
+                let dates = tanggal_kirim.split(" - ");
+                let startDate = moment(dates[0], "DD/MM/YYYY", true);
+                let endDate = moment(dates[1], "DD/MM/YYYY", true);
+
+                if (!startDate.isValid() || !endDate.isValid()) {
+                    e.preventDefault();
+                    iziToast.error({
+                        title: 'Tanggal tidak valid',
+                        message: 'Harap masukkan tanggal yang benar!',
+                        position: 'topRight'
+                    });
+                }
+            }
+        }
+        
+    });
     });
 </script>
 @endpush

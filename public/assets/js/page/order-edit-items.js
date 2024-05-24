@@ -11,6 +11,28 @@ $(document).ready(function() {
         $('.delete-form-btn').show();
     }
 
+    function checkForDuplicateItems() {
+        let itemCodes = [];
+        let hasDuplicate = false;
+        $('.select-item').each(function() {
+            let itemCode = $(this).val();
+            if (itemCodes.includes(itemCode)) {
+                hasDuplicate = true;
+                return false; // keluar dari each loop
+            }
+            itemCodes.push(itemCode);
+        });
+        return hasDuplicate;
+    }
+
+    function showDuplicateItemToast() {
+        iziToast.error({
+            title: 'Item Duplikat',
+            message: 'Terdapat item yang duplikat pada formulir!',
+            position: 'topRight'
+        });
+    }
+
     function initializeFormFields(container) {
         let selectItem = container.find('.select-item');
         let hargaSewa = selectItem.find('option:selected').data('harga_sewa');
@@ -44,6 +66,11 @@ $(document).ready(function() {
         $("#form-container").append(newItemForm); // Tambahkan formulir baru ke dalam kontainer
 
         initializeFormFields(newItemForm); // Inisialisasi field pada formulir baru
+
+        if (checkForDuplicateItems()) {
+            newItemForm.remove(); // Hapus form jika duplikat ditemukan
+            showDuplicateItemToast();
+        }
         
         updateDeleteButtonVisibility();
     });
@@ -79,6 +106,15 @@ $(document).ready(function() {
             container.find('.jumlah').val(formatRupiah(parseInt(hargaSewa) * parseInt(jumlahItem)));
         } else {
             container.find('.jumlah').val(formatRupiah(parseInt(hargaSewa * 30) * parseInt(jumlahItem)));
+        }
+
+        if (checkForDuplicateItems()) {
+            $(this).val(''); // Reset the value if duplicate found
+            container.find('.harga-sewa').val('')
+            container.find('.jumlah').val('')
+            container.find('.satuan-waktu').val('');
+            container.find('.satuan-item').val('');
+            showDuplicateItemToast();
         }
     });
 

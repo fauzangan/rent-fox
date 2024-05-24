@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
@@ -38,6 +40,74 @@ class Order extends Model
 
     public function statusTransport() {
         return $this->belongsTo(StatusTransport::class, 'status_transport_id', 'status_transport_id');
+    }
+
+    public function scopeFilterByOrderId(Builder $query, $orderId)
+    {
+        if ($orderId) {
+            $query->where('order_id', '=', $orderId);
+        }
+    }
+
+    public function scopeFilterByCustomerId(Builder $query, $customerId)
+    {
+        if ($customerId) {
+            $query->where('customer_id', '=', $customerId);
+        }
+    }
+
+    public function scopeFilterByCustomerName(Builder $query, $nama)
+    {
+        if ($nama) {
+            $query->whereHas('customer', function($q) use($nama) {
+                $q->where('nama', 'like', '%' .$nama.'%');
+            });
+        }
+    }
+
+    public function scopeFilterByPerusahaanName(Builder $query, $perusahaan)
+    {
+        if ($perusahaan) {
+            $query->whereHas('customer.perusahaan', function($q) use($perusahaan){
+                $q->where('nama', 'like', '%' .$perusahaan.'%');
+            });
+        }
+    }
+
+    public function scopeFilterByStatusTransportId(Builder $query, $statusTransportId)
+    {
+        if($statusTransportId) {
+            $query->where('status_transport_id', '=', $statusTransportId);
+        }
+    }
+
+    public function scopeFilterByStatusOrderId(Builder $query, $statusOrderId)
+    {
+        if($statusOrderId) {
+            $query->where('status_order_id', '=', $statusOrderId);
+        }
+    }
+
+    public function scopeFilterByTanggalOrder(Builder $query, $tanggalOrder)
+    {
+        if($tanggalOrder) {
+            list($startDate, $endDate) = explode(' - ', $tanggalOrder);
+            // Ubah format tanggal menjadi "YYYY-MM-DD" untuk query
+            $startDate = Carbon::createFromFormat('d/m/Y', $startDate)->format('Y-m-d');
+            $endDate = Carbon::createFromFormat('d/m/Y', $endDate)->format('Y-m-d');
+            $query->whereBetween('tanggal_order', [$startDate, $endDate]);
+        }
+    }
+
+    public function scopeFilterByTanggalKirim(Builder $query, $tanggalKirim)
+    {
+        if($tanggalKirim) {
+            list($startDate, $endDate) = explode(' - ', $tanggalKirim);
+            // Ubah format tanggal menjadi "YYYY-MM-DD" untuk query
+            $startDate = Carbon::createFromFormat('d/m/Y', $startDate)->format('Y-m-d');
+            $endDate = Carbon::createFromFormat('d/m/Y', $endDate)->format('Y-m-d');
+            $query->whereBetween('tanggal_kirim', [$startDate, $endDate]);
+        }
     }
 
     public static function createOrderWithItems($data){

@@ -172,17 +172,7 @@ class CustomerController extends Controller
     {
         try {
             DB::transaction(function () use ($customer) {
-
-                // cek jika terikat dengan perusahaan atau tidak ?
-                if ($customer->perusahaan_id !== null) {
-                    // mencari id perusahaan dan hapus
-                    $perusahaanID = $customer->perusahaan_id;
-                    // Hapus Customer yang berkaitan dengan ID
-                    $customer->delete();
-                    Perusahaan::where('perusahaan_id', '=', $perusahaanID)->delete();
-                } else {
-                    $customer->delete();
-                }
+                $customer->delete();
             });
 
             // Memberikan feedback kepada pengguna
