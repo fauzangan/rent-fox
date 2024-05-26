@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ItemFilterRequest extends FormRequest
+class LogistikFilterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class ItemFilterRequest extends FormRequest
         return [
             'item_id' => ['sometimes', 'nullable', 'string', 'max:255'],
             'nama_item' => ['sometimes', 'nullable', 'string', 'max:255'],
-            'category_item_id' => ['sometimes', 'nullable', 'integer'],
+            'category_item_id' => ['sometimes', 'nullable', 'string']
         ];
     }
 }

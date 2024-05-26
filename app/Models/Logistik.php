@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Logistik extends Model
 {
@@ -27,6 +28,31 @@ class Logistik extends Model
 
     public function totalLogistiks(){
         return $this->hasMany(TotalLogistik::class, 'logistik_id', 'logistik_id');
+    }
+
+    public function scopeFilterByItemId(Builder $query, $itemId)
+    {
+        if ($itemId) {
+            $query->where('item_id', '=', $itemId);
+        }
+    }
+
+    public function scopeFilterByItemName(Builder $query, $namaItem)
+    {
+        if ($namaItem) {
+            $query->whereHas('item', function($q) use($namaItem){
+                $q->where('nama_item', 'like', '%' . $namaItem . '%');
+            });
+        }
+    }
+
+    public function scopeFilterByCategoryItemId(Builder $query, $categoryItemId)
+    {
+        if ($categoryItemId) {
+            $query->whereHas('item', function($q) use($categoryItemId){
+                $q->where('category_item_id', '=', $categoryItemId);
+            });
+        }
     }
 
     // Accessors

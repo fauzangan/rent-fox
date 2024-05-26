@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LogistikFilterRequest;
+use App\Models\CategoryItem;
 use App\Models\Logistik;
 use Illuminate\Http\Request;
 
 class LogistikController extends Controller
 {
-    public function index(){
-        $logistiks = Logistik::with(['logistikHarians', 'item', 'reservasiItems.reservasi'])->get();
+    public function index(LogistikFilterRequest $request){
+        $logistiks = Logistik::query()
+        ->with(['logistikHarians', 'item', 'reservasiItems.reservasi'])
+        ->filterByItemId($request->input('item_id'))
+        ->filterByItemName($request->input('nama_item'))
+        ->filterByCategoryItemId($request->input('category_item_id'))
+        ->get();
+
         foreach($logistiks as $logistik){
             $logistik['baik'] = $logistik->logistikHarians->sum('baik');
             $logistik['x_ringan'] = $logistik->logistikHarians->sum('x_ringan');
@@ -20,10 +28,10 @@ class LogistikController extends Controller
             $logistik['stock_ready'] = $logistik['stock_gudang'] - $logistik['reservasi'];
         }
 
-        // dd($logistiks[0]->total_stock - $logistiks[0]->total_rental);
-
+        $categoryItems = CategoryItem::all();
         return view('dashboard.logistiks.index', [
-            'logistiks' => $logistiks
+            'logistiks' => $logistiks,
+            'category_items' => $categoryItems
         ]);
     }
 }
