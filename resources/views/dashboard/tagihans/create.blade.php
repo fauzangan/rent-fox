@@ -30,9 +30,9 @@
                                         @foreach($orders as $order)
                                         <option value="{{ $order->order_id }}" {{ old('order_id')==$order->order_id ?
                                             'selected' : '' }} data-customer_id="{{ $order->customer_id }}"
-                                            data-nama_customer="{{ $order->nama_customer }}" data-badan_hukum="{{
-                                            $order->badan_hukum?? '' }}" data-nama_perusahaan="{{
-                                            $order->nama_perusahaan?? '' }}" data-proyek="{{ $order->nama_proyek }}">{{
+                                            data-nama_customer="{{ $order->customer->nama }}" data-badan_hukum="{{
+                                            $order->customer->perusahaan->badan_hukum?? '' }}" data-nama_perusahaan="{{
+                                            $order->customer->perusahaan->nama?? '' }}" data-proyek="{{ $order->nama_proyek }}">{{
                                             $order->order_id }}</option>
                                         @endforeach
                                     </select>

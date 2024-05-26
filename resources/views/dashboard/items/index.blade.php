@@ -74,10 +74,10 @@
                             <th>Nama Item</th>
                             <th>Kategori Item</th>
                             <th>Harga Sewa</th>
-                            <th>Satuan Waktu</th>
+                            <th>Satuan<br> Waktu</th>
                             <th>Harga Barang</th>
-                            <th>Claim<br> Rusak Ringan</th>
-                            <th>Claim<br> Rusak Berat</th>
+                            <th>Claim<br> xRingan</th>
+                            <th>Claim<br> xBerat</th>
                             <th>Claim<br> Hilang</th>
                             <th>Keterangan</th>
                             <th>Tanggal Diupdate</th>
@@ -102,13 +102,12 @@
                                 <span class="badge" style="background-color: #0000b3; color:white">Rp {{ number_format($item->harga_barang,0,",",".").',-' }}</span>
                             </td>
                             <td>
-                                <span class="badge" style="background-color: #ff9933; color:white">Rp {{ number_format($item->x_ringan,0,",",".").',-' }}</td></span>
-                                
+                                <span class="badge" style="background-color: #ff9933; color:black">Rp {{ number_format($item->x_ringan,0,",",".").',-' }}</td></span>
                             <td>
-                                <span class="badge" style="background-color: #ff8000; color:white">{{ $item->x_berat*100 }}%</td></span>    
+                                <span class="badge" style="background-color: #ff8000; color:black">{{ $item->x_berat*100 }}%</td></span>    
                             </td>
                             <td>
-                                <span class="badge" style="background-color: #e67300; color:white">{{ $item->hilang*100 }}%</td></span>
+                                <span class="badge" style="background-color: #e67300; color:black">{{ $item->hilang*100 }}%</td></span>
                             </td>
                             <td>{{ $item->keterangan }}</td>
                             <td>{{ $item->updated_at->translatedFormat('d F Y') }}</td>

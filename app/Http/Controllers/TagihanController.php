@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TagihanFilterRequest;
 use App\Models\Order;
 use App\Models\JenisTagihan;
 use Illuminate\Http\Request;
@@ -12,15 +13,31 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class TagihanController extends Controller
 {
-    public function index(){
-        $tagihans = Tagihan::with(['order', 'statusTagihan', 'jenisTagihan'])->paginate(10);
+    public function index(TagihanFilterRequest $request){
+        $tagihans = Tagihan::query()
+        ->with(['order.customer.perusahaan', 'statusTagihan', 'jenisTagihan'])
+        ->filterByTagihanId($request->input('tagihan_id'))
+        ->filterByOrderId($request->input('order_id'))
+        ->filterByCustomerId($request->input('customer_id'))
+        ->filterByCustomerName($request->input('nama_customer'))
+        ->filterByPerusahaanName($request->input('nama_perusahaan'))
+        ->filterByJenisTagihanId($request->input('jenis_tagihan_id'))
+        ->filterByStatusTagihanId($request->input('status_tagihan_id'))
+        ->filterByTanggalDitagihkan($request->input('tanggal_ditagihkan'))
+        ->filterByJatuhTempo1($request->input('jatuh_tempo_1'))
+        ->filterByJatuhTempo2($request->input('jatuh_tempo_2'))
+        ->paginate(10);
+        $jenisTagihans = JenisTagihan::all();
+        $statusTagihans = StatusTagihan::all();
         return view('dashboard.tagihans.index', [
-            'tagihans' => $tagihans
+            'tagihans' => $tagihans,
+            'jenis_tagihans' => $jenisTagihans,
+            'status_tagihans' => $statusTagihans
         ]);
     }
 
     public function create(){
-        $orders = Order::all();
+        $orders = Order::with(['customer.perusahaan'])->get();
         $jenisTagihans = JenisTagihan::all();
         $statusTagihans = StatusTagihan::all();
         return view('dashboard.tagihans.create', [

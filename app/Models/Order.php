@@ -69,7 +69,7 @@ class Order extends Model
     {
         if ($perusahaan) {
             $query->whereHas('customer.perusahaan', function($q) use($perusahaan){
-                $q->where('nama', 'like', '%' .$perusahaan.'%');
+                $q->where('nama', 'like', '%' . $perusahaan . '%');
             });
         }
     }
@@ -93,8 +93,8 @@ class Order extends Model
         if($tanggalOrder) {
             list($startDate, $endDate) = explode(' - ', $tanggalOrder);
             // Ubah format tanggal menjadi "YYYY-MM-DD" untuk query
-            $startDate = Carbon::createFromFormat('d/m/Y', $startDate)->format('Y-m-d');
-            $endDate = Carbon::createFromFormat('d/m/Y', $endDate)->format('Y-m-d');
+            $startDate = DateTime::createFromFormat('d/m/Y', $startDate)->format('Y-m-d');
+            $endDate = DateTime::createFromFormat('d/m/Y', $endDate)->format('Y-m-d');
             $query->whereBetween('tanggal_order', [$startDate, $endDate]);
         }
     }
