@@ -118,12 +118,14 @@ class ItemController extends Controller
 
     public function destroy(Item $item)
     {
+        return back();
         try {
             // Hapus Item
             $item->delete();
 
             // Memberikan feedback kepada pengguna
             alert()->success('Delete Berhasil', 'item ID: ' . $item->item_id . ' telah dihapus!');
+            
         } catch (\Exception $e) {
             // Menangani kesalahan jika terjadi selama penghapusan
             alert()->error('Delete Gagal', 'Terjadi kesalahan saat menghapus item.');

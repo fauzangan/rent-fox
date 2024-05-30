@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TotalLogistikFilterRequest;
 use App\Models\Logistik;
 use Illuminate\Http\Request;
 use App\Models\TotalLogistik;
@@ -12,10 +13,21 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class TotalLogistikController extends Controller
 {
-    public function index(){
-        $totalLogistiks = TotalLogistik::with(['logistik.item','statusTotalLogistik', 'dataTotalLogistik'])->get();
+    public function index(TotalLogistikFilterRequest $request){
+        $totalLogistiks = TotalLogistik::query()
+        ->with(['logistik.item','statusTotalLogistik', 'dataTotalLogistik'])
+        ->filterByStatusTotalLogistikId($request->input('status_total_logistik_id'))
+        ->filterByItemId($request->input('item_id'))
+        ->filterByItemName($request->input('nama_item'))
+        ->filterByDataTotalLogistikId($request->input('data_total_logistik_id'))
+        ->filterByTanggalTransaksi($request->input('tanggal_transaksi'))
+        ->get();
+        $statusTotalLogistiks = StatusTotalLogistik::all();
+        $dataTotalLogistiks = DataTotalLogistik::all();
         return view('dashboard.total-logistiks.index', [
-            'total_logistiks' => $totalLogistiks
+            'total_logistiks' => $totalLogistiks,
+            'status_total_logistiks' => $statusTotalLogistiks,
+            'data_total_logistiks' => $dataTotalLogistiks
         ]);
     }
 

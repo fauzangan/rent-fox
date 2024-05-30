@@ -70,7 +70,7 @@ Route::put('/dashboard/tagihans/update/{tagihan}', [TagihanController::class, 'u
 Route::get('/dashboard/logistiks', [LogistikController::class, 'index'])->name('dashboard.logistiks.index');
 
 // Logistik Harian Route
-Route::get('/dashboard/logistik-harians/index', [LogistikHarianController::class, 'index'])->name('dashboard.logistik-harians.index');
+Route::get('/dashboard/logistik-harians', [LogistikHarianController::class, 'index'])->name('dashboard.logistik-harians.index');
 Route::get('/dashboard/logistik-harians/edit/{logistikHarian}', [LogistikHarianController::class, 'edit'])->name('dashboard.logistik-harians.edit');
 Route::put('/dashboard/logistik-harians/update/{logistikHarian}', [LogistikHarianController::class, 'update'])->name('dashboard.logistik-harians.update');
 Route::get('/dashboard/logistik-harians/create', [LogistikHarianController::class, 'create'])->name('dashboard.logistik-harians.create');

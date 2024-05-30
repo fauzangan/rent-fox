@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LogistikHarianFilterRequest;
 use App\Models\Order;
 use App\Models\Customer;
 use App\Models\Logistik;
@@ -16,11 +17,21 @@ use Illuminate\Support\Facades\Validator;
 class LogistikHarianController extends Controller
 {
 
-    public function index(){
-        $logistikHarians = LogistikHarian::with('statusLogistik', 'logistik.item', 'order.customer')->get();
+    public function index(LogistikHarianFilterRequest $request){
+        $logistikHarians = LogistikHarian::query()
+        ->with('statusLogistik', 'logistik.item', 'order.customer')
+        ->filterByStatusLogistikId($request->input('status_logistik_id'))
+        ->filterByOrderId($request->input('order_id'))
+        ->filterByItemId($request->input('item_id'))
+        ->filterByCustomerId($request->input('customer_id'))
+        ->filterByItemName($request->input('nama_item'))
+        ->filterByTanggalTransaksi($request->input('tanggal_transaksi'))
+        ->get();
 
+        $statusLogistiks = StatusLogistik::all();
         return view('dashboard.logistik-harians.index',[
             'logistik_harians' => $logistikHarians,
+            'status_logistiks' => $statusLogistiks,
         ]);
     }
 

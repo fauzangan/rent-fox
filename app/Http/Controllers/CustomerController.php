@@ -86,7 +86,7 @@ class CustomerController extends Controller
             $customer = Customer::createCustomer($validatedData);
 
             // Notifikasi berhasil
-            Alert::toast('Data Customer ID: ' . $customer->customer_id . ' berhasil ditambahkan', 'success');
+            Alert::success('Data Customer ID: ' . $customer->customer_id . ' berhasil ditambahkan', 'success');
 
             // Redirect ke halaman index
             return redirect()->route('dashboard.customers.index');
@@ -144,7 +144,7 @@ class CustomerController extends Controller
             $customer->updateCustomer($validatedData);
 
             // Notifikasi berhasil
-            Alert::toast('Customer ID: ' . $customer->customer_id . ' berhasil di-update', 'success');
+            Alert::success('Customer ID: ' . $customer->customer_id . ' berhasil di-update', 'success');
 
             // Redirect ke halaman index
             return redirect()->route('dashboard.customers.index');
@@ -170,6 +170,7 @@ class CustomerController extends Controller
 
     public function destroy(Customer $customer)
     {
+        return back();
         try {
             DB::transaction(function () use ($customer) {
                 $customer->delete();

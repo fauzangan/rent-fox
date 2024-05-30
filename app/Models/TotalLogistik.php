@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use DateTime;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class TotalLogistik extends Model
 {
@@ -18,6 +19,49 @@ class TotalLogistik extends Model
     protected $casts = [
         'tanggal_transaksi' => 'date'
     ];
+
+    public function scopeFilterByStatusTotalLogistikId(Builder $query, $statusTotalLogistikId)
+    {
+        if ($statusTotalLogistikId) {
+            $query->where('status_total_logistik_id', '=', $statusTotalLogistikId);
+        }
+    }
+
+    public function scopeFilterByItemId(Builder $query, $itemId)
+    {
+        if ($itemId) {
+            $query->whereHas('logistik', function($q) use($itemId){
+                $q->where('item_id', '=', $itemId);
+            });
+        }
+    }
+
+    public function scopeFilterByItemName(Builder $query, $itemName)
+    {
+        if ($itemName) {
+            $query->whereHas('logistik.item', function($q) use($itemName){
+                $q->where('nama_item', 'like', '%' . $itemName . '%');
+            });
+        }
+    }
+
+    public function scopeFilterByDataTotalLogistikId(Builder $query, $dataTotalLogistikId)
+    {
+        if ($dataTotalLogistikId) {
+            $query->where('data_total_logistik_id', '=', $dataTotalLogistikId);
+        }
+    }
+
+    public function scopeFilterByTanggalTransaksi(Builder $query, $tanggalTransaksi)
+    {
+        if($tanggalTransaksi) {
+            list($startDate, $endDate) = explode(' - ', $tanggalTransaksi);
+            // Ubah format tanggal menjadi "YYYY-MM-DD" untuk query
+            $startDate = DateTime::createFromFormat('d/m/Y', $startDate)->format('Y-m-d');
+            $endDate = DateTime::createFromFormat('d/m/Y', $endDate)->format('Y-m-d');
+            $query->whereBetween('tanggal_transaksi', [$startDate, $endDate]);
+        }
+    }
 
     public static function createTotalLogistik($data){
         $data['tanggal_transaksi'] = DateTime::createFromFormat('d/m/Y', $data['tanggal_transaksi'])->format('Y-m-d');

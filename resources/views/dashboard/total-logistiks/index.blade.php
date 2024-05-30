@@ -21,6 +21,70 @@
     </div>
 
     <div class="card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <h4>Filter Data</h4>
+            <button class="btn btn-primary" type="button" id="filterButton"><i class="fa fa-plus" id="filterIcon"></i></button>
+        </div>
+        <div class="card-body" id="filterForm" style="display: none">
+            <form action="{{ route('dashboard.total-logistiks.index') }}" method="GET">
+                <div class="row align-items-center">
+                    <div class="col pr-0">
+                        <div class="form-group">
+                            <label>Status Logistik</label>
+                            <select class="form-control" id="status_total_logistik_id" name="status_total_logistik_id">
+                                <option selected></option>
+                                @foreach($status_total_logistiks as $status_total_logistik)
+                                <option value="{{ $status_total_logistik->status_total_logistik_id }}" {{ request('status_total_logistik_id') == $status_total_logistik->status_total_logistik_id ? 'selected' : '' }}>{{ $status_total_logistik->nama_status }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-1 pr-0">
+                        <div class="form-group">
+                            <label>Kode Item</label>
+                            <input type="text" id="item_id" name="item_id" value="{{ request('item_id') }}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col pr-0">
+                        <div class="form-group">
+                            <label>Nama Item</label>
+                            <input type="text" id="nama_item" name="nama_item" value="{{ request('nama_item') }}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col pr-0">
+                        <div class="form-group">
+                            <label>Tanggal Transaksi</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-calendar"></i>
+                                    </div>
+                                </div>
+                                <input type="text" name="tanggal_transaksi" id="tanggal_transaksi" value="{{ request('tanggal_transaksi') }}" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label>Data Logistik</label>
+                            <select class="form-control" id="data_total_logistik_id" name="data_total_logistik_id">
+                                <option selected></option>
+                                @foreach($data_total_logistiks as $data_total_logistik)
+                                <option value="{{ $data_total_logistik->data_total_logistik_id }}" {{ request('data_total_logistik_id') == $data_total_logistik->data_total_logistik_id ? 'selected' : '' }}>{{ $data_total_logistik->nama_data }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right py-0 pr-0">
+                    <button type="reset" class="btn btn-warning">Reset</button>
+                    <button type="submit" class="btn btn-info"><i class="fa fa-search"></i> Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
         <div class="card-header">
             <h4>Total Log Table</h4>
         </div>
@@ -85,6 +149,8 @@
 </div>
 
 @push('styles')
+<link rel="stylesheet" href="{{ asset('assets/modules/bootstrap-daterangepicker/daterangepicker.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/modules/izitoast/css/iziToast.min.css') }}">
 <style>
     .sticky-aksi-head {
         position: sticky;
@@ -115,5 +181,80 @@
 <script src="{{ asset('assets/js/stisla.js') }}"></script>
 
 <!-- JS Spesific Page -->
+<script src="{{ asset('assets/modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+<script src="{{ asset('assets/modules/izitoast/js/iziToast.min.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        // Function to get query string value
+        function getQueryStringParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Check if any of the specified query strings exist
+        const fields = ['status_total_logistik_id', 'item_id', 'nama_item', 'data_total_logistik_id'];
+        let formShouldShow = false;
+        
+        fields.forEach(field => {
+            if (getQueryStringParameter(field)) {
+                formShouldShow = true;
+            }
+        });
+
+        if (formShouldShow) {
+            $('#filterForm').show();
+            $('#filterIcon').toggleClass('fa-plus fa-minus');
+        }
+
+        $('#filterButton').click(function() {
+            $('#filterForm').toggle('slow', 'swing');
+            $('#filterIcon').toggleClass('fa-plus fa-minus');
+        });
+
+        /* Pengaturan Tanggal Order dan Tanggal Kirim Input */
+        $("#tanggal_transaksi").daterangepicker({
+            locale: { format: "DD/MM/YYYY" },
+            autoUpdateInput: false,
+        });
+        $("#tanggal_transaksi").attr("placeholder", "");
+
+        $("#tanggal_transaksi").on("apply.daterangepicker", function (ev, picker) {
+            $(this).val(picker.startDate.format("DD/MM/YYYY") + " - " + picker.endDate.format("DD/MM/YYYY"));
+        });
+
+        $("#tanggal_transaksi").on("cancel.daterangepicker", function (ev, picker) {
+            $(this).val("");
+        });
+
+        $("#filterForm").on("submit", function(e) {
+            let tanggalTransaksi = $("#tanggal_transaksi").val();
+            let datePattern = /^\d{2}\/\d{2}\/\d{4} - \d{2}\/\d{2}\/\d{4}$/;
+
+            if(tanggalTransaksi){
+                if (!datePattern.test(tanggalTransaksi)) {
+                    e.preventDefault();
+                    iziToast.error({
+                        title: 'Tanggal tidak valid',
+                        message: 'Harap masukkan tanggal yang benar!',
+                        position: 'topRight'
+                    });
+                } else {
+                    let dates = tanggalTransaksi.split(" - ");
+                    let startDate = moment(dates[0], "DD/MM/YYYY", true);
+                    let endDate = moment(dates[1], "DD/MM/YYYY", true);
+
+                    if (!startDate.isValid() || !endDate.isValid()) {
+                        e.preventDefault();
+                        iziToast.error({
+                            title: 'Tanggal tidak valid',
+                            message: 'Harap masukkan tanggal yang benar!',
+                            position: 'topRight'
+                        });
+                    }
+                }
+            }
+        });
+    });
+</script>
 @endpush
 @endsection

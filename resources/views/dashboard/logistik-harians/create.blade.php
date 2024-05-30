@@ -211,8 +211,8 @@
                     <table class="table table-md">
                         <thead>
                             <tr>
-                                <th>Item ID</th>
-                                <th>Item Name</th>
+                                <th>Kode</th>
+                                <th>Nama Item</th>
                                 <th>Jumlah</th>
                             </tr>
                         </thead>

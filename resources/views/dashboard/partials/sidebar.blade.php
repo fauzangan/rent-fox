@@ -25,6 +25,9 @@
             <li class="{{ Request::is('dashboard/logistik-harians*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.logistik-harians.index') }}"><i class="fas fa-shipping-fast"></i> <span>Logistik Harian</span></a></li>
             <li class="{{ Request::is('dashboard/total-logistiks*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.total-logistiks.index') }}"><i class="fas fa-dolly-flatbed"></i> <span>Total Logistik</span></a></li>
             <li class="{{ Request::is('dashboard/logistiks*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.logistiks.index') }}"><i class="fas fa-warehouse"></i> <span>Stock</span></a></li>
+            <li class="menu-header" style="color: black">Accounting</li>
+            <li class=""><a class="nav-link" href="#"><i class="fas fa-book"></i> <span>Buku Harian</span></a></li>
+
             {{-- <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-warehouse"></i><span>Menu Inventori</span></a>
                 <ul class="dropdown-menu">
@@ -177,8 +180,8 @@
         </ul>
 
         <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
-            <a href="https://getstisla.com/docs" class="btn btn-primary btn-lg btn-block btn-icon-split">
-                <i class="fas fa-rocket"></i> Documentation
+            <a href="#" class="btn btn-primary btn-lg btn-block btn-icon-split">
+                <i class="fas fa-rocket"></i> Dokumentasi
             </a>
         </div>
     </aside>

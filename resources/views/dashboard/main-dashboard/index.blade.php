@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.main')
 @section('content')
 <div class="section-header">
-    <h1>Dashboard Utama</h1>
+    <h1>Dashboard Utama ( masih dalam pengembangan... )</h1>
   </div>
 
   <div class="section-body">
@@ -13,7 +13,7 @@
           </div>
           <div class="card-wrap">
             <div class="card-header">
-              <h4>Total Admin</h4>
+              <h4>Customer</h4>
             </div>
             <div class="card-body">
               10
@@ -28,7 +28,7 @@
           </div>
           <div class="card-wrap">
             <div class="card-header">
-              <h4>News</h4>
+              <h4>Tagihan</h4>
             </div>
             <div class="card-body">
               42
@@ -43,7 +43,7 @@
           </div>
           <div class="card-wrap">
             <div class="card-header">
-              <h4>Reports</h4>
+              <h4>Logistik</h4>
             </div>
             <div class="card-body">
               1,201
@@ -58,7 +58,7 @@
           </div>
           <div class="card-wrap">
             <div class="card-header">
-              <h4>Online Users</h4>
+              <h4>Order Selesai</h4>
             </div>
             <div class="card-body">
               47

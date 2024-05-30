@@ -5,6 +5,7 @@ namespace App\Models;
 use DateTime;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class LogistikHarian extends Model
@@ -29,6 +30,58 @@ class LogistikHarian extends Model
 
     public function statusLogistik(){
         return $this->belongsTo(StatusLogistik::class, 'status_logistik_id', 'status_logistik_id');
+    }
+
+    public function scopeFilterByStatusLogistikId(Builder $query, $statusLogistikId)
+    {
+        if ($statusLogistikId) {
+            $query->where('status_logistik_id', '=', $statusLogistikId);
+        }
+    }
+
+    public function scopeFilterByOrderId(Builder $query, $orderId)
+    {
+        if ($orderId) {
+            $query->where('order_id', '=', $orderId);
+        }
+    }
+
+    public function scopeFilterByItemId(Builder $query, $itemId)
+    {
+        if ($itemId) {
+            $query->whereHas('logistik', function($q) use($itemId){
+                $q->where('item_id', '=', $itemId);
+            });
+        }
+    }
+
+    public function scopeFilterByCustomerId(Builder $query, $customerId)
+    {
+        if ($customerId) {
+            $query->whereHas('order', function($q) use($customerId){
+                $q->where('customer_id', '=', $customerId);
+            });
+        }
+    }
+
+    public function scopeFilterByItemName(Builder $query, $itemName)
+    {
+        if ($itemName) {
+            $query->whereHas('logistik.item', function($q) use($itemName){
+                $q->where('nama_item', 'like', '%' . $itemName . '%');
+            });
+        }
+    }
+
+    public function scopeFilterByTanggalTransaksi(Builder $query, $tanggalTransaksi)
+    {
+        if($tanggalTransaksi) {
+            list($startDate, $endDate) = explode(' - ', $tanggalTransaksi);
+            // Ubah format tanggal menjadi "YYYY-MM-DD" untuk query
+            $startDate = DateTime::createFromFormat('d/m/Y', $startDate)->format('Y-m-d');
+            $endDate = DateTime::createFromFormat('d/m/Y', $endDate)->format('Y-m-d');
+            $query->whereBetween('tanggal_transaksi', [$startDate, $endDate]);
+        }
     }
 
     public static function createLogistikHarian($data){

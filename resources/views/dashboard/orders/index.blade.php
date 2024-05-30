@@ -211,7 +211,7 @@
                                     }}>Detail</button>
                                 <a href="{{ route('dashboard.orders.edit', ['order' => $order->order_id]) }}"
                                     class="btn btn-warning">Edit</a>
-                                <a href="{{ route('dashboard.orders.delete', ['order' => $order->order_id]) }}"
+                                <a href="#"
                                     class="btn btn-danger" data-confirm-delete="true">Delete</a>
                             </td>
                         </tr>
@@ -311,58 +311,57 @@
         });
 
         $("#filterForm").on("submit", function(e) {
-        let tanggal_order = $("#tanggal_order").val();
-        let tanggal_kirim = $("#tanggal_kirim").val();
-        let datePattern = /^\d{2}\/\d{2}\/\d{4} - \d{2}\/\d{2}\/\d{4}$/;
+            let tanggal_order = $("#tanggal_order").val();
+            let tanggal_kirim = $("#tanggal_kirim").val();
+            let datePattern = /^\d{2}\/\d{2}\/\d{4} - \d{2}\/\d{2}\/\d{4}$/;
 
-        if(tanggal_order){
-            if (!datePattern.test(tanggal_order)) {
-                e.preventDefault();
-                iziToast.error({
-                    title: 'Tanggal tidak valid',
-                    message: 'Harap masukkan tanggal yang benar!',
-                    position: 'topRight'
-                });
-            } else {
-                let dates = tanggal_order.split(" - ");
-                let startDate = moment(dates[0], "DD/MM/YYYY", true);
-                let endDate = moment(dates[1], "DD/MM/YYYY", true);
-
-                if (!startDate.isValid() || !endDate.isValid()) {
+            if(tanggal_order){
+                if (!datePattern.test(tanggal_order)) {
                     e.preventDefault();
                     iziToast.error({
                         title: 'Tanggal tidak valid',
                         message: 'Harap masukkan tanggal yang benar!',
                         position: 'topRight'
                     });
+                } else {
+                    let dates = tanggal_order.split(" - ");
+                    let startDate = moment(dates[0], "DD/MM/YYYY", true);
+                    let endDate = moment(dates[1], "DD/MM/YYYY", true);
+
+                    if (!startDate.isValid() || !endDate.isValid()) {
+                        e.preventDefault();
+                        iziToast.error({
+                            title: 'Tanggal tidak valid',
+                            message: 'Harap masukkan tanggal yang benar!',
+                            position: 'topRight'
+                        });
+                    }
                 }
             }
-        }
-        if(tanggal_kirim){
-            if (!datePattern.test(tanggal_kirim)) {
-                e.preventDefault();
-                iziToast.error({
-                    title: 'Tanggal tidak valid',
-                    message: 'Harap masukkan tanggal yang benar!',
-                    position: 'topRight'
-                });
-            } else {
-                let dates = tanggal_kirim.split(" - ");
-                let startDate = moment(dates[0], "DD/MM/YYYY", true);
-                let endDate = moment(dates[1], "DD/MM/YYYY", true);
-
-                if (!startDate.isValid() || !endDate.isValid()) {
+            if(tanggal_kirim){
+                if (!datePattern.test(tanggal_kirim)) {
                     e.preventDefault();
                     iziToast.error({
                         title: 'Tanggal tidak valid',
                         message: 'Harap masukkan tanggal yang benar!',
                         position: 'topRight'
                     });
+                } else {
+                    let dates = tanggal_kirim.split(" - ");
+                    let startDate = moment(dates[0], "DD/MM/YYYY", true);
+                    let endDate = moment(dates[1], "DD/MM/YYYY", true);
+
+                    if (!startDate.isValid() || !endDate.isValid()) {
+                        e.preventDefault();
+                        iziToast.error({
+                            title: 'Tanggal tidak valid',
+                            message: 'Harap masukkan tanggal yang benar!',
+                            position: 'topRight'
+                        });
+                    }
                 }
             }
-        }
-        
-    });
+        });
     });
 </script>
 @endpush
