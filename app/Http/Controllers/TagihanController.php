@@ -96,4 +96,42 @@ class TagihanController extends Controller
             'status_tagihans' => $statusTagihans,
         ]);
     }
+
+    public function update(Request $request, Tagihan $tagihan){
+        $validatedData = $request->validate([
+            'order_id' => ['required', 'integer'],
+            'jenis_tagihan_id' => ['required', 'integer'],
+            'tanggal_ditagihkan' => ['required', 'string'],
+            'jatuh_tempo_1' => ['required', 'string'],
+            'jatuh_tempo_2' => ['required', 'string'],
+            'status_tagihan_id' => ['required', 'integer'],
+            'jumlah_tagihan' => ['required'],
+            'keterangan' => ['sometimes', 'nullable', 'string'],
+            'is_dp' => ['required'],
+            'total_dp' => ['sometimes', 'required'],
+            'dp1' => ['sometimes', 'nullable'],
+            'dp2' => ['sometimes', 'nullable'],
+            'dp3' => ['sometimes', 'nullable'],
+        ]);
+
+        try {
+            // Memanggil metode createTagihan dari model
+            $tagihan->updateTagihan($validatedData);
+
+            // Notifikasi berhasil
+            Alert::success('Data Tagihan ID: ' . $tagihan->tagihan_id . ' berhasil diedit', 'success');
+
+            // Redirect ke halaman index
+            return redirect()->route('dashboard.tagihans.index');
+        } catch (\Exception $e) {
+            // (error handling)
+            // Log error dan tampilkan pesan kesalahan ke pengguna
+            Log::error('Error in editing tagihan data: ' . $e->getMessage());
+
+            Alert::error('Terjadi kesalahan saat mengedit data tagihan. Silakan coba lagi.');
+
+            // Redirect ke halaman sebelumnya atau halaman kesalahan
+            return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat mengedit data tagihan.']);
+        }
+    }
 }
