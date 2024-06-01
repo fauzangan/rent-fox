@@ -26,7 +26,7 @@
             <li class="{{ Request::is('dashboard/total-logistiks*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.total-logistiks.index') }}"><i class="fas fa-dolly-flatbed"></i> <span>Total Logistik</span></a></li>
             <li class="{{ Request::is('dashboard/logistiks*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.logistiks.index') }}"><i class="fas fa-warehouse"></i> <span>Stock</span></a></li>
             <li class="menu-header" style="color: black">Accounting</li>
-            <li class=""><a class="nav-link" href="#"><i class="fas fa-book"></i> <span>Buku Harian</span></a></li>
+            <li class="{{ Request::is('dashboard/buku-harians*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.buku-harians.index') }}"><i class="fas fa-book"></i> <span>Buku Harian</span></a></li>
 
             {{-- <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-warehouse"></i><span>Menu Inventori</span></a>

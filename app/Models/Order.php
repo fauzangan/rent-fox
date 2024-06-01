@@ -42,6 +42,10 @@ class Order extends Model
         return $this->belongsTo(StatusTransport::class, 'status_transport_id', 'status_transport_id');
     }
 
+    public function bukuHarians() {
+        return $this->hasMany(BukuHarian::class, 'buku_harian_id', 'buku_harian_id');
+    }
+
     public function scopeFilterByOrderId(Builder $query, $orderId)
     {
         if ($orderId) {
@@ -117,6 +121,12 @@ class Order extends Model
             $data['jumlah_hargas'][$i] = $data['jumlah_hargas'][$i] = (int)str_replace(',', '.', str_replace('.', '', $data['jumlah_hargas'][$i]));
         } 
 
+        $data['total_harga'] = 0;
+        foreach($data['jumlah_hargas'] as $jumlah_harga){
+            $data['total_harga'] += $jumlah_harga;
+        }
+
+
         return DB::transaction(function() use($data){
             $order = Order::create([
                 'tanggal_order' => $data['tanggal_order'],
@@ -126,6 +136,7 @@ class Order extends Model
                 'nama_proyek' => $data['nama_proyek'],
                 'alamat_kirim' => $data['alamat_kirim'],
                 'status_transport_id' => $data['status_transport_id'],
+                'total_harga' => $data['total_harga'],
                 'status_order_id' => $data['status_order_id'],
                 'keterangan' => $data['keterangan'],
             ]);

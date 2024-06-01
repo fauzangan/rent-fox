@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BukuHarianController;
 use App\Http\Controllers\CategoryItemController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ItemController;
@@ -80,7 +81,6 @@ Route::get('/dashboard/logistik-harians/getOrder/{orderId}', [LogistikHarianCont
 Route::get('/dashboard/logistik-harians/getOrderItem/{orderId}', [LogistikHarianController::class, 'getOrderItems'])->name('dashboard.logistik-harians.getOrderItem');
 Route::get('/dashboard/logistik-harians/getCustomerOrders/{customerId}', [LogistikHarianController::class, 'getCustomerOrders'])->name('dashboard.logistik-harians.getCustomerOrder');
 
-
 // Reservasi
 Route::get('/dashboard/reservasis', [ReservasiController::class, 'index'])->name('dashboard.reservasis.index');
 Route::get('/dashboard/reservasis/create', [ReservasiController::class,'create'])->name('dashboard.reservasis.create');
@@ -94,6 +94,14 @@ Route::get('/dashboard/total-logistiks/create', [TotalLogistikController::class,
 Route::post('/dashboard/total-logistiks/create', [TotalLogistikController::class, 'store'])->name('dashboard.total-logistiks.store');
 Route::get('/dashboard/total-logistiks/edit/{totalLogistik}', [TotalLogistikController::class, 'edit'])->name('dashboard.total-logistiks.edit');
 Route::put('/dashboard/total-logistiks/update/{totalLogistik}', [TotalLogistikController::class, 'update'])->name('dashboard.total-logistiks.update');
+
+// Buku Harian
+Route::get('/dashboard/buku-harians', [BukuHarianController::class, 'index'])->name('dashboard.buku-harians.index');
+Route::get('/dashboard/buku-harians/create', [BukuHarianController::class, 'create'])->name('dashboard.buku-harians.create');
+Route::get('/dashboard/buku-harians/getSaldoData', [BukuHarianController::class, 'getSaldoData'])->name('dashboard.buku-harians.getSaldoData');
+Route::get('/dashboard/buku-harians/getOrderData/{orderId}', [BukuHarianController::class, 'getOrderData'])->name('dashboard.buku-harians.getOrderData');
+Route::get('/dashboard/buku-harians/getCustomerData/{customerId}', [BukuHarianController::class, 'getCustomerData'])->name('dashboard.buku-harians.getCustomerData');
+Route::post('/dashboard/buku-harians/store', [BukuHarianController::class, 'store'])->name('dashboard.buku-harians.store');
 
 Route::get('/test', function(){
     return view('test');

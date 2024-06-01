@@ -24,6 +24,10 @@ return new class extends Migration
             $table->string('memo')->nullable();
             $table->unsignedBigInteger('status_transport_id')->nullable();
             $table->foreign('status_transport_id')->references('status_transport_id')->on('status_transports')->onDelete('set null');
+            $table->unsignedBigInteger('total_harga')->default(0);
+            $table->float('discount')->default(0);
+            $table->unsignedBigInteger('total_harga_disc')->default(0);
+            $table->unsignedBigInteger('biaya_transport')->default(0);
             $table->unsignedBigInteger('status_order_id')->nullable();
             $table->foreign('status_order_id')->references('status_order_id')->on('status_orders')->onDelete('set null');
             $table->timestamps();
