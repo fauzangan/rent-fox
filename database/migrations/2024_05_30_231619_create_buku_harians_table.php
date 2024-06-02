@@ -22,7 +22,7 @@ return new class extends Migration
             $table->bigInteger('debit')->default(0);
             $table->bigInteger('kredit')->default(0);
             $table->bigInteger('saldo')->default(0);
-            $table->string('data_buku_harian_id')->nullable();
+            $table->unsignedBigInteger('data_buku_harian_id')->nullable();
             $table->foreign('data_buku_harian_id')->references('data_buku_harian_id')->on('data_buku_harians')->onDelete('set null');
             $table->string('vendor')->nullable()->default('-');
             $table->timestamps();

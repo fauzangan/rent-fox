@@ -37,7 +37,6 @@ class ItemController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request);
         $validatedData = $request->validate([
             'nama_item' => ['required', 'string', 'max:255'],
             'category_item_id' => ['required'],
@@ -52,9 +51,9 @@ class ItemController extends Controller
             'keterangan' => ['sometimes', 'nullable'],
         ]);
 
-        $item = Item::createItem($validatedData);
         try {
             // Memanggil metode createItem dari model
+            $item = Item::createItem($validatedData);
 
             // Notifikasi berhasil
             Alert::success('Data Item ID: ' . $item->item_id . ' berhasil ditambahkan', 'success');

@@ -207,8 +207,7 @@
                                 @endif
                             </td>
                             <td class="sticky-aksi-col">
-                                <button class="btn btn-info" id="detail-button" data-id={{ $order->order_id
-                                    }}>Detail</button>
+                                <a href="{{ route('dashboard.orders.detail', ['order' => $order->order_id]) }}" class="btn btn-info">Detail</a>
                                 <a href="{{ route('dashboard.orders.edit', ['order' => $order->order_id]) }}"
                                     class="btn btn-warning">Edit</a>
                                 <a href="#"

@@ -121,9 +121,9 @@ class Order extends Model
             $data['jumlah_hargas'][$i] = $data['jumlah_hargas'][$i] = (int)str_replace(',', '.', str_replace('.', '', $data['jumlah_hargas'][$i]));
         } 
 
-        $data['total_harga'] = 0;
+        $data['subtotal'] = 0;
         foreach($data['jumlah_hargas'] as $jumlah_harga){
-            $data['total_harga'] += $jumlah_harga;
+            $data['subtotal'] += $jumlah_harga;
         }
 
 
@@ -136,7 +136,10 @@ class Order extends Model
                 'nama_proyek' => $data['nama_proyek'],
                 'alamat_kirim' => $data['alamat_kirim'],
                 'status_transport_id' => $data['status_transport_id'],
-                'total_harga' => $data['total_harga'],
+                'subtotal' => $data['subtotal'],
+                'biaya_sewa' => $data['subtotal'],
+                'sisa_rental' => $data['subtotal'],
+                'biaya_transport_sewa' => $data['subtotal'],
                 'status_order_id' => $data['status_order_id'],
                 'keterangan' => $data['keterangan'],
             ]);
@@ -169,7 +172,12 @@ class Order extends Model
         $data['tanggal_kirim'] = DateTime::createFromFormat('d/m/Y', $data['tanggal_kirim'])->format('Y-m-d');
         for($i = 0; $i < count($data['jumlah_hargas']); $i++){
             $data['jumlah_hargas'][$i] = $data['jumlah_hargas'][$i] = (int)str_replace(',', '.', str_replace('.', '', $data['jumlah_hargas'][$i]));
-        } 
+        }
+        
+        $data['subtotal'] = 0;
+        foreach($data['jumlah_hargas'] as $jumlah_harga){
+            $data['subtotal'] += $jumlah_harga;
+        }
 
         DB::transaction(function() use($order, $data) {
             $order->update([
@@ -180,6 +188,13 @@ class Order extends Model
                 'alamat_kirim' => $data['alamat_kirim'],
                 'nama_proyek' => $data['nama_proyek'],
                 'status_transport_id' => $data['status_transport_id'],
+                'subtotal' => $data['subtotal'],
+                'biaya_sewa' => $data['subtotal'],
+                'discount' => 0,
+                'biaya_transport' => 0,
+                'down_payment' => 0,
+                'biaya_transport_sewa' => $data['subtotal'],
+                'sisa_rental' => $data['subtotal'],
                 'status_order_id' => $data['status_order_id'],
                 'keterangan' => $data['keterangan'],
             ]);

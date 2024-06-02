@@ -48,6 +48,11 @@ class TagihanController extends Controller
         ]);
     }
 
+    public function getOrder(Order $order){
+        $order->load(['orderItems', 'tagihans.jenisTagihan', 'tagihans.statusTagihan']);
+        return response()->json($order);
+    }
+
     public function store(Request $request) {
         $validatedData = $request->validate([
             'order_id' => ['required', 'integer'],

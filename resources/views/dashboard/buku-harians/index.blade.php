@@ -70,13 +70,13 @@
                 <table class="table table-hover table-bordered table-md">
                     <thead>
                         <tr>
-                            <th>Kode<br> Transaksi <span data-toggle="tooltip" title="Kode Barang"><i class="fas fa-question-circle"></i></span></th>
+                            <th>No.<br> Trans <span data-toggle="tooltip" title="Kode Barang"><i class="fas fa-question-circle"></i></span></th>
                             <th>Tanggal<br> Entry</th>
                             <th>Tanggal<br> Transaksi</th>
                             <th>Kode<br> Posting</th>
                             <th>Nama<br> Posting</th>
                             <th>Kode<br> Order</th>
-                            <th>Kode<br> Customer</th>
+                            <th>Kode<br> Cust</th>
                             <th>Keterangan</th>
                             <th>Debet</th>
                             <th>Kredit</th>
@@ -90,16 +90,28 @@
                             <td>{{ $buku_harian->buku_harian_id }}</td>
                             <td>{{ $buku_harian->created_at->format('d/m/Y') }}</td>
                             <td>{{ $buku_harian->tanggal_transaksi->format('d/m/Y') }}</td>
-                            <td>{{ $buku_harian->posting_biaya_id }}</td>
-                            <td>{{ $buku_harian->postingBiaya->nama_posting }}</td>
-                            <td>{{ $buku_harian->order_id }}</td>
-                            <td>{{ $buku_harian->order->customer_id }}</td>
+                            <td><span class="badge badge-secondary">{{ $buku_harian->posting_biaya_id }}</span></td>
+                            <td><span class="badge badge-secondary">{{ $buku_harian->postingBiaya->nama_posting }}</span></td>
+                            <td>
+                                @if(isset($buku_harian->order_id))
+                                {{ $buku_harian->order_id }}
+                                @else
+                                <span class="badge badge-secondary">dihapus</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if(isset($buku_harian->order->customer_id))
+                                {{ $buku_harian->order->customer_id }}
+                                @else
+                                <span class="badge badge-secondary">dihapus</span>
+                                @endif
+                            </td>
                             <td>{{ $buku_harian->keterangan }}</td>
-                            <td>Rp {{ number_format($buku_harian->debit,0,",",".").',-' }}</td>
-                            <td>Rp {{ number_format($buku_harian->kredit,0,",",".").',-' }}</td>
-                            <td>Rp {{ number_format($buku_harian->saldo,0,",",".").',-' }}</td>
+                            <td><span class="badge badge-currency" style="background-color:darkblue; color:white;">Rp {{ number_format($buku_harian->debit,0,",",".").',-' }}</span></td>
+                            <td><span class="badge badge-currency" style="background-color:steelblue; color:white;">Rp {{ number_format($buku_harian->kredit,0,",",".").',-' }}</span></td>
+                            <td><span class="badge badge-currency" style="background-color: teal; color:white;">Rp {{ number_format($buku_harian->saldo,0,",",".").',-' }}</span></td>
                             <td class="sticky-aksi-col">
-                                <a href="#" class="btn btn-warning">Edit</a>
+                                <a href="{{ route('dashboard.buku-harians.edit', ['bukuHarian' => $buku_harian->buku_harian_id]) }}" class="btn btn-warning">Edit</a>
                                 <a href="#" class="btn btn-danger" data-confirm-delete="true">Delete</a>
                             </td>
                         </tr>
@@ -132,6 +144,10 @@
         z-index: 999;
         background-color: #ffffff !important;
         /* Warna latar belakang */
+    }
+
+    .badge-currency {
+        border-radius: 5px !important;
     }
 </style>
 @endpush

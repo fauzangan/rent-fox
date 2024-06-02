@@ -54,6 +54,11 @@ Route::delete('/dashboard/items/delete/{item}', [ItemController::class, 'destroy
 
 // Order Route
 Route::get('/dashboard/orders', [OrderController::class, 'index'])->name('dashboard.orders.index');
+Route::get('/dashboard/orders/detail/{order}', [OrderController::class, 'detail'])->name('dashboard.orders.detail');
+Route::post('/dashboard/orders/detail/{order}/post-discount', [OrderController::class, 'postDiscount'])->name('dashboard.orders.detail.post-discount');
+Route::post('/dashboard/orders/detail/{order}/post-biaya-transport', [OrderController::class, 'postBiayaTransport'])->name('dashboard.orders.detail.post-biaya-transport');
+Route::post('/dashboard/orders/detail/{order}/post-down-payment', [OrderController::class, 'postDownPayment'])->name('dashboard.orders.detail.post-down-payment');
+Route::get('/dashboard/orders/detail/{order}/get-order-data', [OrderController::class, 'getOrder'])->name('dashboard.orders.detail.get-order-data');
 Route::get('/dashboard/orders/create', [OrderController::class, 'create'])->name('dashboard.orders.create');
 Route::post('/dashboard/orders/create', [OrderController::class, 'store'])->name('dashboard.orders.store');
 Route::get('/dashboard/orders/edit/{order}', [OrderController::class, 'edit'])->name('dashboard.orders.edit');
@@ -63,6 +68,7 @@ Route::delete('/dashboard/orders/delete/{order}', [OrderController::class, 'dest
 // Tagihan Route
 Route::get('/dashboard/tagihans', [TagihanController::class, 'index'])->name('dashboard.tagihans.index');
 Route::get('/dashboard/tagihans/create', [TagihanController::class, 'create'])->name('dashboard.tagihans.create');
+Route::get('/dashboard/tagihans/getOrderData/{order}', [TagihanController::class, 'getOrder'])->name('dashboard.tagihans.get-order-data');
 Route::post('/dashboard/tagihans/create', [TagihanController::class, 'store'])->name('dashboard.tagihans.store');
 Route::get('/dashboard/tagihans/edit/{tagihan}', [TagihanController::class, 'edit'])->name('dashboard.tagihans.edit');
 Route::put('/dashboard/tagihans/update/{tagihan}', [TagihanController::class, 'update'])->name('dashboard.tagihans.update');
@@ -99,9 +105,12 @@ Route::put('/dashboard/total-logistiks/update/{totalLogistik}', [TotalLogistikCo
 Route::get('/dashboard/buku-harians', [BukuHarianController::class, 'index'])->name('dashboard.buku-harians.index');
 Route::get('/dashboard/buku-harians/create', [BukuHarianController::class, 'create'])->name('dashboard.buku-harians.create');
 Route::get('/dashboard/buku-harians/getSaldoData', [BukuHarianController::class, 'getSaldoData'])->name('dashboard.buku-harians.getSaldoData');
+Route::get('/dashboard/buku-harians/getSaldoData/{bukuHarian}', [BukuHarianController::class, 'getSaldoDataEdit'])->name('dashboard.buku-harians.getSaldoData-edit');
 Route::get('/dashboard/buku-harians/getOrderData/{orderId}', [BukuHarianController::class, 'getOrderData'])->name('dashboard.buku-harians.getOrderData');
 Route::get('/dashboard/buku-harians/getCustomerData/{customerId}', [BukuHarianController::class, 'getCustomerData'])->name('dashboard.buku-harians.getCustomerData');
 Route::post('/dashboard/buku-harians/store', [BukuHarianController::class, 'store'])->name('dashboard.buku-harians.store');
+Route::get('/dashboard/buku-harians/edit/{bukuHarian}', [BukuHarianController::class, 'edit'])->name('dashboard.buku-harians.edit');
+Route::put('/dashboard/buku-harians/update/{bukuHarian}', [BukuHarianController::class, 'update'])->name('dashboard.buku-harians.update');
 
 Route::get('/test', function(){
     return view('test');

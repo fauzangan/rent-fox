@@ -133,10 +133,10 @@ class Tagihan extends Model
                 $data['dp3'] = (float)str_replace(',', '.', str_replace('.', '', $data['dp3']));
             }
         }else{
-            $data['total_dp'] = null;
-            $data['dp1'] = null;
-            $data['dp2'] = null;
-            $data['dp3'] = null;
+            $data['total_dp'] = 0;
+            $data['dp1'] = 0;
+            $data['dp2'] = 0;
+            $data['dp3'] = 0;
         }
 
         // Konversi string to Date
@@ -177,10 +177,10 @@ class Tagihan extends Model
                 $data['dp3'] = (float)str_replace(',', '.', str_replace('.', '', $data['dp3']));
             }
         }else{
-            $data['total_dp'] = null;
-            $data['dp1'] = null;
-            $data['dp2'] = null;
-            $data['dp3'] = null;
+            $data['total_dp'] = 0;
+            $data['dp1'] = 0;
+            $data['dp2'] = 0;
+            $data['dp3'] = 0;
         }
 
         // Konversi string to Date

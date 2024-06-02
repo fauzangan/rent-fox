@@ -25,26 +25,26 @@
             <h4>Kategori Item Table</h4>
         </div>
         <div class="card-body">
-            <div class="table-responsive text-nowrap">
+            <div class="table-responsive text-nowrap text-center">
                 <table class="table table-bordered table-md">
                     <thead>
                         <tr>
-                            <th>ID <span data-toggle="tooltip" title="Kode Tagihan"><i class="fas fa-question-circle"></i></span></th>
-                            <th>Nama Kategori</th>
-                            <th>Prefiks Kode Item</th>
-                            <th>Total Items</th>
+                            <th>No.</th>
+                            <th>Nama<br> Kategori</th>
+                            <th>Prefiks<br> Kode Item</th>
+                            <th>Total<br> Items</th>
                             <th>Keterangan</th>
-                            <th>Tanggal Diupdate</th>
+                            <th>Tanggal<br> Diupdate</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($category_items as $category_item)
                         <tr>
-                            <td>{{ $category_item->category_item_id }}</td>
+                            <td>{{ $loop->iteration }}</td>
                             <td>{{ $category_item->nama_category }}</td>
-                            <td>{{ $category_item->prefiks }}</td>
-                            <td>{{ $category_item->items->count() }}</td>
+                            <td><span class="badge badge-secondary">{{ $category_item->prefiks }}</span></td>
+                            <td><span class="badge badge-primary">{{ $category_item->items->count() }}</span></td>
                             <td>{{ $category_item->keterangan }}</td>
                             <td>{{ $category_item->updated_at->translatedFormat('d F Y') }}</td>
                             <td>

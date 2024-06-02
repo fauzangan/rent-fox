@@ -15,7 +15,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class BukuHarianController extends Controller
 {
     public function index(){
-        $bukuHarians = BukuHarian::all();
+        $bukuHarians = BukuHarian::with(['postingBiaya', 'order', 'dataBukuHarian'])->orderBy('updated_at', 'desc')->get();
         return view('dashboard.buku-harians.index', [
             'buku_harians' => $bukuHarians
         ]);
@@ -39,8 +39,20 @@ class BukuHarianController extends Controller
     }
 
     public function getSaldoData(){
-        $saldo = BukuHarian::sum('saldo');
+        $kredit = BukuHarian::sum('kredit');
+        $debit = BukuHarian::sum('debit');
 
+        $saldo = $kredit - $debit;
+
+        return response()->json($saldo);
+    }
+
+    public function getSaldoDataEdit(BukuHarian $bukuHarian){
+        $kredit = BukuHarian::where('buku_harian_id', '!=', $bukuHarian->buku_harian_id)->sum('kredit');
+        $debit = BukuHarian::where('buku_harian_id', '!=', $bukuHarian->buku_harian_id)->sum('debit');
+    
+        $saldo = $kredit - $debit;
+    
         return response()->json($saldo);
     }
 
@@ -83,5 +95,50 @@ class BukuHarianController extends Controller
         }
 
         dd($validatedData);
+    }
+
+    public function edit(BukuHarian $bukuHarian){
+        $orders = Order::with('customer')->get();
+        $groupBiayas = GroupBiaya::with('postingBiayas')->get();
+        $dataBukuHarians = DataBukuHarian::all();
+        return view('dashboard.buku-harians.edit', [
+            'buku_harian' => $bukuHarian,
+            'orders' => $orders,
+            'group_biayas' => $groupBiayas,
+            'data_buku_harians' => $dataBukuHarians
+        ]);
+    }
+
+    public function update(Request $request, BukuHarian $bukuHarian){
+        $validatedData = $request->validate([
+            'posting_biaya_id' => ['required', 'string', 'max:6'],
+            'order_id' => ['required', 'integer'],
+            'tanggal_transaksi' => ['required', 'string'],
+            'keterangan' => ['sometimes', 'nullable'],
+            'debit' => ['required'],
+            'kredit' => ['required'],
+            'data_buku_harian_id' => ['required', 'integer'],
+            'vendor' => ['sometimes', 'nullable']
+        ]);
+
+        try {
+            // Memanggil metode createBukuHarian dari model
+            $bukuHarian->updateBukuHarian($validatedData);
+
+            // Notifikasi berhasil
+            Alert::success('Data Buku Harian ID: ' . $bukuHarian->buku_harian_id . ' berhasil diedit', 'success');
+
+            // Redirect ke halaman index
+            return redirect()->route('dashboard.buku-harians.index');
+        } catch (\Exception $e) {
+            // (error handling)
+            // Log error dan tampilkan pesan kesalahan ke pengguna
+            Log::error('Error in editing buku harian data: ' . $e->getMessage());
+
+            Alert::error('Terjadi kesalahan saat mengedit data buku harian. Silakan coba lagi.');
+
+            // Redirect ke halaman sebelumnya atau halaman kesalahan
+            return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat mengedit data buku harian.']);
+        }
     }
 }

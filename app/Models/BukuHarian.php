@@ -41,7 +41,9 @@ class BukuHarian extends Model
         $data['kredit'] = $data['kredit'] = (int)str_replace(',', '.', str_replace('.', '', $data['kredit']));
 
         // Mengambil data saldo dari database buku harian
-        $data['saldo'] = BukuHarian::sum('saldo');
+        $kredit = BukuHarian::sum('kredit');
+        $debit = BukuHarian::sum('debit');
+        $data['saldo'] = $kredit - $debit;
 
         // Operasi untuk menambah saldo atau mengurangi saldo berdasarkan data debit dan kredit
         if($data['kredit'] > 0){
@@ -55,6 +57,31 @@ class BukuHarian extends Model
 
         return DB::transaction(function () use($data) {
             return BukuHarian::create($data);
+        });
+    }
+
+    public function updateBukuHarian($data){
+        // Konversi String to Int debit dan kredit
+        $data['debit'] = $data['debit'] = (int)str_replace(',', '.', str_replace('.', '', $data['debit']));
+        $data['kredit'] = $data['kredit'] = (int)str_replace(',', '.', str_replace('.', '', $data['kredit']));
+
+        // Mengambil data saldo dari database buku harian
+        $kredit = BukuHarian::sum('kredit');
+        $debit = BukuHarian::sum('debit');
+        $data['saldo'] = $kredit - $debit;
+
+        // Operasi untuk menambah saldo atau mengurangi saldo berdasarkan data debit dan kredit
+        if($data['kredit'] > 0){
+            $data['saldo'] += $data['kredit'];
+        }else if ($data['debit'] > 0) {
+            $data['saldo'] -= $data['debit'];
+        }
+
+        // Konversi tanggal transaksi string menjadi date di database
+        $data['tanggal_transaksi'] = DateTime::createFromFormat('d/m/Y', $data['tanggal_transaksi'])->format('Y-m-d');
+
+        return DB::transaction(function () use($data) {
+            return $this->update($data);
         });
     }
 }

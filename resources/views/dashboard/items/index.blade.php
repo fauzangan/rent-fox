@@ -66,11 +66,11 @@
             <h4>Item Table</h4>
         </div>
         <div class="card-body">
-            <div class="table-responsive text-nowrap">
+            <div class="table-responsive text-nowrap text-center">
                 <table class="table table-hover table-bordered table-md">
                     <thead>
                         <tr>
-                            <th>ID <span data-toggle="tooltip" title="Kode Barang"><i class="fas fa-question-circle"></i></span></th>
+                            <th>Kode<br>Item <span data-toggle="tooltip" title="Kode Barang"><i class="fas fa-question-circle"></i></span></th>
                             <th>Nama Item</th>
                             <th>Kategori Item</th>
                             <th>Harga Sewa</th>
@@ -95,11 +95,11 @@
                                 <td><span class="badge badge-danger">Not Set</span></td>
                             @endif
                             <td>
-                                <span class="badge" style="background-color: #0080ff; color:white">Rp {{ number_format($item->harga_sewa,0,",",".").',-' }}</span>
+                                <span class="badge badge-currency" style="background-color: #0080ff; color:white">Rp {{ number_format($item->harga_sewa,0,",",".").',-' }}</span>
                             </td>
                             <td>Per {{ $item->satuan_waktu }}</td>
                             <td>
-                                <span class="badge" style="background-color: #0000b3; color:white">Rp {{ number_format($item->harga_barang,0,",",".").',-' }}</span>
+                                <span class="badge badge-currency" style="background-color: #0000b3; color:white">Rp {{ number_format($item->harga_barang,0,",",".").',-' }}</span>
                             </td>
                             <td>
                                 <span class="badge" style="background-color: #ff9933; color:black">Rp {{ number_format($item->x_ringan,0,",",".").',-' }}</td></span>
@@ -145,6 +145,10 @@
         z-index: 999;
         background-color: #ffffff !important;
         /* Warna latar belakang */
+    }
+
+    .badge-currency {
+        border-radius: 5px !important;
     }
 </style>
 @endpush

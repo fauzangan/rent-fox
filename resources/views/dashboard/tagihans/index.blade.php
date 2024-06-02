@@ -179,7 +179,7 @@
                             <td>{{ $tagihan->jenisTagihan->nama_tagihan }}</td>
                             <td>{{ $tagihan->jatuh_tempo_1->format('d/m/Y') }}</td>
                             <td>{{ $tagihan->jatuh_tempo_2->format('d/m/Y') }}</td>
-                            <td><span class="badge" style="background-color: #0080ff; color:white">Rp {{ number_format($tagihan->jumlah_tagihan,0 ,",","."). ',-' }}</span></td>
+                            <td><span class="badge badge-currency" style="background-color: #0080ff; color:white">Rp {{ number_format($tagihan->jumlah_tagihan,0 ,",","."). ',-' }}</span></td>
                             <td>{{ $tagihan->statusTagihan->nama_status }}</td>
                             <td>{{ $tagihan->keterangan }}</td>
                             <td class="sticky-aksi-col">
@@ -222,6 +222,10 @@
 
     .form-group {
         margin-bottom: 15px !important;
+    }
+
+    .badge-currency {
+        border-radius: 5px !important;
     }
 </style>
 @endpush

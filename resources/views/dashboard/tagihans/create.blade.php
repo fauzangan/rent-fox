@@ -315,7 +315,140 @@
             </div>
         </form>
     </div>
+
+    <div class="card mb-1">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-1 pr-0">
+                    <div class="form-group">
+                        <label for="">Kode Order</label>
+                        <input type="text" class="form-control" id="showOrderId" disabled>
+                    </div>
+                </div>
+                <div class="col pr-0">
+                    <div class="form-group">
+                        <label for="">Subtotal</label>
+                        <input type="text" class="form-control" id="showSubtotal" disabled>
+                    </div>
+                </div>
+                <div class="col-1 pr-0">
+                    <div class="form-group">
+                        <label for="">Discount</label>
+                        <input type="text" class="form-control" id="showDiscount" disabled>
+                    </div>
+                </div>
+                <div class="col pr-0">
+                    <div class="form-group">
+                        <label for="">Biaya Sewa</label>
+                        <input type="text" class="form-control" id="showBiayaSewa" disabled>
+                    </div>
+                </div>
+                <div class="col pr-0">
+                    <div class="form-group">
+                        <label for="">Biaya Transport</label>
+                        <input type="text" class="form-control" id="showBiayaTransport" disabled>
+                    </div>
+                </div>
+                <div class="col pr-0">
+                    <div class="form-group">
+                        <label for="">Down Payment</label>
+                        <input type="text" class="form-control" id="showDownPayment" disabled>
+                    </div>
+                </div>
+                <div class="col pr-0">
+                    <div class="form-group">
+                        <label for="">Sisa Rental</label>
+                        <input type="text" class="form-control" id="showSisaRental" disabled>
+                    </div>
+                </div>
+                <div class="col-md-auto d-flex flex-column">
+                    <button id="detail-order-button" class="btn btn-info mb-1">Order Item</button>
+                    <button id="detail-tagihan-button" class="btn btn-warning">Tagihan Tercatat</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- Modal Order -->
+<div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="orderModalLabel">Detail Order Items</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="table-responsive text-nowrap text-center">
+                        <table id="modalOrderItems" class="table table-hover table-bordered table-md">
+                            <thead>
+                                <tr>
+                                    <th>Kode Item</th>
+                                    <th>Nama Item</th>
+                                    <th>Kuantitas</th>
+                                    <th>Total Harga</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                                <tr style="background-color:gainsboro">
+                                    <td colspan="3"><strong>Subtotal Harga Sewa</strong></td>
+                                    <td><strong><span id="modalSubtotal"></span></strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Order -->
+
+<!-- Modal Tagihan -->
+<div class="modal fade" id="tagihanModal" tabindex="-1" aria-labelledby="tagihanModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tagihanModalLabel">Tagihan Tercatat</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="table-responsive text-nowrap text-center">
+                        <table id="modalTagihans" class="table table-hover table-bordered table-md">
+                            <thead>
+                                <tr>
+                                    <th>Kode Tagihan</th>
+                                    <th>Jenis Tagihan</th>
+                                    <th>Jumlah Tagihan</th>
+                                    <th>Status Tagihan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Tagihan -->
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
@@ -344,5 +477,92 @@
 <script src="{{ asset('assets/modules/cleave-js/dist/cleave.min.js') }}"></script>
 <script src="{{ asset('assets/modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 <script src="{{ asset('assets/js/page/tagihan-create.js') }}"></script>
+<script>
+    $(document).ready(function(){
+        $(document).on('click', '#detail-order-button', function() {
+            $('#orderModal').appendTo("body").modal('show');
+        });
+
+        $(document).on('click', '#detail-tagihan-button', function() {
+            $('#tagihanModal').appendTo("body").modal('show');
+        });
+
+        // Ubah String menjadi format rupiah
+        function formatRupiah(angka) {
+            // Konversi angka menjadi string dan simpan tanda negatif jika ada
+            var isNegative = false;
+            if (angka < 0) {
+                isNegative = true;
+                angka = Math.abs(angka);
+            }
+
+            // Balikkan string, bagi menjadi grup ribuan, gabungkan kembali, dan balikkan lagi
+            var reverse = angka.toString().split('').reverse().join('');
+            var ribuan = reverse.match(/\d{1,3}/g);
+            ribuan = ribuan.join('.').split('').reverse().join('');
+
+            // Tambahkan kembali tanda negatif jika diperlukan
+            if (isNegative) {
+                ribuan = '-' + ribuan;
+            }
+
+            return ribuan;
+        }
+
+        $('#order_id').change(function(){
+            let orderId = $(this).val();
+            
+            $.ajax({
+                url: '/dashboard/tagihans/getOrderData/' + orderId,
+                type: 'GET',
+                success: function(response) {
+                    $('#showOrderId').val(orderId);
+                    $('#showSubtotal').val('Rp '+formatRupiah(response.subtotal));
+                    $('#modalSubtotal').text('Rp '+formatRupiah(response.subtotal));
+                    $('#showDiscount').val(response.discount+'%');
+                    $('#showBiayaSewa').val('Rp '+formatRupiah(response.biaya_sewa));
+                    $('#showBiayaTransport').val('Rp '+formatRupiah(response.biaya_transport));
+                    $('#showDownPayment').val('Rp '+formatRupiah(response.down_payment));
+                    $('#showSisaRental').val('Rp '+formatRupiah(response.sisa_rental));
+
+                    if(response.order_items != null){
+                        var rows = "";
+                        $.each(response.order_items, function (key, orderItem) {
+                            rows += "<tr>";
+                            rows += "<td>" + orderItem.item_id + "</td>";
+                            rows += "<td>" + orderItem.nama_item + "</td>";
+                            rows += "<td>" + orderItem.jumlah_item + "</td>";
+                            rows += "<td>" + 'Rp '+formatRupiah(parseInt(orderItem.jumlah_harga)) + "</td>";
+                            rows += "</tr>";
+                        });
+                        $("#modalOrderItems tbody").html(rows);
+                    }
+
+                    if(response.tagihans != null){
+                        var rows = "";
+                        $.each(response.tagihans, function (key, tagihan) {
+                            rows += "<tr>";
+                            rows += "<td>" + tagihan.tagihan_id + "</td>";
+                            rows += "<td>" + tagihan.jenis_tagihan.nama_tagihan + "</td>";
+                            rows += "<td>" + 'Rp '+formatRupiah(parseInt(tagihan.jumlah_tagihan)) + "</td>";
+                            rows += "<td>" + tagihan.status_tagihan.nama_status + "</td>";
+                            rows += "</tr>";
+                        });
+                        $("#modalTagihans tbody").html(rows);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    var errors = xhr.responseJSON.errors;
+                    iziToast.error({
+                        title: 'Error Load Data',
+                        message: error,
+                        position: 'topRight'
+                    });
+                }
+            });
+        });
+    });
+</script>
 @endpush
 @endsection

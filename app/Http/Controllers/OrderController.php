@@ -40,6 +40,70 @@ class OrderController extends Controller
         ]);
     }
 
+    public function detail(Order $order){
+        return view('dashboard.orders.detail', [
+            'order' => $order
+        ]);
+    }
+
+    public function postDiscount(Request $request, Order $order)
+    {
+        $request->validate([
+            'discount' => 'required|numeric|min:0|max:100',
+        ]);
+
+        $order->discount = $request->discount;
+        $order->biaya_sewa = $order->subtotal - ($order->subtotal * $request->discount / 100);
+        $order->biaya_transport_sewa = $order->biaya_transport + $order->biaya_sewa;
+        $order->sisa_rental = $order->biaya_transport_sewa - $order->down_payment;
+        $order->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Discount Sukses di update menjadi '. $order->discount.'% !',
+            'discount' => $order->discount
+        ]);
+    }
+
+    public function postBiayaTransport(Request $request, Order $order)
+    {
+        $request->validate([
+            'biaya_transport' => 'required|numeric|min:0',
+        ]);
+
+        $order->biaya_transport = $request->biaya_transport;
+        $order->biaya_transport_sewa = $request->biaya_transport + $order->biaya_sewa;
+        $order->sisa_rental = $order->biaya_transport_sewa - $order->down_payment;
+        $order->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Biaya transport sukses di update menjadi '. $order->biaya_transport .'!',
+            'biaya_transport' => $order->biaya_transport
+        ]);
+    }
+
+    public function postDownPayment(Request $request, Order $order)
+    {
+        $request->validate([
+            'down_payment' => 'required|numeric|min:0',
+        ]);
+
+        $order->down_payment = $request->down_payment;
+        $order->sisa_rental = $order->biaya_transport_sewa - $order->down_payment;
+        $order->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Down Payment sukses di update menjadi '. $order->biaya_transport .'!',
+            'down_payment' => $order->down_payment
+        ]);
+    }
+
+    public function getOrder(Order $order){
+        return response()->json($order);
+    }
+
     public function create(){
         $customers = Customer::with('perusahaan')->get();
         $statusOrders = StatusOrder::all();

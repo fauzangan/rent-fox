@@ -14,7 +14,8 @@
         <div class="card-header">
             <h4>Input Data</h4>
         </div>
-        <form action="{{ route('dashboard.buku-harians.store') }}" method="POST">
+        <form action="{{ route('dashboard.buku-harians.update', ['bukuHarian' => $buku_harian->buku_harian_id]) }}" method="POST">
+            @method('PUT')
             @csrf
             <div class="card-body">
                 <div class="row">
@@ -26,7 +27,7 @@
                                 @foreach($group_biayas as $group_biaya)
                                 <optgroup label="{{ $group_biaya->nama_group }} (Kode Group: {{ $group_biaya->prefiks }})">
                                     @foreach($group_biaya->postingBiayas as $posting_biaya)
-                                    <option value="{{ $posting_biaya->posting_biaya_id }}">{{ $posting_biaya->posting_biaya_id }} | {{ $posting_biaya->nama_posting }}</option>
+                                    <option value="{{ $posting_biaya->posting_biaya_id }}" {{ old('posting_biaya_id', $buku_harian->posting_biaya_id) == $posting_biaya->posting_biaya_id ? 'selected' : '' }}>{{ $posting_biaya->posting_biaya_id }} | {{ $posting_biaya->nama_posting }}</option>
                                     @endforeach
                                 </optgroup>
                                 @endforeach
@@ -44,7 +45,7 @@
                             <select class="form-control select2 @error('order_id') is-invalid @enderror" id="order_id" name="order_id">
                                 <option disabled selected> </option>
                                 @foreach($orders as $order)
-                                <option value="{{ $order->order_id }}" data-customer_id="{{ $order->customer_id }}">{{ $order->order_id }}</option>
+                                <option value="{{ $order->order_id }}" data-customer_id="{{ $order->customer_id }}" {{ old('order_id', $buku_harian->order_id) == $order->order_id ? 'selected' : '' }}>{{ $order->order_id }}</option>
                                 @endforeach
                             </select>
                             @error('order_id')
@@ -57,7 +58,7 @@
                     <div class="col-1 pr-0">
                         <div class="form-group">
                             <label>Kode Cust</label>
-                            <input class="form-control" type="text" disabled id="customer_id" value="{{ old('customer_id') }}">
+                            <input class="form-control" type="text" disabled id="customer_id" value="{{ old('customer_id', $buku_harian->order->customer_id) }}">
                             @error('customer_id')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -76,7 +77,7 @@
                                 </div>
                                 <input type="text" class="form-control @error('tanggal_transaksi') is-invalid @enderror"
                                     id="tanggal_transaksi" name="tanggal_transaksi"
-                                    value="{{ old('tanggal_transaksi') }}">
+                                    value="{{ old('tanggal_transaksi', $buku_harian->tanggal_transaksi->format('d/m/Y')) }}">
                                 @error('tanggal_transaksi')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -137,7 +138,7 @@
                                         Rp
                                     </div>
                                 </div>
-                                <input type="text" class="form-control @error('debit') is-invalid @enderror" name="debit" id="debit" value="0">
+                                <input type="text" class="form-control @error('debit') is-invalid @enderror" name="debit" id="debit" value="{{ old('debit', $buku_harian->debit) }}">
                             </div>
                             @error('debit')
                             <div class="invalid-feedback">
@@ -155,7 +156,7 @@
                                         Rp
                                     </div>
                                 </div>
-                                <input type="text" class="form-control @error('kredit') is-invalid @enderror" name="kredit" id="kredit" value="0">
+                                <input type="text" class="form-control @error('kredit') is-invalid @enderror" name="kredit" id="kredit" value="{{ old('kredit', $buku_harian->kredit) }}">
                             </div>
                             @error('kredit')
                             <div class="invalid-feedback">
@@ -173,7 +174,7 @@
                                         Rp
                                     </div>
                                 </div>
-                                <input type="text" class="form-control @error('saldo') is-invalid @enderror" disabled id="saldo">
+                                <input type="text" class="form-control @error('saldo') is-invalid @enderror" disabled id="saldo" value="{{ old('saldo', $buku_harian->saldo) }}">
                             </div>
                             @error('saldo')
                             <div class="invalid-feedback">
@@ -187,7 +188,7 @@
                             <label>Status Data</label>
                             <select class="form-control select2 @error('data_buku_harian_id') is-invalid @enderror" id="data_buku_harian_id" name="data_buku_harian_id">
                                 @foreach($data_buku_harians as $data_buku_harian)
-                                <option value="{{ $data_buku_harian->data_buku_harian_id }}">{{ $data_buku_harian->nama_data }}</option>
+                                <option value="{{ $data_buku_harian->data_buku_harian_id }}" {{ old('data_buku_harian_id', $buku_harian->data_buku_harian_id) == $data_buku_harian->data_buku_harian_id ? 'selected' : '' }}>{{ $data_buku_harian->nama_data }}</option>
                                 @endforeach
                             </select>
                             @error('data_buku_harian_id')
@@ -200,7 +201,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Vendor</label>
-                            <input type="text" class="form-control @error('vendor') is-invalid @enderror" name="vendor" id="vendor">
+                            <input type="text" class="form-control @error('vendor') is-invalid @enderror" name="vendor" id="vendor" value="{{ old('vendor', $buku_harian->vendor) }}">
                             @error('vendor')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -211,7 +212,7 @@
                 </div>
             </div>
             <div class="card-footer text-right pt-0">
-                <button type="submit" class="btn btn-primary">Tambah Data Buku Harian</button>
+                <button type="submit" class="btn btn-warning">Edit Data Buku Harian</button>
             </div>
         </form>
     </div>
@@ -392,6 +393,20 @@
             $('#tagihanModal').appendTo("body").modal('show');
         });
 
+        // Simpan nilai asli dari debit dan kredit
+        let originalDebitValue = $('#debit').val();
+        let originalKreditValue = $('#kredit').val();
+        // Panggil fungsi saat dokumen selesai dimuat
+        updateOrderData();
+        updatePostingFields();
+
+        // inisiasi nilai saldo field
+        if(originalDebitValue == 0){
+            getSaldo(null, convertStringToInt(originalKreditValue));
+        }else{
+            getSaldo(convertStringToInt(originalDebitValue), null);
+        }
+
         function formatRupiah(angka) {
             // Konversi angka menjadi string dan simpan tanda negatif jika ada
             var isNegative = false;
@@ -498,7 +513,7 @@
 
         function getSaldo(debit, kredit){
             $.ajax({
-                url: '/dashboard/buku-harians/getSaldoData',
+                url: '{{ route('dashboard.buku-harians.getSaldoData-edit', ['bukuHarian' => $buku_harian->buku_harian_id]) }}',
                 method: 'GET',
                 success: function(response) {
                     if(debit){
@@ -531,23 +546,25 @@
             });
         }
 
-        // Jalankan fungsi saat halaman dimuat
-        fillCustomerData();
-
-        // Event listener untuk select change
-        $("#order_id").change(function() {
-            let orderId = $(this).val();
+        function updateOrderData() {
+            let orderId = $("#order_id").val();
             let selectedOption = $("#order_id").find('option:selected');
             let customerId = selectedOption.data('customer_id');
 
             fillCustomerData(customerId);
             getCustomerData(customerId);
             getOrderData(orderId);
+        }
+
+        // Event listener untuk perubahan pada select
+        $("#order_id").change(function() {
+            updateOrderData();
         });
 
         // Event listener untuk perubahan saldo
         $("#kredit").change(function () {
             let kreditVal = convertStringToInt($(this).val());
+
             getSaldo(null, kreditVal);
         });
 
@@ -599,25 +616,31 @@
         });
 
 
-        // Posting Biaya check untuk disabled debit dan kredit
-        $('#posting_biaya_id').on('change', function() {
-            let selectedOption = $(this).val();
+
+        // update posting field
+        function updatePostingFields() {
+            let selectedOption = $('#posting_biaya_id').val();
             let debitField = $('#debit');
             let kreditField = $('#kredit');
             // Reset Saldo Value
             $('#saldo').val('');
 
-            if(selectedOption.charAt(0) === 'A' || selectedOption.charAt(0) === 'C') {
+            if (selectedOption.charAt(0) === 'A' || selectedOption.charAt(0) === 'C') {
                 debitField.val(0);
                 debitField.prop('readonly', true);
-                kreditField.val(0);
+                kreditField.val(formatRupiah(originalKreditValue));
                 kreditField.prop('readonly', false);
             } else {
                 debitField.prop('readonly', false);
-                debitField.val(0);
+                debitField.val(formatRupiah(originalDebitValue));
                 kreditField.prop('readonly', true);
                 kreditField.val(0);
             }
+        }
+
+        // Event listener untuk perubahan pada select
+        $('#posting_biaya_id').on('change', function() {
+            updatePostingFields();
         });
 
     });
