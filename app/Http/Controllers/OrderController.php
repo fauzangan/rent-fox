@@ -143,7 +143,7 @@ class OrderController extends Controller
             Alert::success('Data Order ID: ' . $order->order_id . ' berhasil ditambahkan', 'success');
 
             // Redirect ke halaman index
-            return redirect()->route('dashboard.orders.index');
+            return redirect()->route('dashboard.orders.detail', ['order' => $order->order_id]);
         } catch (\Exception $e) {
             // (error handling)
             // Log error dan tampilkan pesan kesalahan ke pengguna
@@ -210,7 +210,7 @@ class OrderController extends Controller
             Alert::success('Data Order ID: ' . $order->order_id . ' berhasil diedit', 'success');
 
             // Redirect ke halaman index
-            return redirect()->route('dashboard.orders.index');
+            return redirect()->route('dashboard.orders.detail', ['order' => $order->order_id]);
         } catch (\Exception $e) {
             // (error handling)
             // Log error dan tampilkan pesan kesalahan ke pengguna

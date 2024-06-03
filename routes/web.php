@@ -4,6 +4,7 @@ use App\Http\Controllers\BukuHarianController;
 use App\Http\Controllers\CategoryItemController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\JurnalBulananController;
 use App\Http\Controllers\LogistikController;
 use App\Http\Controllers\LogistikHarianController;
 use App\Http\Controllers\OrderController;
@@ -111,6 +112,10 @@ Route::get('/dashboard/buku-harians/getCustomerData/{customerId}', [BukuHarianCo
 Route::post('/dashboard/buku-harians/store', [BukuHarianController::class, 'store'])->name('dashboard.buku-harians.store');
 Route::get('/dashboard/buku-harians/edit/{bukuHarian}', [BukuHarianController::class, 'edit'])->name('dashboard.buku-harians.edit');
 Route::put('/dashboard/buku-harians/update/{bukuHarian}', [BukuHarianController::class, 'update'])->name('dashboard.buku-harians.update');
+
+// Jurnal Bulanan
+Route::get('/dashboard/jurnal-bulanans', [JurnalBulananController::class, 'index'])->name('dashboard.jurnal-bulanans.index');
+Route::post('/dashboard/jurnal-bulanans', [JurnalBulananController::class, 'filter'])->name('dashboard.jurnal-bulanans.filter');
 
 Route::get('/test', function(){
     return view('test');

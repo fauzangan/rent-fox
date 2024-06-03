@@ -127,41 +127,40 @@
         </div>
         <div class="card-body">
             <div class="table-responsive text-nowrap">
-                <table class="table table-bordered table-md">
+                <table class="table table-bordered table-hover table-md">
                     <thead>
                         <tr>
-                            <th>Kode Order <span data-toggle="tooltip" title="Kode Order"><i
-                                        class="fas fa-question-circle"></i></span></th>
-                            <th>Tanggal Order</th>
-                            <th>Tanggal Kirim</th>
-                            <th>Kode Cust</th>
-                            <th>Nama Cust</th>
-                            <th>Alamat Cust</th>
-                            <th>Kota Cust</th>
-                            <th>Telp Cust</th>
+                            <th class="text-center">Kode<br>Order</th>
+                            <th>Tanggal<br> Order</th>
+                            <th>Tanggal<br> Kirim</th>
+                            <th class="text-center">Kode<br> Cust</th>
+                            <th>Nama<br> Customer</th>
+                            <th>Alamat<br> Customer</th>
+                            <th>Kota<br> Customer</th>
+                            <th>No. Handphone<br> Customer</th>
                             <th>Hk.</th>
                             <th>Perusahaan</th>
-                            <th>Kirim Kepada</th>
+                            <th>Kirim<br> Kepada</th>
                             <th>Proyek</th>
-                            <th>Alamat Kirim</th>
+                            <th>Alamat<br> Kirim</th>
                             <th>Keterangan</th>
                             <th>Transport</th>
-                            <th>Status Order</th>
+                            <th>Status<br> Order</th>
                             <th class="sticky-aksi-head text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($orders as $order)
                         <tr>
-                            <td>{{ $order->order_id }}</td>
+                            <td class="text-center">{{ $order->order_id }}</td>
                             <td>{{ $order->tanggal_order->format('d/m/Y') }}</td>
                             <td>{{ $order->tanggal_kirim->format('d/m/Y') }}</td>
                             @if(!is_null($order->customer_id))
-                            <td>{{ $order->customer_id }}</td>
+                            <td class="text-center">{{ $order->customer_id }}</td>
                             <td>{{ $order->customer->nama }}</td>
                             <td>{{ $order->customer->alamat }}</td>
                             <td>{{ $order->customer->kota }}</td>
-                            <td>{{ $order->customer->telp ?? '-' }}</td>
+                            <td>{{ $order->customer->handphone ?? '-' }}</td>
                             <td>{{ $order->customer->perusahaan->badan_hukum ?? '-' }}</td>
                             <td>{{ $order->customer->perusahaan->nama ?? '-' }}</td>
                             @else

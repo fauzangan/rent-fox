@@ -66,8 +66,8 @@ class BukuHarian extends Model
         $data['kredit'] = $data['kredit'] = (int)str_replace(',', '.', str_replace('.', '', $data['kredit']));
 
         // Mengambil data saldo dari database buku harian
-        $kredit = BukuHarian::sum('kredit');
-        $debit = BukuHarian::sum('debit');
+        $kredit = BukuHarian::sum('kredit') - $this->kredit;
+        $debit = BukuHarian::sum('debit') - $this->debit;
         $data['saldo'] = $kredit - $debit;
 
         // Operasi untuk menambah saldo atau mengurangi saldo berdasarkan data debit dan kredit
