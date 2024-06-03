@@ -90,6 +90,9 @@
             <h4>Semua Data Logistik Harian</h4>
         </div>
         <div class="card-body">
+            @if($logistik_harians->count() == 0)
+            <h4 class="text-center">Tidak ada Data</h4>
+            @else
             <div class="table-responsive text-nowrap">
                 <table class="table table-bordered table-md">
                     <thead>
@@ -141,6 +144,7 @@
                     </tbody>
                 </table>
             </div>
+            @endif
         </div>
     </div>
 </div>

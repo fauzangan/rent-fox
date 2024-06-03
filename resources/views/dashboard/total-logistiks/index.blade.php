@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.main')
 @section('content')
 <div class="section-header">
-    <h1>Total Logistik</h1>
+    <h1>Total Logistik ASR</h1>
     <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active"><a href="/">Dashboard</a></div>
         <div class="breadcrumb-item">Total Logistik</div>
@@ -86,9 +86,12 @@
 
     <div class="card">
         <div class="card-header">
-            <h4>Total Log Table</h4>
+            <h4>Data Total Logistik ASR</h4>
         </div>
         <div class="card-body">
+            @if($total_logistiks->count() == 0)
+            <h4 class="text-center">Tidak ada Data</h4>
+            @else
             <div class="table-responsive text-nowrap">
                 <table class="table table-bordered table-hover table-md">
                     <thead>
@@ -144,6 +147,7 @@
                     </tbody>
                 </table>
             </div>
+            @endif
         </div>
     </div>
 </div>

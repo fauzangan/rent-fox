@@ -93,9 +93,12 @@
 
     <div class="card">
         <div class="card-header">
-            <h4>Customer Table</h4>
+            <h4>Data Customer</h4>
         </div>
         <div class="card-body">
+            @if($customers->count() == 0)
+            <h4 class="text-center">Tidak ada Data</h4>
+            @else
             <div class="table-responsive text-nowrap">
                 <table class="table table-hover table-bordered table-md">
                     <thead>
@@ -153,6 +156,7 @@
                     </tbody>
                 </table>
             </div>
+            @endif
         </div>
         <div class="card-footer text-right">
             <nav class="d-inline-block">

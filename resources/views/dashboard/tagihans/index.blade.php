@@ -138,6 +138,9 @@
             <h4>Tagihan Table</h4>
         </div>
         <div class="card-body">
+            @if($tagihans->count() == 0)
+            <h4 class="text-center">Tidak ada Data</h4>
+            @else
             <div class="table-responsive text-nowrap">
                 <table class="table table-hover table-bordered table-md">
                     <thead>
@@ -191,6 +194,7 @@
                     </tbody>
                 </table>
             </div>
+            @endif
         </div>
         <div class="card-footer text-right">
             <nav class="d-inline-block">

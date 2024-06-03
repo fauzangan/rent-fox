@@ -127,6 +127,9 @@
         </div>
         <div class="card-body">
             <div class="table-responsive text-nowrap">
+                @if($orders->count() == 0)
+                <h4 class="text-center">Tidak ada Data</h4>
+                @else
                 <table class="table table-bordered table-hover table-md">
                     <thead>
                         <tr>
@@ -216,6 +219,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                @endif
             </div>
         </div>
         <div class="card-footer text-right">

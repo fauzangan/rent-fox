@@ -56,6 +56,9 @@
 
     <div class="card">
         <div class="card-body p-0">
+            @if($logistiks->count() == 0)
+            <h4 class="text-center p-4 m-4">Tidak ada Data</h4>
+            @else
             <div class="table-responsive text-nowrap">
                 <table class="table table-bordered table-hover table-md">
                     <thead>
@@ -100,6 +103,7 @@
                     </tbody>
                 </table>
             </div>
+            @endif
         </div>
     </div>
 </div>
