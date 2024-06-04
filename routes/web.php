@@ -7,6 +7,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\JurnalBulananController;
 use App\Http\Controllers\LogistikController;
 use App\Http\Controllers\LogistikHarianController;
+use App\Http\Controllers\MainDashboardController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReservasiController;
 use App\Http\Controllers\TagihanController;
@@ -24,10 +25,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard.main-dashboard.index');
-});
-
+// Main Dashboard Route
+Route::get('/dashboard', [MainDashboardController::class, 'index'])->name('dashboard.main-dashboard.index');
 
 // Customers Route
 Route::get('/dashboard/customers', [CustomerController::class, 'index'])->name('dashboard.customers.index');

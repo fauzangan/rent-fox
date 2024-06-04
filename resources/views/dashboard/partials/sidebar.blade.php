@@ -8,7 +8,7 @@
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header" style="color: black">Dashboard</li>
-            <li class="{{ Request::is('/')? 'active' : '' }}"><a class="nav-link" href="/"><i class="far fa-square"></i> <span>Dashboard</span></a></li>
+            <li class="{{ Request::is('/')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.main-dashboard.index') }}"><i class="far fa-square"></i> <span>Dashboard</span></a></li>
             <li class="menu-header" style="color: black">Order Rental</li>
             <li class="{{ Request::is('dashboard/customers*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.customers.index') }}"><i class="far fa-user"></i> <span> Customer</span></a></li>
             <li class="{{ Request::is('dashboard/orders*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.orders.index') }}"><i class="fas fa-receipt "></i> <span> Order</span></a></li>

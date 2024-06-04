@@ -3,7 +3,7 @@
 <div class="section-header">
     <h1>Journal Bulanan</h1>
     <div class="section-header-breadcrumb">
-        <div class="breadcrumb-item active"><a href="/">Dashboard</a></div>
+        <div class="breadcrumb-item active"><a href="{{ route('dashboard.main-dashboard.index') }}">Dashboard</a></div>
         <div class="breadcrumb-item">Journal Bulanan</div>
     </div>
 </div>

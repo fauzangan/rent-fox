@@ -3,7 +3,7 @@
 <div class="section-header">
     <h1>Buat Data Order Baru</h1>
     <div class="section-header-breadcrumb">
-        <div class="breadcrumb-item active"><a href="/">Dashboard</a></div>
+        <div class="breadcrumb-item active"><a href="{{ route('dashboard.main-dashboard.index') }}">Dashboard</a></div>
         <div class="breadcrumb-item"><a href="{{ route('dashboard.orders.index') }}"></a>Manajemen Order</div>
         <div class="breadcrumb-item">Tambah Order</div>
     </div>

@@ -3,7 +3,7 @@
 <div class="section-header">
     <h1>Tambah Data Reservasi</h1>
     <div class="section-header-breadcrumb">
-        <div class="breadcrumb-item active"><a href="/">Dashboard</a></div>
+        <div class="breadcrumb-item active"><a href="{{ route('dashboard.main-dashboard.index') }}">Dashboard</a></div>
         <div class="breadcrumb-item active"><a href="{{ route('dashboard.reservasis.index') }}">Reservasi</a></div>
         <div class="breadcrumb-item">Tambah Reservasi</div>
     </div>

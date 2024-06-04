@@ -46,6 +46,7 @@ class Reservasi extends Model
                         'reservasi_id' => $reservasi->reservasi_id,
                         'logistik_id' => $logistik->logistik_id,
                         'item_id' => $item->item_id,
+                        'waktu' => $data['waktus'][$i],
                         'jumlah_item' => $data['jumlah_items'][$i],
                         'jumlah_harga' => $data['jumlah_hargas'][$i],
                     ]);
@@ -79,7 +80,7 @@ class Reservasi extends Model
             for($i = 0; $i < count($data['items']); $i++){
                 $existingItem = $reservasi->reservasiItems()->where('item_id', $data['items'][$i])->first();
                 $item = Item::where('item_id', '=', $data['items'][$i])->first();
-                // dd($existingItem);
+                $logistik = Logistik::where('item_id', '=', $data['items'][$i])->first();
                 if($existingItem){
                     $existingItem->update([
                         'waktu' => $data['waktus'][$i],
@@ -90,17 +91,11 @@ class Reservasi extends Model
                 } else {
                     $reservasi->reservasiItems()->create([
                         'reservasi_id' => $reservasi->reservasi_id,
+                        'logistik_id' => $logistik->logistik_id,
                         'item_id' => $item->item_id,
-                        'nama_item' => $item->nama_item,
-                        'harga_sewa' => $item->harga_sewa,
-                        'harga_barang' => $item->harga_barang,
-                        'x_ringan' => $item->x_ringan,
-                        'x_berat' => $item->x_berat,
-                        'hilang' => $item->hilang,
-                        'satuan' => $item->satuan_item,
                         'waktu' => $data['waktus'][$i],
                         'jumlah_item' => $data['jumlah_items'][$i],
-                        'jumlah_harga' => $data['jumlah_hargas'][$i]
+                        'jumlah_harga' => $data['jumlah_hargas'][$i],
                     ]);
                     $existingItems[] = $data['items'][$i];
                 }

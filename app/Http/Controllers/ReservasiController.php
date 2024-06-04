@@ -98,10 +98,10 @@ class ReservasiController extends Controller
             'waktus' => ['required'],
             'jumlah_hargas' => ['required']
         ]);
-
+        
+        $reservasi = Reservasi::updateReservasiWithItems($validatedData, $reservasi);
         try {
             // Memanggil metode updateReservasiwithItem dari model
-            $reservasi = Reservasi::updateReservasiWithItems($validatedData, $reservasi);
 
             // Notifikasi berhasil
             Alert::success('Data reservasi ID: ' . $reservasi->reservasi_id . ' berhasil diedit', 'success');

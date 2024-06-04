@@ -3,7 +3,7 @@
 <div class="section-header">
     <h1>Edit Data Logistik Harian</h1>
     <div class="section-header-breadcrumb">
-        <div class="breadcrumb-item active"><a href="/">Dashboard</a></div>
+        <div class="breadcrumb-item active"><a href="{{ route('dashboard.main-dashboard.index') }}">Dashboard</a></div>
         <div class="breadcrumb-item active"><a href="{{ route('dashboard.logistik-harians.index') }}">Logistik Harian</a></div>
         <div class="breadcrumb-item">Edit Logistik Harian</div>
     </div>

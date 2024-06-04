@@ -56,23 +56,48 @@ class JurnalBulananController extends Controller
             $title = 'Semua Data';
         }
 
-        // Hanya mengambil PostingBiaya yang memiliki BukuHarian
-        $journalsQuery = $journalsQuery->has('bukuHarians');
+        // Ambil semua data jurnal sesuai dengan filter yang dipilih
+        $allJournals = $journalsQuery->get();
 
-        // Ambil data jurnal sesuai dengan filter yang dipilih
-        $journals = $journalsQuery->get();
+        // Ambil data jurnal yang memiliki group_biaya_id 1 atau 2
+        $journalRentals = $journalsQuery->whereIn('group_biaya_id', [1, 2])->get();
 
-        // Menjumlahkan kredit dan debit untuk setiap PostingBiaya
-        $journals = $journals->map(function($posting) {
+        // Menjumlahkan kredit dan debit untuk semua jurnal
+        $allJournals = $allJournals->map(function($posting) {
             $posting->total_kredit = $posting->bukuHarians->sum('kredit');
             $posting->total_debit = $posting->bukuHarians->sum('debit');
             $posting->count = $posting->bukuHarians->count();
             return $posting;
         });
 
+        // Menjumlahkan kredit dan debit untuk jurnal dengan group_biaya_id 1 atau 2
+        $journalRentals = $journalRentals->map(function($posting) {
+            $posting->total_kredit = $posting->bukuHarians->sum('kredit');
+            $posting->total_debit = $posting->bukuHarians->sum('debit');
+            $posting->count = $posting->bukuHarians->count();
+            return $posting;
+        });
+
+        // Attribute untuk data ditampilkan
+        $rentalTotalDebit = $journalRentals->sum('total_debit');
+        $rentalTotalKredit = $journalRentals->sum('total_kredit');
+        $rentalTotalSaldo = $rentalTotalKredit - $rentalTotalDebit;
+        $allTotalDebit = $allJournals->sum('total_debit');
+        $allTotalKredit = $allJournals->sum('total_kredit');
+        $allTotalSaldo = $allTotalKredit - $allTotalDebit;
+        $selisihSaldo = $allTotalSaldo - $rentalTotalSaldo;
+
         // Arahkan ke view yang berbeda
         return view('dashboard.jurnal-bulanans.detail', [
-            'journals' => $journals,
+            'journals' => $allJournals,
+            'journal_rentals' => $journalRentals,
+            'rental_debit' => $rentalTotalDebit,
+            'rental_kredit' => $rentalTotalKredit,
+            'rental_saldo' => $rentalTotalSaldo,
+            'all_debit' => $allTotalDebit,
+            'all_kredit' => $allTotalKredit,
+            'all_saldo' => $allTotalSaldo,
+            'selisih_saldo' => $selisihSaldo,
             'title' => $title,
         ]);
     }

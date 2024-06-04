@@ -52,20 +52,22 @@ $(document).ready(function () {
             });
         }
 
+        // Validasi reservasi item
         let valid = true;
-        $(".select-item").each(function () {
-            if ($(this).val() === null || $(this).val() === "Pilih Item") {
+        $('.select-item').each(function() {
+            if ($(this).val() === null || $(this).val() === 'Pilih Item') {
                 valid = false;
             }
         });
-
+    
         if (!valid) {
             e.preventDefault();
             iziToast.error({
-                title: "Reservasi Item",
-                message: "Reservasi Item harus diisi!",
-                position: "topRight",
+                title: 'Reservasi Item',
+                message: 'Reservasi Item harus diisi!',
+                position: 'topRight'
             });
+            return; // Menghentikan eksekusi lebih lanjut jika validasi gagal
         }
     });
 });

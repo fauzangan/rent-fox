@@ -10,6 +10,28 @@ $(document).ready(function() {
         $('.delete-form-btn').show(); // Tombol delete selalu terlihat
     }
 
+    function checkForDuplicateItems() {
+        let itemCodes = [];
+        let hasDuplicate = false;
+        $('.select-item').each(function() {
+            let itemCode = $(this).val();
+            if (itemCodes.includes(itemCode)) {
+                hasDuplicate = true;
+                return false; // keluar dari each loop
+            }
+            itemCodes.push(itemCode);
+        });
+        return hasDuplicate;
+    }
+
+    function showDuplicateItemToast() {
+        iziToast.error({
+            title: 'Item Duplikat/Kosong',
+            message: 'Terdapat item yang duplikat/kosong pada formulir item order!',
+            position: 'topRight'
+        });
+    }
+
     updateDeleteButtonVisibility(); // Panggil fungsi ini saat halaman pertama kali dimuat
 
     // Fungsi untuk menambah formulir item baru
@@ -19,6 +41,11 @@ $(document).ready(function() {
         newItemForm.find('.jumlah-item').val(1);
         newItemForm.find('.waktu').val(1);
         $("#form-container").append(newItemForm); // Tambahkan formulir baru ke dalam kontainer
+
+        if (checkForDuplicateItems()) {
+            newItemForm.remove(); // Hapus form jika duplikat ditemukan
+            showDuplicateItemToast();
+        }
         
         updateDeleteButtonVisibility();
     });
@@ -29,7 +56,11 @@ $(document).ready(function() {
         if (formsCount > 1) { // Pastikan setidaknya ada satu formulir tersisa
             $(this).closest('.form-item').remove(); // Hapus formulir
         } else {
-            alert("Tidak dapat menghapus formulir terakhir.");
+            iziToast.error({
+                title: 'Tidak Bisa Dihapus',
+                message: 'Minimal 1 pemesanan item pada Order',
+                position: 'topRight'
+            });
         }
         
         updateDeleteButtonVisibility();
@@ -44,12 +75,21 @@ $(document).ready(function() {
         let jumlah_item = container.find('.jumlah-item').val();
 
         container.find('.harga-sewa').val(harga_sewa);
-        container.find('.satuan-waktu').val("Per " + satuan_waktu);
+        container.find('.satuan-waktu').val("Per " + satuan_waktu );
         container.find('.satuan-item').val(satuan_item);
         if(satuan_waktu == 'Bulan'){
             container.find('.jumlah').val(formatRupiah(parseInt(harga_sewa) * parseInt(jumlah_item)));
         }else{
             container.find('.jumlah').val(formatRupiah(parseInt(harga_sewa*30) * parseInt(jumlah_item)));
+        }
+
+        if (checkForDuplicateItems()) {
+            $(this).val(''); // Reset the value if duplicate found
+            container.find('.harga-sewa').val('')
+            container.find('.jumlah').val('')
+            container.find('.satuan-waktu').val('');
+            container.find('.satuan-item').val('');
+            showDuplicateItemToast();
         }
     });
 
@@ -60,5 +100,4 @@ $(document).ready(function() {
 
         container.find('.jumlah').val(formatRupiah(parseInt(harga_sewa) * parseInt(jumlah_item)));
     });
-
 });
