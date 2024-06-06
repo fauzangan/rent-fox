@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BukuHarianFilterRequest;
 use App\Models\Order;
 use App\Models\Customer;
 use App\Models\BukuHarian;
@@ -14,10 +15,20 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class BukuHarianController extends Controller
 {
-    public function index(){
-        $bukuHarians = BukuHarian::with(['postingBiaya', 'order', 'dataBukuHarian'])->orderBy('updated_at', 'desc')->get();
+    public function index(BukuHarianFilterRequest $request){
+        $bukuHarians = BukuHarian::query()
+        ->with(['postingBiaya', 'order', 'dataBukuHarian'])
+        ->filterByOrderId($request->input('order_id'))
+        ->filterByCustomerId($request->input('customer_id'))
+        ->filterByTanggalTransaksi($request->input('tanggal_transaksi'))
+        ->filterByGroupBiayaId($request->input('group_biaya_id'))
+        ->filterByPostingBiayaId($request->input('posting_biaya_id'))
+        ->orderBy('updated_at', 'desc')
+        ->get();
+        $groupBiayas = GroupBiaya::with(['postingBiayas'])->get();
         return view('dashboard.buku-harians.index', [
-            'buku_harians' => $bukuHarians
+            'buku_harians' => $bukuHarians,
+            'group_biayas' => $groupBiayas,
         ]);
     }
 

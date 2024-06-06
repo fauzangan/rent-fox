@@ -20,34 +20,61 @@
         </div>
     </div>
 
-    {{-- <div class="card">
+    <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h4>Filter Data</h4>
             <button class="btn btn-primary" type="button" id="filterButton"><i class="fa fa-plus" id="filterIcon"></i></button>
         </div>
         <div class="card-body" id="filterForm" style="display: none">
-            <form action="{{ route('dashboard.items.index') }}" method="GET">
-                @csrf
+            <form action="{{ route('dashboard.buku-harians.index') }}" method="GET">
                 <div class="row align-items-center">
-                    <div class="col-2 pr-0">
+                    <div class="col-1 pr-0">
                         <div class="form-group">
-                            <label>Kode Item</label>
-                            <input type="text" id="item_id" name="item_id" value="{{ request('item_id') }}" class="form-control">
+                            <label>Kode Order</label>
+                            <input type="text" id="order_id" name="order_id" value="{{ request('order_id') }}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-1 pr-0">
+                        <div class="form-group">
+                            <label>Kode Cust</label>
+                            <input type="text" id="customer_id" name="customer_id" value="{{ request('customer_id') }}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-3 pr-0">
+                        <div class="form-group">
+                            <label>Tanggal Transaksi</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-calendar"></i>
+                                    </div>
+                                </div>
+                                <input type="text" name="tanggal_transaksi" id="tanggal_transaksi" value="{{ request('tanggal_transaksi') }}" class="form-control">
+                            </div>
                         </div>
                     </div>
                     <div class="col pr-0">
                         <div class="form-group">
-                            <label>Nama Item</label>
-                            <input type="text" id="nama_item" name="nama_item" value="{{ request('nama_item') }}" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col pr-0">
-                        <div class="form-group">
-                            <label>Kategori Item</label>
-                            <select class="form-control" id="category_item_id" name="category_item_id">
+                            <label>Group Biaya</label>
+                            <select class="form-control" id="group_biaya_id" name="group_biaya_id">
                                 <option selected></option>
-                                @foreach($category_items as $category_item)
-                                <option value="{{ $category_item->category_item_id }}" {{ request('category_item_id') == $category_item->category_item_id ? 'selected' : '' }}>{{ $category_item->nama_category }}</option>
+                                @foreach($group_biayas as $group_biaya)
+                                <option value="{{ $group_biaya->group_biaya_id }}" {{ request('group_biaya_id') == $group_biaya->group_biaya_id ? 'selected' : '' }}>(Kode Group: {{ $group_biaya->prefiks }} ) | {{ $group_biaya->nama_group }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Posting Biaya</label>
+                            <select class="form-control" id="posting_biaya_id" name="posting_biaya_id">
+                                <option selected></option>
+                                @foreach($group_biayas as $group_biaya)
+                                <optgroup label="{{ $group_biaya->nama_group }} (Kode Group: {{ $group_biaya->prefiks }})">
+                                    @foreach($group_biaya->postingBiayas as $posting_biaya)
+                                    <option value="{{ $posting_biaya->posting_biaya_id }}" {{ request('posting_biaya_id') == $posting_biaya->posting_biaya_id ? 'selected' : '' }}>{{ $posting_biaya->posting_biaya_id }} | {{ $posting_biaya->nama_posting }}</option>
+                                    @endforeach
+                                </optgroup>
                                 @endforeach
                             </select>
                         </div>
@@ -59,7 +86,7 @@
                 </div>
             </form>
         </div>
-    </div> --}}
+    </div>
 
     <div class="card">
         <div class="card-header">
@@ -129,6 +156,8 @@
 </div>
 
 @push('styles')
+<link rel="stylesheet" href="{{ asset('assets/modules/bootstrap-daterangepicker/daterangepicker.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/modules/izitoast/css/iziToast.min.css') }}">
 <style>
     .sticky-aksi-head {
         position: sticky;
@@ -160,6 +189,10 @@
 <script src="{{ asset('assets/modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
 <script src="{{ asset('assets/modules/moment.min.js') }}"></script>
 <script src="{{ asset('assets/js/stisla.js') }}"></script>
+
+<!-- Spesific JS File -->
+<script src="{{ asset('assets/modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+<script src="{{ asset('assets/modules/izitoast/js/iziToast.min.js') }}"></script>
 <script>
     $(document).ready(function() {
         // Function to get query string value
@@ -169,7 +202,7 @@
         }
 
         // Check if any of the specified query strings exist
-        const fields = ['item_id', 'nama_item', 'category_item_id'];
+        const fields = ['order_id', 'customer_id', 'tanggal_transaksi', 'group_biaya_id', 'posting_biaya_id'];
         let formShouldShow = false;
         
         fields.forEach(field => {
@@ -186,6 +219,51 @@
         $('#filterButton').click(function() {
             $('#filterForm').toggle('slow', 'swing');
             $('#filterIcon').toggleClass('fa-plus fa-minus');
+        });
+
+                /* Pengaturan Tanggal Order dan Tanggal Kirim Input */
+        $("#tanggal_transaksi").daterangepicker({
+            locale: { format: "DD/MM/YYYY" },
+            autoUpdateInput: false,
+        });
+
+        $("#tanggal_transaksi").attr("placeholder", "");
+
+        $("#tanggal_transaksi").on("apply.daterangepicker", function (ev, picker) {
+            $(this).val(picker.startDate.format("DD/MM/YYYY") + " - " + picker.endDate.format("DD/MM/YYYY"));
+        });
+
+        $("#tanggal_transaksi").on("cancel.daterangepicker", function (ev, picker) {
+            $(this).val("");
+        });
+
+        $("#filterForm").on("submit", function(e) {
+            let tanggalTransaksi = $("#tanggal_transaksi").val();
+            let datePattern = /^\d{2}\/\d{2}\/\d{4} - \d{2}\/\d{2}\/\d{4}$/;
+
+            if(tanggalTransaksi){
+                if (!datePattern.test(tanggalTransaksi)) {
+                    e.preventDefault();
+                    iziToast.error({
+                        title: 'Tanggal tidak valid',
+                        message: 'Harap masukkan tanggal yang benar!',
+                        position: 'topRight'
+                    });
+                } else {
+                    let dates = tanggalTransaksi.split(" - ");
+                    let startDate = moment(dates[0], "DD/MM/YYYY", true);
+                    let endDate = moment(dates[1], "DD/MM/YYYY", true);
+
+                    if (!startDate.isValid() || !endDate.isValid()) {
+                        e.preventDefault();
+                        iziToast.error({
+                            title: 'Tanggal tidak valid',
+                            message: 'Harap masukkan tanggal yang benar!',
+                            position: 'topRight'
+                        });
+                    }
+                }
+            }
         });
     });
 </script>
