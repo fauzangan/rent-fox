@@ -25,8 +25,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Temporary Route
+Route::get('/', function() {
+    return redirect()->route('dashboard.main-dashboard.index');
+});
+
 // Main Dashboard Route
 Route::get('/dashboard', [MainDashboardController::class, 'index'])->name('dashboard.main-dashboard.index');
+Route::get('/dashboard/getOrdersByDate', [MainDashboardController::class, 'getOrdersByDate'])->name('dashboard.main-dashboard.getOrdersByDate');
+Route::get('/dashboard/getTagihansByDate', [MainDashboardController::class, 'getTagihansByDate'])->name('dashboard.main-dashboard.getTagihansByDate');
+Route::get('/dashboard/getLogistikHariansByDate', [MainDashboardController::class, 'getLogistikHariansByDate'])->name('dashboard.main-dashboard.getLogistikHariansByDate');
 
 // Customers Route
 Route::get('/dashboard/customers', [CustomerController::class, 'index'])->name('dashboard.customers.index');
