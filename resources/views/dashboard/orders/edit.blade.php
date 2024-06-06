@@ -246,8 +246,18 @@
                         </div>
                         <div class="form-group">
                             <label>Keterangan</label>
-                            <textarea type="text" class="form-control @error('keterangan') is-invalid @enderror" name="keterangan" id="keterangan">{{ old('keterangan', $order->keterangan) }}</textarea>
+                            <textarea type="text" class="form-control @error('keterangan') is-invalid @enderror" name="keterangan" id="keterangan">{{ old('keterangan', $order->keterangan ?? '') }}</textarea>
                             @error('keterangan')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <hr class="bg-primary pb-1">
+                        <div class="form-group">
+                            <label>Memoir</label>
+                            <textarea type="text" class="form-control @error('memo') is-invalid @enderror" name="memo" id="memo">{{ old('memo', $order->memo ?? '') }}</textarea>
+                            @error('memo')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>

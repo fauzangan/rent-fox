@@ -26,6 +26,7 @@ class LogistikHarianController extends Controller
         ->filterByCustomerId($request->input('customer_id'))
         ->filterByItemName($request->input('nama_item'))
         ->filterByTanggalTransaksi($request->input('tanggal_transaksi'))
+        ->orderBy('logistik_harian_id', 'desc')
         ->get();
 
         $statusLogistiks = StatusLogistik::all();

@@ -252,6 +252,16 @@
                             </div>
                             @enderror
                         </div>
+                        <hr class="bg-primary pb-1">
+                        <div class="form-group">
+                            <label>Memoir</label>
+                            <textarea type="text" class="form-control @error('memo') is-invalid @enderror" name="memo" id="memo">{{ old('memo') }}</textarea>
+                            @error('memo')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
                     </div>
                 </div>
 

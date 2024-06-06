@@ -12,7 +12,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class ReservasiController extends Controller
 {
     public function index(){
-        $reservasis = Reservasi::with(['statusReservasi'])->get();
+        $reservasis = Reservasi::with(['statusReservasi'])->orderBy('reservasi_id', 'desc')->get();
         return view('dashboard.reservasis.index', [
             'reservasis' => $reservasis
         ]);

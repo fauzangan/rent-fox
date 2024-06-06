@@ -142,6 +142,7 @@ class Order extends Model
                 'biaya_transport_sewa' => $data['subtotal'],
                 'status_order_id' => $data['status_order_id'],
                 'keterangan' => $data['keterangan'],
+                'memo' => $data['memo']
             ]);
 
             if(isset($data['items'])){
@@ -179,6 +180,10 @@ class Order extends Model
             $data['subtotal'] += $jumlah_harga;
         }
 
+        $data['biaya_sewa'] = $data['subtotal'] - (($order->discount/100)*$data['subtotal']);
+        $data['biaya_transport_sewa'] = $data['biaya_sewa'] + $order->biaya_transport;
+        $data['sisa_rental'] = $data['biaya_transport_sewa'] - $order->down_payment;
+
         DB::transaction(function() use($order, $data) {
             $order->update([
                 'tanggal_order' => $data['tanggal_order'],
@@ -189,14 +194,12 @@ class Order extends Model
                 'nama_proyek' => $data['nama_proyek'],
                 'status_transport_id' => $data['status_transport_id'],
                 'subtotal' => $data['subtotal'],
-                'biaya_sewa' => $data['subtotal'],
-                'discount' => 0,
-                'biaya_transport' => 0,
-                'down_payment' => 0,
-                'biaya_transport_sewa' => $data['subtotal'],
-                'sisa_rental' => $data['subtotal'],
+                'biaya_sewa' => $data['biaya_sewa'],
+                'biaya_transport_sewa' => $data['biaya_transport_sewa'],
+                'sisa_rental' => $data['sisa_rental'],
                 'status_order_id' => $data['status_order_id'],
                 'keterangan' => $data['keterangan'],
+                'memo' => $data['memo']
             ]);
 
             $existingItems = [];

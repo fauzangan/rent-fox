@@ -46,7 +46,7 @@
                                     value="{{ old('customer_id', $order->customer_id) }}" disabled>
                             </div>
                             <div class="col-md-auto">
-                                <button class="btn btn-primary mt-1">Detail</button>
+                                <button id="detail-customer" class="btn btn-primary mt-1">Detail</button>
                             </div>
                         </div>
                     </div>
@@ -248,6 +248,9 @@
     </div>
 </div>
 
+{{-- Modal Customer --}}
+@include('dashboard.orders.partials.modal-detail-customers')
+
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/modules/bootstrap-daterangepicker/daterangepicker.css') }}">
@@ -306,6 +309,10 @@
 <script src="{{ asset('assets/modules/izitoast/js/iziToast.min.js') }}"></script>
 <script>
     $(document).ready(function() {
+
+        $(document).on('click', '#detail-customer', function() {
+            $('#customerModal').appendTo("body").modal('show');
+        });
 
         // Load pertamakali di render
         loadDiscountHarga();
@@ -507,5 +514,4 @@
     });
 </script>
 @endpush
-
 @endsection

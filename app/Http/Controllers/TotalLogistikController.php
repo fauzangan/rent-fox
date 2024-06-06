@@ -21,6 +21,7 @@ class TotalLogistikController extends Controller
         ->filterByItemName($request->input('nama_item'))
         ->filterByDataTotalLogistikId($request->input('data_total_logistik_id'))
         ->filterByTanggalTransaksi($request->input('tanggal_transaksi'))
+        ->orderBy('total_logistik_id', 'desc')
         ->get();
         $statusTotalLogistiks = StatusTotalLogistik::all();
         $dataTotalLogistiks = DataTotalLogistik::all();

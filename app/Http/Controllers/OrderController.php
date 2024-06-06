@@ -86,7 +86,11 @@ class OrderController extends Controller
     public function postDownPayment(Request $request, Order $order)
     {
         $request->validate([
-            'down_payment' => 'required|numeric|min:0',
+            'down_payment' => ['required', 'numeric', 'min:0', function ($attribute, $value, $fail) use ($order) {
+                if ($value > $order->biaya_transport_sewa) {
+                    $fail('Down Payment tidak boleh lebih dari biaya sewa + transport.');
+                }
+            },],
         ]);
 
         $order->down_payment = $request->down_payment;
@@ -176,25 +180,13 @@ class OrderController extends Controller
             'tanggal_order' => ['required', 'string'],
             'tanggal_kirim' => ['required', 'string'],
             'customer_id' => ['required'],
-            'nama_customer' => ['required', 'string'],
-            'identitas_customer' => ['required', 'string'],
-            'alamat_customer' => ['required', 'string'],
-            'kota_customer' => ['required', 'string'],
-            'telp_customer' => ['sometimes', 'nullable'],
-            'fax_customer' => ['sometimes', 'nullable'],
-            'handphone' => ['required', 'string'],
-            'badan_hukum' => ['sometimes', 'nullable', 'string'],
-            'nama_perusahaan' => ['sometimes', 'nullable', 'string'],
-            'alamat_perusahaan' => ['sometimes', 'nullable', 'string'],
-            'kota_perusahaan' => ['sometimes', 'nullable', 'string'],
-            'telp_perusahaan' => ['sometimes', 'nullable', 'string'],
-            'fax_perusahaan' => ['sometimes', 'nullable', 'string'],
             'kirim_kepada' => ['required', 'string', 'max:255'],
             'alamat_kirim' => ['required', 'string'],
             'nama_proyek' => ['required', 'string', 'max:255'],
             'status_transport_id' => ['required'],
             'status_order_id' => ['required'],
             'keterangan' => ['sometimes', 'nullable'],
+            'memo' => ['sometimes', 'nullable', 'string'],
             'items' => ['required'],
             'jumlah_items' => ['required'],
             'waktus' => ['required'],

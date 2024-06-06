@@ -210,7 +210,7 @@
                         <div class="form-group">
                             <label>Apakah DP ?</label>
                             <select class="form-control @error('is_dp') is-invalid @enderror" name="is_dp" id="is_dp">
-                                @if(isset($tagihan->total_dp))
+                                @if($tagihan->total_dp != 0)
                                 <option value="0">Tidak</option>
                                 <option value="1" selected>Ya</option>
                                 @else
@@ -360,83 +360,11 @@
 </div>
 
 <!-- Modal Order -->
-<div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="orderModalLabel">Detail Order Items</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="table-responsive text-nowrap text-center">
-                        <table id="modalOrderItems" class="table table-hover table-bordered table-md">
-                            <thead>
-                                <tr>
-                                    <th>Kode Item</th>
-                                    <th>Nama Item</th>
-                                    <th>Kuantitas</th>
-                                    <th>Total Harga</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                            <tfoot>
-                                <tr style="background-color:gainsboro">
-                                    <td colspan="3"><strong>Subtotal Harga Sewa</strong></td>
-                                    <td><strong><span id="modalSubtotal"></span></strong></td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
+@include('dashboard.tagihans.partials.modal-orders')
 <!-- Modal Order -->
 
 <!-- Modal Tagihan -->
-<div class="modal fade" id="tagihanModal" tabindex="-1" aria-labelledby="tagihanModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="tagihanModalLabel">Tagihan Tercatat</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="table-responsive text-nowrap text-center">
-                        <table id="modalTagihans" class="table table-hover table-bordered table-md">
-                            <thead>
-                                <tr>
-                                    <th>Kode Tagihan</th>
-                                    <th>Jenis Tagihan</th>
-                                    <th>Jumlah Tagihan</th>
-                                    <th>Status Tagihan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
+@include('dashboard.tagihans.partials.modal-tagihans')
 <!-- Modal Tagihan -->
 
 @push('styles')

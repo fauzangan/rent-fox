@@ -26,6 +26,7 @@ class TagihanController extends Controller
         ->filterByTanggalDitagihkan($request->input('tanggal_ditagihkan'))
         ->filterByJatuhTempo1($request->input('jatuh_tempo_1'))
         ->filterByJatuhTempo2($request->input('jatuh_tempo_2'))
+        ->orderBy('tagihan_id', 'desc')
         ->paginate(10)
         ->appends($request->except('page'));
         $jenisTagihans = JenisTagihan::all();
