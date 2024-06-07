@@ -221,7 +221,7 @@
             $('#filterIcon').toggleClass('fa-plus fa-minus');
         });
 
-                /* Pengaturan Tanggal Order dan Tanggal Kirim Input */
+        /* Pengaturan Tanggal Order dan Tanggal Kirim Input */
         $("#tanggal_transaksi").daterangepicker({
             locale: { format: "DD/MM/YYYY" },
             autoUpdateInput: false,

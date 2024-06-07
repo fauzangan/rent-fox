@@ -160,22 +160,37 @@
     <div class="row" id="biodataCustomer" style="display: none;">
         <div class="col">
             <div class="card mb-2">
-                <div class="card-body py-0">
+                <div class="card-body">
                     <div class="row">
-                        <div class="col-md-auto">
-                            <p><strong>Kode Cust:</strong> <span id="customerIdInfo"></span></p>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="">Customer Id</label>
+                                <input class="form-control" type="text" id="customerIdInfo" readonly>
+                            </div>
                         </div>
-                        <div class="col-md-auto">
-                            <p><strong>Nama:</strong> <span id="customerNamaInfo"></span></p>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="">Nama Customer</label>
+                                <input class="form-control" type="text" id="customerNamaInfo" readonly>
+                            </div>
                         </div>
-                        <div class="col-md-auto">
-                            <p><strong>Perusahaan:</strong> <span id="customerPerusahaanInfo"></span></p>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="">Nama Perusahaan</label>
+                                <input class="form-control" type="text" id="customerPerusahaanInfo" readonly>
+                            </div>
                         </div>
-                        <div class="col-md-auto">
-                            <p><strong>Proyek:</strong> <span id="customerProyekInfo"></span></p>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="">Proyek</label>
+                                <input class="form-control" type="text" id="customerProyekInfo" readonly>
+                            </div>
                         </div>
-                        <div class="col-md-auto">
-                            <p><strong>Alamat Kirim:</strong> <span id="customerAlamatKirimInfo"></span></p>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="">Alamat Kirim</label>
+                                <input class="form-control" type="text" id="customerAlamatKirimInfo" readonly>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -224,7 +239,30 @@
         <div class="col-6">
             <div class="row">
                 <div class="col">
-                    <div class="card mb-1" id="itemOrderLogistik" style="display: none;">
+                    <div class="card mb-1" id="itemOrderCustomer" style="display: none;">
+                        <div class="card-header">
+                            <h4>Daftar Order dg. Item INI per Customer INI (Aktif dan Tutup)</h4>
+                        </div>
+                        <div class="card-body p-0" >
+                            <table class="table table-md">
+                                <thead>
+                                    <tr>
+                                        <th class="py-1">Kode<br> Item</th>
+                                        <th class="py-1">Nama</th>
+                                        <th class="py-1">Sat.</th>
+                                        <th class="py-1">Jumlah<br> Item</th>
+                                        <th class="py-1">Kode<br> Order</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="card" id="itemOrderLogistik" style="display: none;">
                         <div class="card-header">
                             <h4>Total Trans Item INI per Order INI</h4>
                         </div>
@@ -238,29 +276,6 @@
                                         <th class="py-1">x_berat</th>
                                         <th class="py-1">Jumlah<br> Item</th>
                                         <th class="py-1">Status Log</th>
-                                        <th class="py-1">Kode<br> Order</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="card" id="itemOrderCustomer" style="display: none;">
-                        <div class="card-header">
-                            <h4>Daftar Order dg. Item INI per Customer INI (Aktif dan Tutup)</h4>
-                        </div>
-                        <div class="card-body p-0" >
-                            <table class="table table-md">
-                                <thead>
-                                    <tr>
-                                        <th class="py-1">Kode<br> Item</th>
-                                        <th class="py-1">Nama</th>
-                                        <th class="py-1">Sat.</th>
-                                        <th class="py-1">Jumlah<br> Item</th>
                                         <th class="py-1">Kode<br> Order</th>
                                     </tr>
                                 </thead>
@@ -296,7 +311,7 @@
 <script src="{{ asset('assets/js/page/logistik-harian-create.js') }}"></script>
 <script>
     /* Pengaturan Tanggal Ditagihkan Input */
-        $("#tanggal_transaksi").daterangepicker({
+    $("#tanggal_transaksi").daterangepicker({
         locale: { format: "DD/MM/YYYY" },
         singleDatePicker: true,
         autoUpdateInput: false,

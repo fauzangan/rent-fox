@@ -8,11 +8,19 @@
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header" style="color: black">Dashboard</li>
-            <li class="{{ Request::is('dashboard')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.main-dashboard.index') }}"><i class="far fa-square"></i> <span>Main Dashboard</span></a></li>
+            <li class="{{ Request::is('dashboard')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.main-dashboard.index') }}">
+                <i class="far fa-square"></i> <span>Main Dashboard</span></a>
+            </li>
             <li class="menu-header" style="color: black">Order Rental</li>
-            <li class="{{ Request::is('dashboard/customers*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.customers.index') }}"><i class="far fa-user"></i> <span> Customer</span></a></li>
-            <li class="{{ Request::is('dashboard/orders*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.orders.index') }}"><i class="fas fa-receipt "></i> <span> Order</span></a></li>
-            <li class="{{ Request::is('dashboard/reservasis*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.reservasis.index') }}"><i class="fas fa-calendar-alt"></i> <span>Reservasi</span></a></li>
+            <li class="{{ Request::is('dashboard/customers*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.customers.index') }}">
+                <i class="far fa-user"></i> <span> Customer</span></a>
+            </li>
+            <li class="{{ Request::is('dashboard/orders*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.orders.index') }}">
+                <i class="fas fa-receipt "></i> <span> Order</span></a>
+            </li>
+            <li class="{{ Request::is('dashboard/reservasis*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.reservasis.index') }}">
+                <i class="fas fa-calendar-alt"></i> <span>Reservasi</span></a>
+            </li>
             <li class="dropdown {{ Request::is('dashboard/items*', 'dashboard/category-items*')? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-archive"></i><span> Items</span></a>
                 <ul class="dropdown-menu">
@@ -20,15 +28,36 @@
                     <li class="{{ Request::is('dashboard/category-items*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.category-items.index') }}">Kategori Item</a></li>
                 </ul>
             </li>
-            <li class="{{ Request::is('dashboard/tagihans*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.tagihans.index') }}"><i class="fas fa-file-invoice-dollar"></i> <span> Tagihan</span></a></li>
+            <li class="{{ Request::is('dashboard/tagihans*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.tagihans.index') }}">
+                <i class="fas fa-file-invoice-dollar"></i> <span> Tagihan</span></a>
+            </li>
             <li class="menu-header" style="color: black">Logistik</li>
-            <li class="{{ Request::is('dashboard/logistik-harians*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.logistik-harians.index') }}"><i class="fas fa-shipping-fast"></i> <span>Logistik Harian</span></a></li>
-            <li class="{{ Request::is('dashboard/total-logistiks*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.total-logistiks.index') }}"><i class="fas fa-dolly-flatbed"></i> <span>Total Logistik</span></a></li>
-            <li class="{{ Request::is('dashboard/logistiks*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.logistiks.index') }}"><i class="fas fa-warehouse"></i> <span>Stock</span></a></li>
+            <li class="{{ Request::is('dashboard/logistik-harians*')? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('dashboard.logistik-harians.index') }}"><i class="fas fa-shipping-fast"></i> <span>Logistik Harian</span></a>
+            </li>
+            <li class="{{ Request::is('dashboard/total-logistiks*')? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('dashboard.total-logistiks.index') }}"><i class="fas fa-dolly-flatbed"></i> <span>Total Logistik</span></a>
+            </li>
+            <li class="{{ Request::is('dashboard/logistiks*')? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('dashboard.logistiks.index') }}"><i class="fas fa-warehouse"></i> <span>Stock</span></a>
+            </li>
             <li class="menu-header" style="color: black">Accounting</li>
-            <li class="{{ Request::is('dashboard/buku-harians*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.buku-harians.index') }}"><i class="fas fa-book"></i> <span>Buku Harian</span></a></li>
-            <li class="{{ Request::is('dashboard/jurnal-bulanans*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.jurnal-bulanans.index') }}"><i class="fas fa-chart-line"></i> <span>Journal Bulanan</span></a></li>
-
+            <li class="{{ Request::is('dashboard/buku-harians*')? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('dashboard.buku-harians.index') }}"><i class="fas fa-book"></i> <span>Buku Harian</span></a>
+            </li>
+            <li class="{{ Request::is('dashboard/jurnal-bulanans*')? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('dashboard.jurnal-bulanans.index') }}"><i class="fas fa-chart-line"></i> <span>Journal Bulanan</span></a>
+            </li>
+            <li class="menu-header" style="color: black">Pengaturan Aplikasi</li>
+            <li class="">
+                <a class="nav-link" href="#"><i class="fas fa-user-shield"></i> <span>Hak Akses</span></a>
+            </li>
+            <li class="">
+                <a class="nav-link" href="#"><i class="fas fa-users"></i> <span>Pengguna</span></a>
+            </li>
+            <li class="">
+                <a class="nav-link" href="#"><i class="fas fa-door-open"></i> <span>Log Aktivitas</span></a>
+            </li>
             {{-- <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-warehouse"></i><span>Menu Inventori</span></a>
                 <ul class="dropdown-menu">

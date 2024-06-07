@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BukuHarian;
+use App\Models\Customer;
 use App\Models\LogistikHarian;
 use App\Models\Order;
 use App\Models\Tagihan;
@@ -11,7 +13,14 @@ use Illuminate\Http\Request;
 class MainDashboardController extends Controller
 {
     public function index(){
-        return view('dashboard.main-dashboard.index');
+        $totalCustomer = Customer::count();
+        $totalOrder = Order::count();
+        $totalBukuHarian = BukuHarian::count();
+        return view('dashboard.main-dashboard.index', [
+            'totalCustomer' => $totalCustomer,
+            'totalOrder' => $totalOrder,
+            'totalBukuHarian' => $totalBukuHarian
+        ]);
     }
 
     public function getOrdersByDate(Request $request) {

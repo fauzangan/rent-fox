@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use DateTime;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Reservasi extends Model
 {
@@ -18,6 +19,46 @@ class Reservasi extends Model
     protected $casts = [
         'tanggal_reservasi' => 'date'
     ];
+
+    public function statusReservasi(){
+        return $this->belongsTo(StatusReservasi::class, 'status_reservasi_id', 'status_reservasi_id');
+    }
+
+    public function reservasiItems(){
+        return $this->hasMany(ReservasiItem::class, 'reservasi_id', 'reservasi_id');
+    }
+
+    public function scopeFilterByTanggalReservasi(Builder $query, $tanggalReservasi)
+    {
+        if($tanggalReservasi) {
+            list($startDate, $endDate) = explode(' - ', $tanggalReservasi);
+            // Ubah format tanggal menjadi "YYYY-MM-DD" untuk query
+            $startDate = DateTime::createFromFormat('d/m/Y', $startDate)->format('Y-m-d');
+            $endDate = DateTime::createFromFormat('d/m/Y', $endDate)->format('Y-m-d');
+            $query->whereBetween('tanggal_reservasi', [$startDate, $endDate]);
+        }
+    }
+
+    public function scopeFilterByCustomerName(Builder $query, $customerName)
+    {
+        if ($customerName) {
+            $query->where('nama_customer', 'like', '%' . $customerName . '%');
+        }
+    }
+
+    public function scopeFilterByPerusahaanName(Builder $query, $perusahaanName)
+    {
+        if ($perusahaanName) {
+            $query->where('nama_perusahaan', 'like', '%' . $perusahaanName . '%');
+        }
+    }
+
+    public function scopeFilterByHandphone(Builder $query, $handphone)
+    {
+        if ($handphone) {
+            $query->where('handphone', 'like', '%' . $handphone . '%');
+        }
+    }
 
     public static function createReservasiWithItems($data){
         $data['tanggal_reservasi'] = DateTime::createFromFormat('d/m/Y', $data['tanggal_reservasi'])->format('Y-m-d');
@@ -103,14 +144,6 @@ class Reservasi extends Model
             $reservasi->reservasiItems()->whereNotIn('item_id', $existingItems)->delete();
         });
         return $reservasi;
-    }
-
-    public function statusReservasi(){
-        return $this->belongsTo(StatusReservasi::class, 'status_reservasi_id', 'status_reservasi_id');
-    }
-
-    public function reservasiItems(){
-        return $this->hasMany(ReservasiItem::class, 'reservasi_id', 'reservasi_id');
     }
     
 }

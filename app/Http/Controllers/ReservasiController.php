@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReservasiFilterRequest;
 use App\Models\Item;
 use App\Models\Reservasi;
 use Illuminate\Http\Request;
@@ -11,8 +12,15 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class ReservasiController extends Controller
 {
-    public function index(){
-        $reservasis = Reservasi::with(['statusReservasi'])->orderBy('reservasi_id', 'desc')->get();
+    public function index(ReservasiFilterRequest $request){
+        $reservasis = Reservasi::query()
+        ->with(['statusReservasi'])
+        ->filterByTanggalReservasi($request->input('tanggal_reservasi'))
+        ->filterByCustomerName($request->input('nama_custome'))
+        ->filterByPerusahaanName($request->input('nama_perusahaan'))
+        ->filterByHandphone($request->input('handphone'))
+        ->orderBy('reservasi_id', 'desc')
+        ->get();
         return view('dashboard.reservasis.index', [
             'reservasis' => $reservasis
         ]);

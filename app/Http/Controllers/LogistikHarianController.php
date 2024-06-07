@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LogistikHarianFilterRequest;
 use App\Models\Order;
 use App\Models\Customer;
 use App\Models\Logistik;
@@ -13,6 +12,8 @@ use App\Models\StatusLogistik;
 use Illuminate\Support\Facades\Log;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\LogistikHarianFilterRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class LogistikHarianController extends Controller
 {
@@ -149,8 +150,29 @@ class LogistikHarianController extends Controller
     }
 
     public function getOrder($orderId){
-        $order = Order::with('orderItems')->where('order_id', '=', $orderId)->get();
-        return response()->json($order);
+        try {
+            // Load customer with orders that have status_order_id = 1 and their order items
+            $order = Order::with(['orderItems', 'customer.perusahaan'])->where('order_id', '=', $orderId)->first();
+    
+            // Return the customer data as JSON
+            return response()->json([
+                "success" => true,
+                "orderItems" => $order->orderItems, 
+                "customerId" => $order->customer_id,
+                "namaCustomer" => $order->customer->nama,
+                "badanHukumPerusahaan" => $order->customer->perusahaan->badan_hukum ?? '-',
+                "namaPerusahaan" => $order->customer->perusahaan->nama ?? '',
+                "proyek" => $order->nama_proyek,
+                "alamatKirim" => $order->alamat_kirim
+                ]);
+    
+        } catch (ModelNotFoundException $e) {
+            // Return a 404 response if customer is not found
+            return response()->json(["success" => false, 'message' => 'Order tidak ditemukan']);
+        } catch (\Exception $e) {
+            // Handle any other exceptions
+            return response()->json(["success" => false, 'message' => 'Gagam mengambil data order']);
+        }
     }
 
     public function getOrderItems($orderId){
@@ -160,8 +182,26 @@ class LogistikHarianController extends Controller
     }
 
     public function getCustomerOrders($customerId){
-        $customerOrders = Customer::with('orders.orderItems')->where('customer_id', '=', $customerId)->get();
-
-        return response()->json($customerOrders);
+        try {
+            // Load customer with orders that have status_order_id = 1 and their order items
+            $customer = Customer::with(['orders' => function($query) {
+                $query->where('status_order_id', 1);
+            }, 'orders.orderItems'])
+            ->where('customer_id', $customerId)
+            ->firstOrFail();
+    
+            // Return the customer data as JSON
+            return response()->json([
+                "success" => true, 
+                "customerOrders" => $customer->orders
+                ]);
+    
+        } catch (ModelNotFoundException $e) {
+            // Return a 404 response if customer is not found
+            return response()->json(["success" => false, 'message' => 'Customer tidak ditemukan']);
+        } catch (\Exception $e) {
+            // Handle any other exceptions
+            return response()->json(["success" => false, 'message' => 'Gagam mengambil data status order']);
+        }
     }
 }

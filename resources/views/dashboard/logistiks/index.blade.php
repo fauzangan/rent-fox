@@ -20,7 +20,6 @@
         </div>
         <div class="card-body" id="filterForm" style="display: none">
             <form action="{{ route('dashboard.logistiks.index') }}" method="GET">
-                @csrf
                 <div class="row align-items-center">
                     <div class="col-2 pr-0">
                         <div class="form-group">
@@ -132,7 +131,7 @@
 
 <!-- Spesific JS File -->
 <script>
-        $(document).ready(function() {
+    $(document).ready(function() {
         // Function to get query string value
         function getQueryStringParameter(name) {
             const urlParams = new URLSearchParams(window.location.search);

@@ -27,7 +27,6 @@
         </div>
         <div class="card-body" id="filterForm" style="display: none">
             <form action="{{ route('dashboard.items.index') }}" method="GET">
-                @csrf
                 <div class="row align-items-center">
                     <div class="col-2 pr-0">
                         <div class="form-group">
