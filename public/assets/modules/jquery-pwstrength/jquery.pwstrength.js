@@ -57,7 +57,7 @@
         var options = $.extend({
             label: '.label',
             classes: ['pw-very-weak', 'pw-weak', 'pw-mediocre', 'pw-strong', 'pw-very-strong'],
-            texts: ['very weak', 'weak', 'mediocre', 'strong', 'very strong']
+            texts: ['sangat lemah', 'lemah', 'biasa', 'kuat', 'sangat kuat']
         }, options || {});
         options.indicator = $('#' + this.data('indicator'));
         

@@ -144,15 +144,15 @@
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6 col-12">
             <div class="card card-statistic-1">
-                <div class="card-icon bg-success">
-                    <i class="fas fa-circle"></i>
+                <div class="card-icon" style="background-color: teal">
+                    <i class="fas fa-shipping-fast"></i>
                 </div>
                 <div class="card-wrap">
                     <div class="card-header">
-                        <h4>Online Users</h4>
+                        <h4>Gudang Harian Log</h4>
                     </div>
                     <div class="card-body">
-                        47
+                        {{ $totalGudangHarian }}
                     </div>
                 </div>
             </div>
@@ -357,9 +357,16 @@
 
     function setDefaultOrdersDate() {
         const today = new Date();
-        const month = today.toLocaleString('default', { month: 'long' });
+        const month = ('0' + (today.getMonth() + 1)).slice(-2);
         const year = today.getFullYear();
-        $('#orderDate').val(`${month} ${year}`);
+        const monthName = getMonthName(today.getMonth());
+        $('#orderDate').val(`${monthName} ${year}`);
+    }
+
+    // Fungsi untuk mendapatkan nama bulan berdasarkan angka bulan (dalam format bahasa Inggris)
+    function getMonthName(monthIndex) {
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        return monthNames[monthIndex];
     }
 
     function fetchOrders() {
@@ -395,9 +402,10 @@
 
     function setDefaultTagihansDate() {
         const today = new Date();
-        const month = today.toLocaleString('default', { month: 'long' });
+        const month = ('0' + (today.getMonth() + 1)).slice(-2);
         const year = today.getFullYear();
-        $('#tagihanDate').val(`${month} ${year}`);
+        const monthName = getMonthName(today.getMonth());
+        $('#tagihanDate').val(`${monthName} ${year}`);
     }
  
     function fetchTagihans() {
@@ -458,9 +466,10 @@
 
     function setDefaultLogistikHariansDate() {
         const today = new Date();
-        const month = today.toLocaleString('default', { month: 'long' });
+        const month = ('0' + (today.getMonth() + 1)).slice(-2);
         const year = today.getFullYear();
-        $('#logistikHarianDate').val(`${month} ${year}`);
+        const monthName = getMonthName(today.getMonth());
+        $('#logistikHarianDate').val(`${monthName} ${year}`);
         fetchLogisticsData();
     }
 

@@ -16,10 +16,12 @@ class MainDashboardController extends Controller
         $totalCustomer = Customer::count();
         $totalOrder = Order::count();
         $totalBukuHarian = BukuHarian::count();
+        $totalGudangHarian = LogistikHarian::count();
         return view('dashboard.main-dashboard.index', [
             'totalCustomer' => $totalCustomer,
             'totalOrder' => $totalOrder,
-            'totalBukuHarian' => $totalBukuHarian
+            'totalBukuHarian' => $totalBukuHarian,
+            'totalGudangHarian' => $totalGudangHarian
         ]);
     }
 
