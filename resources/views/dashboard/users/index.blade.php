@@ -84,16 +84,20 @@
                         <tr>
                             <td>{{ $user->name }}</td>
                             @if($user->roles->count() != 0)
-                            <td><span class="badge badge-success" style="color: black">{{ $user->roles->pluck('name')->toArray()[0] }}</span></td>
+                                @if($user->roles->pluck('name')->contains('Super Admin'))
+                                    <td><span class="badge badge-primary" style="color: white">{{ $user->roles->pluck('name')->first() }}</span></td>
+                                @else
+                                    <td><span class="badge badge-success" style="color: black">{{ $user->roles->pluck('name')->first() }}</span></td>
+                                @endif
                             @else
-                            <td><span class="badge badge-danger">Tidak ada peran</span></td>
+                                <td><span class="badge badge-danger">Tidak ada peran</span></td>
                             @endif
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->email }}</td>
                             <td class="sticky-aksi-col">
                                 <a href="{{ route('dashboard.users.edit', ['user' => $user->id]) }}" class="btn btn-warning">Edit Data</a>
                                 <a href="{{ route('dashboard.users.editPassword', ['user' => $user->id]) }}" class="btn btn-info">Reset Password</a>
-                                <a href="#" class="btn btn-danger" data-confirm-delete="true">Delete</a>
+                                {{-- <a href="#" class="btn btn-danger" data-confirm-delete="true">Delete</a> --}}
                             </td>
                         </tr>
                         @endforeach
