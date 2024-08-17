@@ -48,7 +48,7 @@
             <li class="{{ Request::is('dashboard/jurnal-bulanans*')? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('dashboard.jurnal-bulanans.index') }}"><i class="fas fa-chart-line"></i> <span>Journal Bulanan</span></a>
             </li>
-            <li class="menu-header" style="color: black">Rekapitulasi</li>
+            {{-- <li class="menu-header" style="color: black">Rekapitulasi</li>
             <li class="">
                 <a class="nav-link" href="#"><i class="fas fa-book-open"></i> <span>Rekap By Order</span></a>
             </li>
@@ -57,7 +57,7 @@
             </li>
             <li class="">
                 <a class="nav-link" href="#"><i class="fas fa-book-open"></i> <span>Rekap By </span></a>
-            </li>
+            </li> --}}
             <li class="menu-header" style="color: black">Pengaturan Aplikasi</li>
             <li class="{{ Request::is('dashboard/hak-akses*')? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('dashboard.hak-akses.index') }}"><i class="fas fa-user-shield"></i> <span>Hak Akses</span></a>

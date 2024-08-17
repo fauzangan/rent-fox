@@ -37,6 +37,8 @@ class DatabaseSeeder extends Seeder
             GroupBiayaSeeder::class,
             PostingBiayaSeeder::class,
             DataBukuHarianSeeder::class,
+            RolePermissionSeeder::class,
+            RoleSeeder::class
         ]);
     }
 }

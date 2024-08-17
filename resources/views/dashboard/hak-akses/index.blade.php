@@ -80,8 +80,8 @@
                                 @endif
                             </td>
                             <td class="sticky-aksi-col">
-                                <a href="{{ route('dashboard.hak-akses.edit', ['role' => $role->id]) }}" class="btn btn-warning">Edit</a>
-                                <a href="#" class="btn btn-danger" data-confirm-delete="true">Delete</a>
+                                <a href="{{ route('dashboard.hak-akses.edit', ['role' => $role->id]) }}" class="btn btn-warning btn-block">Edit</a>
+                                <a href="#" class="btn btn-danger btn-block" data-confirm-delete="true">Delete</a>
                             </td>
                         </tr>
                         @endforeach
