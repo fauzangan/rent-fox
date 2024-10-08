@@ -40,6 +40,12 @@ class UserController extends Controller
             'role' => ['sometimes', 'nullable', 'string'],
         ]);
 
+        // Cek jika mencoba membuat pengguna dengan role Super Admin
+        if (isset($validatedData['role']) && $validatedData['role'] === 'Super Admin') {
+            Alert::error('Pengguna dengan peran Super Admin tidak bisa dibuat.');
+            return redirect()->route('dashboard.users.index');
+        }
+
         try{
             DB::transaction(function() use($validatedData) {
                 $user = User::create([
@@ -73,6 +79,12 @@ class UserController extends Controller
     }
 
     public function edit(User $user){
+        // Cek jika pengguna adalah Super Admin
+        if ($user->hasRole('Super Admin')) {
+            Alert::error('Pengguna Super Admin tidak dapat diedit');
+            return redirect()->route('dashboard.users.index');
+        }
+
         $roles = Role::all();
         return view('dashboard.users.edit', [
             'user' => $user,
@@ -81,6 +93,12 @@ class UserController extends Controller
     }
 
     public function update(Request $request, User $user){
+        // Cek jika pengguna adalah Super Admin
+        if ($user->hasRole('Super Admin')) {
+            Alert::error('Pengguna Super Admin tidak dapat diubah');
+            return redirect()->route('dashboard.users.index');
+        }
+
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', Rule::unique('users')->ignore($user)],
@@ -122,12 +140,24 @@ class UserController extends Controller
     }
 
     public function editPassword(User $user){
+        // Cek jika pengguna adalah Super Admin
+        if ($user->hasRole('Super Admin')) {
+            Alert::error('Password pengguna Super Admin tidak dapat diubah');
+            return redirect()->route('dashboard.users.index');
+        }
+
         return view('dashboard.users.reset-password', [
             'user' => $user
         ]);
     }
 
     public function updatePassword(Request $request, User $user){
+        // Cek jika pengguna adalah Super Admin
+        if ($user->hasRole('Super Admin')) {
+            Alert::error('Password pengguna Super Admin tidak dapat diubah');
+            return redirect()->route('dashboard.users.index');
+        }
+
         $validatedData = $request->validate([
             'password' => ['required', 'min:10','string', 'confirmed'],
             'password_confirmation' => ['required', 'string'],

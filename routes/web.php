@@ -13,6 +13,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReservasiController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TagihanController;
+use App\Http\Controllers\TestingWordController;
 use App\Http\Controllers\TotalLogistikController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -376,7 +377,7 @@ Route::group(['middleware' => ['auth']], function () {
         ->middleware('can:edit-users');
 });
 
-
+Route::get('/export/invoice/{id}', [TestingWordController::class, 'createInvoiceFromTemplate']);
 
 Route::get('/test', function(){
     return view('test');

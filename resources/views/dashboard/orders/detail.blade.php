@@ -229,7 +229,8 @@
                             <button class="btn btn-success w-100" style="color: black">Kondisi Barang</button>
                         </div>
                         <div class="col-3">
-                            <button class="btn btn-success w-100" style="color: black">Invoice</button>
+                            <a href="/export/invoice/{{ $order->order_id }}" class="btn btn-success w-100" style="color: black">Invoice</a>
+                            {{-- <button class="btn btn-success w-100" style="color: black">Invoice</button> --}}
                         </div>
                         <div class="col-3">
                             <button class="btn btn-success w-100" style="color: black">Delivery Order</button>
