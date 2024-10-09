@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('kirim_kepada');
             $table->string('nama_proyek');
             $table->string('alamat_kirim');
-            $table->string('keterangan');
+            $table->string('keterangan')->nullable();
             $table->string('memo')->nullable();
             $table->unsignedBigInteger('status_transport_id')->nullable();
             $table->foreign('status_transport_id')->references('status_transport_id')->on('status_transports')->onDelete('set null');

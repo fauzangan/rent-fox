@@ -109,7 +109,7 @@ class OrderController extends Controller
     }
 
     public function create(){
-        $customers = Customer::with('perusahaan')->get();
+        $customers = Customer::with('perusahaan')->orderBy('customer_id', 'desc')->get();
         $statusOrders = StatusOrder::all();
         $statusTransports = StatusTransport::all();
         $items = Item::all();

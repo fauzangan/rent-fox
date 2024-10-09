@@ -192,7 +192,7 @@
                             <td>{{ $order->kirim_kepada }}</td>
                             <td>{{ $order->nama_proyek }}</td>
                             <td>{{ $order->alamat_kirim }}</td>
-                            <td>{{ $order->keterangan }}</td>
+                            <td>{{ $order->keterangan ?? '-' }}</td>
                             <td>{{ $order->statusTransport->nama_status }}</td>
                             <td>
                                 @if($order->statusOrder->status_order_id == 1)

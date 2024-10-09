@@ -58,7 +58,7 @@
                             <div class="row">
                                 <div class="col-3 pr-1">
                                     <input type="text" class="form-control @error('badan_hukum') is-invalid @enderror"
-                                        id="badan_hukum" readonly value="{{ old('badan_hukum', $tagihan->order->customer->perusahaan->badan_hukum) ?? '' }}">
+                                        id="badan_hukum" readonly value="{{ old('badan_hukum', $tagihan->order->customer->perusahaan->badan_hukum ?? '')  }}">
                                     @error('badan_hukum')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -68,7 +68,7 @@
                                 <div class="col-9 pl-1">
                                     <input type="text"
                                         class="form-control"
-                                        id="nama_perusahaan" readonly value="{{ old('nama_perusahaan', $tagihan->order->customer->perusahaan->nama) ?? '' }}">
+                                        id="nama_perusahaan" readonly value="{{ old('nama_perusahaan', $tagihan->order->customer->perusahaan->nama ?? '') }}">
                                     
                                 </div>
                             </div>
