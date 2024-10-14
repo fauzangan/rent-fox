@@ -75,6 +75,13 @@ class BukuHarian extends Model
         }
     }
 
+    public function scopeFilterByKeterangan(Builder $query, $keterangan)
+    {
+        if ($keterangan) {
+            $query->where('keterangan', 'like', '%' . $keterangan . '%');
+        }
+    }
+
     public static function createBukuHarian($data) {
         // Konversi String to Int debit dan kredit
         $data['debit'] = $data['debit'] = (int)str_replace(',', '.', str_replace('.', '', $data['debit']));

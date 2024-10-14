@@ -23,7 +23,7 @@
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h4>Filter Data</h4>
-            <button class="btn btn-primary" type="button" id="filterButton"><i class="fa fa-plus" id="filterIcon"></i></button>
+            <button class="btn btn-primary" type="button" id="filterButton"><i class="fa fa-filter" id="filterIcon"></i></button>
         </div>
         <div class="card-body" id="filterForm" style="display: none">
             <form action="{{ route('dashboard.buku-harians.index') }}" method="GET">
@@ -62,6 +62,12 @@
                                 <option value="{{ $group_biaya->group_biaya_id }}" {{ request('group_biaya_id') == $group_biaya->group_biaya_id ? 'selected' : '' }}>(Kode Group: {{ $group_biaya->prefiks }} ) | {{ $group_biaya->nama_group }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                    </div>
+                    <div class="col pr-0">
+                        <div class="form-group">
+                            <label>Keterangan</label>
+                            <input type="text" id="keterangan" name="keterangan" value="{{ request('keterangan') }}" class="form-control">
                         </div>
                     </div>
                     <div class="col">
@@ -202,7 +208,7 @@
         }
 
         // Check if any of the specified query strings exist
-        const fields = ['order_id', 'customer_id', 'tanggal_transaksi', 'group_biaya_id', 'posting_biaya_id'];
+        const fields = ['order_id', 'customer_id', 'tanggal_transaksi', 'group_biaya_id', 'posting_biaya_id', 'keterangan'];
         let formShouldShow = false;
         
         fields.forEach(field => {
@@ -213,12 +219,12 @@
 
         if (formShouldShow) {
             $('#filterForm').show();
-            $('#filterIcon').toggleClass('fa-plus fa-minus');
+            $('#filterIcon').toggleClass('fa-filter fa-minus');
         }
 
         $('#filterButton').click(function() {
             $('#filterForm').toggle('slow', 'swing');
-            $('#filterIcon').toggleClass('fa-plus fa-minus');
+            $('#filterIcon').toggleClass('fa-filter fa-minus');
         });
 
         /* Pengaturan Tanggal Order dan Tanggal Kirim Input */

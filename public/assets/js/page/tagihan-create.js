@@ -71,6 +71,29 @@ $(document).ready(function () {
         }
     );
 
+    // Event for double-clicking jatuh_tempo_2 to auto-fill with 30 days after jatuh_tempo_1
+    $("#jatuh_tempo_2").on("dblclick", function () {
+        let jatuhTempo1Val = $("#jatuh_tempo_1").val();
+
+        if (jatuhTempo1Val) {
+            // Parse the date from jatuh tempo 1
+            let jatuhTempo1Date = moment(jatuhTempo1Val, "DD/MM/YYYY");
+
+            // Add 30 days to jatuh tempo 1
+            let jatuhTempo2Date = jatuhTempo1Date.add(30, "days");
+
+            // Set the value of jatuh tempo 2 to the new date
+            $(this).val(jatuhTempo2Date.format("DD/MM/YYYY"));
+        } else {
+            // Show an alert or notification if jatuh tempo 1 is not filled
+            iziToast.error({
+                title: "Error",
+                message: "Jatuh Tempo 1 belum diisi.",
+                position: "topRight",
+            });
+        }
+    });
+
     /* Mencegah memasukan tanggal yang salah */
     $("form").on("submit", function (e) {
         let tanggalDitagihkan = $("#tanggal_ditagihkan").val();

@@ -150,12 +150,12 @@
 
         if (formShouldShow) {
             $('#filterForm').show();
-            $('#filterIcon').toggleClass('fa-plus fa-minus');
+            $('#filterIcon').toggleClass('fa-filter fa-minus');
         }
 
         $('#filterButton').click(function() {
             $('#filterForm').toggle('slow', 'swing');
-            $('#filterIcon').toggleClass('fa-plus fa-minus');
+            $('#filterIcon').toggleClass('fa-filter fa-minus');
         });
     });
 </script>

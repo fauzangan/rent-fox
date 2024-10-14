@@ -23,6 +23,7 @@ class BukuHarianController extends Controller
         ->filterByTanggalTransaksi($request->input('tanggal_transaksi'))
         ->filterByGroupBiayaId($request->input('group_biaya_id'))
         ->filterByPostingBiayaId($request->input('posting_biaya_id'))
+        ->filterByKeterangan($request->input('keterangan'))
         ->orderBy('updated_at', 'desc')
         ->get();
         $groupBiayas = GroupBiaya::with(['postingBiayas'])->get();
@@ -33,7 +34,7 @@ class BukuHarianController extends Controller
     }
 
     public function create(){
-        $orders = Order::with('customer')->get();
+        $orders = Order::with('customer')->orderBy('order_id', 'desc')->get();
         $groupBiayas = GroupBiaya::with('postingBiayas')->get();
         $dataBukuHarians = DataBukuHarian::all();
         return view('dashboard.buku-harians.create', [

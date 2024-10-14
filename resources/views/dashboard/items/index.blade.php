@@ -23,7 +23,7 @@
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h4>Filter Data</h4>
-            <button class="btn btn-primary" type="button" id="filterButton"><i class="fa fa-plus" id="filterIcon"></i></button>
+            <button class="btn btn-primary" type="button" id="filterButton"><i class="fa fa-filter" id="filterIcon"></i></button>
         </div>
         <div class="card-body" id="filterForm" style="display: none">
             <form action="{{ route('dashboard.items.index') }}" method="GET">
@@ -184,12 +184,12 @@
 
         if (formShouldShow) {
             $('#filterForm').show();
-            $('#filterIcon').toggleClass('fa-plus fa-minus');
+            $('#filterIcon').toggleClass('fa-filter fa-minus');
         }
 
         $('#filterButton').click(function() {
             $('#filterForm').toggle('slow', 'swing');
-            $('#filterIcon').toggleClass('fa-plus fa-minus');
+            $('#filterIcon').toggleClass('fa-filter fa-minus');
         });
     });
 </script>
