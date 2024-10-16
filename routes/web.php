@@ -238,7 +238,7 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('dashboard.logistik-harians.getCustomerOrder')
         ->middleware('can:lihat-logistik-harians');
 
-    Route::get('/dashboard/logistik-harian/getPengiriman/{orderId}', [LogistikHarianController::class, 'getPengiriman'])
+    Route::get('/dashboard/logistik-harians/getSisa/{orderId}', [LogistikHarianController::class, 'getPengirimanAndPengembalian'])
         ->name('dashboard.logistik-harians.getPengiriman')
         ->middleware('can:lihat-logistik-harians');
 

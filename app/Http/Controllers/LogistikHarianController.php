@@ -212,37 +212,55 @@ class LogistikHarianController extends Controller
         }
     }
 
-    public function getPengiriman($orderId)
+    public function getPengirimanAndPengembalian($orderId)
     {
         // Ambil semua item dari tabel order_items berdasarkan order_id
         $orderItems = OrderItem::where('order_id', $orderId)->get();
-
-        // Buat array untuk menyimpan hasil perhitungan sisa pengiriman per item
-        $sisaPengiriman = [];
-
+    
+        // Buat array untuk menyimpan hasil perhitungan sisa pengiriman dan pengembalian per item
+        $result = [];
+    
         // Loop melalui semua item yang dipesan
         foreach ($orderItems as $item) {
-            // Jika tidak ada pengiriman sebelumnya, maka jumlah item yang dikirim sesuai dengan pengiriman terbaru
+            // Hitung total item yang sudah dikirim dengan status_logistik_id = 1 (pengiriman)
             $totalDikirim = LogistikHarian::where('order_id', $orderId)
                 ->where('status_logistik_id', 1)
                 ->whereHas('logistik', function ($query) use ($item) {
                     $query->where('item_id', $item->item_id);
                 })
                 ->sum('jumlah_item');
-
-            // Periksa apakah jumlah item yang sudah dikirim lebih dari jumlah yang dipesan
-            $sisa = max(0, $item->jumlah_item - $totalDikirim);
-
+    
+            // Hitung total item yang sudah dikembalikan dengan status_logistik_id = 2 (pengembalian)
+            $totalDikembalikan = LogistikHarian::where('order_id', $orderId)
+                ->where('status_logistik_id', 2)
+                ->whereHas('logistik', function ($query) use ($item) {
+                    $query->where('item_id', $item->item_id);
+                })
+                ->sum('jumlah_item');
+    
+            // Perhitungan sisa pengiriman
+            $sisaPengiriman = max(0, $item->jumlah_item - $totalDikirim);
+    
+            // Perhitungan sisa pengembalian
+            $sisaPengembalian = max(0, $totalDikirim - $totalDikembalikan);
+    
             // Tambahkan hasil perhitungan ke array
-            $sisaPengiriman[] = [
+            $result[] = [
                 'item_id' => $item->item_id,
                 'nama_item' => $item->nama_item,
                 'jumlah_dipesan' => $item->jumlah_item,
                 'total_dikirim' => $totalDikirim,
-                'sisa_pengiriman' => $sisa,
+                'total_dikembalikan' => $totalDikembalikan,
+                'sisa_pengiriman' => $sisaPengiriman,
+                'sisa_pengembalian' => $sisaPengembalian,
             ];
         }
+    
+        return response()->json($result);
+    }
 
-        return response()->json($sisaPengiriman);
+    public function getPengembalian($orderId)
+    {
+
     }
 }

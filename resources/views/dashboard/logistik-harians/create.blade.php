@@ -289,7 +289,7 @@
         </div>
 
         <div class="col-6 col-md-4">
-            <div class="card mb-2" id="pengirimanTable">
+            <div class="card mb-2" id="pengirimanTable" style="display: none;">
                 <div class="card-header">
                     <h4>Pengiriman</h4>
                 </div>
@@ -307,7 +307,7 @@
                     </table>
                 </div>
             </div>
-            <div class="card" id="pengembalianTable">
+            <div class="card" id="pengembalianTable" style="display: none">
                 <div class="card-header">
                     <h4>Pengembalian</h4>
                 </div>
@@ -316,8 +316,9 @@
                         <thead>
                             <tr>
                                 <th>Kode</th>
-                                <th>Nama Item</th>
-                                <th>Jumlah</th>
+                                <th>Dikirimkan</th>
+                                <th>Dikembalikan</th>
+                                <th>Sisa</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
