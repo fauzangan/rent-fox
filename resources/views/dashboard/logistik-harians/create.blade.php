@@ -198,12 +198,13 @@
         </div>
     </div>
     <div class="row">
-        <div class="col pr-0">
-            <div class="card" id="customerOrderTable" style="display: none;">
+        <!-- Membuat customerOrderTable dan orderItemsTable vertikal -->
+        <div class="col-6 col-md-3">
+            <div class="card mb-2" id="customerOrderTable" style="display: none;">
                 <div class="card-header">
                     <h4>Order Aktif Customer</h4>
                 </div>
-                <div class="card-body p-0" >
+                <div class="card-body p-0">
                     <table class="table table-md">
                         <thead>
                             <tr>
@@ -216,13 +217,11 @@
                     </table>
                 </div>
             </div>
-        </div>
-        <div class="col pr-0">
             <div class="card" id="orderItemsTable" style="display: none;">
                 <div class="card-header">
                     <h4>Item Per Order Ini</h4>
                 </div>
-                <div class="card-body p-0" >
+                <div class="card-body p-0">
                     <table class="table table-md">
                         <thead>
                             <tr>
@@ -236,14 +235,16 @@
                 </div>
             </div>
         </div>
-        <div class="col-6">
+        
+        <!-- Bagian lain yang tetap horizontal -->
+        <div class="col-12 col-md-5">
             <div class="row">
                 <div class="col">
-                    <div class="card mb-1" id="itemOrderCustomer" style="display: none;">
+                    <div class="card mb-2" id="itemOrderCustomer" style="display: none;">
                         <div class="card-header">
                             <h4>Daftar Order dg. Item INI per Customer INI (Aktif dan Tutup)</h4>
                         </div>
-                        <div class="card-body p-0" >
+                        <div class="card-body p-0">
                             <table class="table table-md">
                                 <thead>
                                     <tr>
@@ -286,7 +287,46 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-6 col-md-4">
+            <div class="card mb-2" id="pengirimanTable">
+                <div class="card-header">
+                    <h4>Pengiriman</h4>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-md">
+                        <thead>
+                            <tr>
+                                <th>Kode Item</th>
+                                <th>Jumlah Order</th>
+                                <th>Dikirimkan</th>
+                                <th>Sisa</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card" id="pengembalianTable">
+                <div class="card-header">
+                    <h4>Pengembalian</h4>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-md">
+                        <thead>
+                            <tr>
+                                <th>Kode</th>
+                                <th>Nama Item</th>
+                                <th>Jumlah</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
+    
 </div>
 
 @push('styles')

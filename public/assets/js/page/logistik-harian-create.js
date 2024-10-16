@@ -102,7 +102,6 @@ $(document).ready(function () {
             success: function (data) {
                 var item = data.find(item => item.item_id == orderItemId);
                 if (item) {
-                    $("#jumlah_item").val(item.jumlah_item);
                     $("#satuan").val(item.satuan);
                     getLogistikHarians(orderId, item.item_id);
                     getCustomerOrderItems(customerId, orderItemId);
@@ -233,4 +232,20 @@ $(document).ready(function () {
             $("#itemOrderCustomer").slideUp();
         }
     }
+
+        // Fungsi untuk menghitung jumlah total dari baik, x_ringan, dan x_berat
+        function calculateTotal() {
+            var baik = parseInt($("input[name='baik']").val()) || 0;
+            var xRingan = parseInt($("input[name='x_ringan']").val()) || 0;
+            var xBerat = parseInt($("input[name='x_berat']").val()) || 0;
+            
+            var total = baik + xRingan + xBerat;
+            
+            $("#jumlah_item").val(total);
+        }
+    
+        // Event listener untuk menghitung total setiap kali nilai baik, x_ringan, atau x_berat berubah
+        $("input[name='baik'], input[name='x_ringan'], input[name='x_berat']").on('input', function () {
+            calculateTotal();
+        });
 });

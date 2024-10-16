@@ -20,15 +20,18 @@ class LogistikHarian extends Model
         'tanggal_transaksi' => 'date'
     ];
 
-    public function logistik(){
+    public function logistik()
+    {
         return $this->belongsTo(Logistik::class, 'logistik_id', 'logistik_id');
     }
 
-    public function order(){
+    public function order()
+    {
         return $this->belongsTo(Order::class, 'order_id', 'order_id');
     }
 
-    public function statusLogistik(){
+    public function statusLogistik()
+    {
         return $this->belongsTo(StatusLogistik::class, 'status_logistik_id', 'status_logistik_id');
     }
 
@@ -49,7 +52,7 @@ class LogistikHarian extends Model
     public function scopeFilterByItemId(Builder $query, $itemId)
     {
         if ($itemId) {
-            $query->whereHas('logistik', function($q) use($itemId){
+            $query->whereHas('logistik', function ($q) use ($itemId) {
                 $q->where('item_id', '=', $itemId);
             });
         }
@@ -58,7 +61,7 @@ class LogistikHarian extends Model
     public function scopeFilterByCustomerId(Builder $query, $customerId)
     {
         if ($customerId) {
-            $query->whereHas('order', function($q) use($customerId){
+            $query->whereHas('order', function ($q) use ($customerId) {
                 $q->where('customer_id', '=', $customerId);
             });
         }
@@ -67,7 +70,7 @@ class LogistikHarian extends Model
     public function scopeFilterByItemName(Builder $query, $itemName)
     {
         if ($itemName) {
-            $query->whereHas('logistik.item', function($q) use($itemName){
+            $query->whereHas('logistik.item', function ($q) use ($itemName) {
                 $q->where('nama_item', 'like', '%' . $itemName . '%');
             });
         }
@@ -75,7 +78,7 @@ class LogistikHarian extends Model
 
     public function scopeFilterByTanggalTransaksi(Builder $query, $tanggalTransaksi)
     {
-        if($tanggalTransaksi) {
+        if ($tanggalTransaksi) {
             list($startDate, $endDate) = explode(' - ', $tanggalTransaksi);
             // Ubah format tanggal menjadi "YYYY-MM-DD" untuk query
             $startDate = DateTime::createFromFormat('d/m/Y', $startDate)->format('Y-m-d');
@@ -84,30 +87,31 @@ class LogistikHarian extends Model
         }
     }
 
-    public static function createLogistikHarian($data){
+    public static function createLogistikHarian($data)
+    {
         $data['tanggal_transaksi'] = DateTime::createFromFormat('d/m/Y', $data['tanggal_transaksi'])->format('Y-m-d');
-        if($data['status_logistik_id'] == 2){
-            if($data['baik'] > 0){
+        if ($data['status_logistik_id'] == 2) {
+            if ($data['baik'] > 0) {
                 $data['baik'] = -(int)$data['baik'];
             }
-            if($data['x_ringan'] > 0){
+            if ($data['x_ringan'] > 0) {
                 $data['x_ringan'] = -(int)$data['x_ringan'];
             }
-            if($data['x_berat'] > 0){
+            if ($data['x_berat'] > 0) {
                 $data['x_berat'] = -(int)$data['x_berat'];
             }
-        }else{
-            if($data['baik'] < 0){
+        } else {
+            if ($data['baik'] < 0) {
                 $data['baik'] = -(int)$data['baik'];
             }
-            if($data['x_ringan'] < 0){
+            if ($data['x_ringan'] < 0) {
                 $data['x_ringan'] = -(int)$data['x_ringan'];
             }
-            if($data['x_berat'] < 0){
+            if ($data['x_berat'] < 0) {
                 $data['x_berat'] = -(int)$data['x_berat'];
             }
         }
-        return DB::transaction(function() use($data) {
+        return DB::transaction(function () use ($data) {
             $logistik = Logistik::where('item_id', '=', $data['item_id'])->first();
             $logistikHarian = LogistikHarian::create([
                 'logistik_id' => $logistik->logistik_id,
@@ -126,47 +130,51 @@ class LogistikHarian extends Model
 
     public function updateLogistikHarian($data)
     {
-    $data['tanggal_transaksi'] = DateTime::createFromFormat('d/m/Y', $data['tanggal_transaksi'])->format('Y-m-d');
-    
-    // Adjust values based on status_logistik_id
-    if($data['status_logistik_id'] == 2){
-        if($data['baik'] > 0){
-            $data['baik'] = -(int)$data['baik'];
+        $data['tanggal_transaksi'] = DateTime::createFromFormat('d/m/Y', $data['tanggal_transaksi'])->format('Y-m-d');
+
+        // Adjust values based on status_logistik_id
+        if ($data['status_logistik_id'] == 2) {
+            if ($data['baik'] > 0) {
+                $data['baik'] = -(int)$data['baik'];
+            }
+            if ($data['x_ringan'] > 0) {
+                $data['x_ringan'] = -(int)$data['x_ringan'];
+            }
+            if ($data['x_berat'] > 0) {
+                $data['x_berat'] = -(int)$data['x_berat'];
+            }
+        } else {
+            if ($data['baik'] < 0) {
+                $data['baik'] = -(int)$data['baik'];
+            }
+            if ($data['x_ringan'] < 0) {
+                $data['x_ringan'] = -(int)$data['x_ringan'];
+            }
+            if ($data['x_berat'] < 0) {
+                $data['x_berat'] = -(int)$data['x_berat'];
+            }
         }
-        if($data['x_ringan'] > 0){
-            $data['x_ringan'] = -(int)$data['x_ringan'];
-        }
-        if($data['x_berat'] > 0){
-            $data['x_berat'] = -(int)$data['x_berat'];
-        }
-    }else{
-        if($data['baik'] < 0){
-            $data['baik'] = -(int)$data['baik'];
-        }
-        if($data['x_ringan'] < 0){
-            $data['x_ringan'] = -(int)$data['x_ringan'];
-        }
-        if($data['x_berat'] < 0){
-            $data['x_berat'] = -(int)$data['x_berat'];
-        }
+
+        return DB::transaction(function () use ($data) {
+            $logistikHarian = $this;
+            // Update Logistik Harian
+            $logistikHarian->update([
+                'logistik_id' => $data['logistik_id'],
+                'status_logistik_id' => $data['status_logistik_id'],
+                'tanggal_transaksi' => $data['tanggal_transaksi'],
+                'order_id' => $data['order_id'],
+                'baik' => $data['baik'],
+                'x_ringan' => $data['x_ringan'],
+                'x_berat' => $data['x_berat'],
+                'jumlah_item' => $data['jumlah_item']
+            ]);
+
+
+            return $logistikHarian;
+        });
     }
 
-    return DB::transaction(function() use($data) {
-        $logistikHarian = $this;
-        // Update Logistik Harian
-        $logistikHarian->update([
-            'logistik_id' => $data['logistik_id'],
-            'status_logistik_id' => $data['status_logistik_id'],
-            'tanggal_transaksi' => $data['tanggal_transaksi'],
-            'order_id' => $data['order_id'],
-            'baik' => $data['baik'],
-            'x_ringan' => $data['x_ringan'],
-            'x_berat' => $data['x_berat'],
-            'jumlah_item' => $data['jumlah_item']
-        ]);
-
-
-        return $logistikHarian;
-    });
-}
+    public function getPengirimanLogHarian($orderId){
+        
+    }
 }

@@ -16,6 +16,7 @@ use App\Http\Controllers\TagihanController;
 use App\Http\Controllers\TestingWordController;
 use App\Http\Controllers\TotalLogistikController;
 use App\Http\Controllers\UserController;
+use App\Models\Logistik;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -235,6 +236,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/dashboard/logistik-harians/getCustomerOrders/{customerId}', [LogistikHarianController::class, 'getCustomerOrders'])
         ->name('dashboard.logistik-harians.getCustomerOrder')
+        ->middleware('can:lihat-logistik-harians');
+
+    Route::get('/dashboard/logistik-harian/getPengiriman/{orderId}', [LogistikHarianController::class, 'getPengiriman'])
+        ->name('dashboard.logistik-harians.getPengiriman')
         ->middleware('can:lihat-logistik-harians');
 
     // Reservasi Route
