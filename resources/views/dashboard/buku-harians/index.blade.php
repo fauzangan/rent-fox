@@ -110,6 +110,7 @@
                             <th>Nama<br> Posting</th>
                             <th>Kode<br> Order</th>
                             <th>Kode<br> Cust</th>
+                            <th>Customer</th>
                             <th>Keterangan</th>
                             <th>Debet</th>
                             <th>Kredit</th>
@@ -137,6 +138,13 @@
                                 {{ $buku_harian->order->customer_id }}
                                 @else
                                 <span class="badge badge-secondary">dihapus</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if(isset($buku_harian->order->customer->nama))
+                                {{ $buku_harian->order->customer->nama }}
+                                @else
+                                -
                                 @endif
                             </td>
                             <td>{{ $buku_harian->keterangan }}</td>

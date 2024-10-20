@@ -14,8 +14,11 @@
         <div class="card-body">
             <form action="" method="POST">
                 @csrf
-                <div class="section-title mt-0">
-                    Orders
+                <div class="card-header justify-content-between px-1">
+                    <div class="section-title mt-0">
+                        Orders
+                    </div>
+                    <button type="submit" class="btn btn-primary rounded-0 py-1"><i class="fas fa-plus"></i> Buat Order</button>
                 </div>
                 <div class="row">
                     <div class="col-3">
@@ -267,9 +270,9 @@
 
                 <div class="section-title">Tambah Items Order</div>
                 @include('dashboard.orders.partials.create-item-order-form')
-                <div class="card-footer text-center">
+                {{-- <div class="card-footer text-center">
                     <button type="submit" class="btn btn-primary">Tambah Order Baru</button>
-                </div>
+                </div> --}}
             </form>
         </div>
     </div>

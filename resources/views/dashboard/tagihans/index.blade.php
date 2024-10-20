@@ -255,6 +255,11 @@
             return urlParams.get(name);
         }
 
+        $('button[type="reset"]').on('click', function(event) {
+            event.preventDefault(); // Mencegah form mereset secara default
+            window.location.href = "{{ route('dashboard.tagihans.index') }}"; // Redirect ke halaman index
+        });
+
         // Check if any of the specified query strings exist
         const fields = ['tagihan_id', 'order_id', 'customer_id', 'nama_customer', 'nama_perusahaan', 'jenis_tagihan_id', 'status_tagihan_id', 'tanggal_ditagihkan', 'jatuh_tempo_1', 'jatuh_tempo_2'];
         let formShouldShow = false;

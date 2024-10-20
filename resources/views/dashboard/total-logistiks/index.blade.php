@@ -195,6 +195,11 @@
             return urlParams.get(name);
         }
 
+        $('button[type="reset"]').on('click', function(event) {
+            event.preventDefault(); // Mencegah form mereset secara default
+            window.location.href = "{{ route('dashboard.total-logistiks.index') }}"; // Redirect ke halaman index
+        });
+
         // Check if any of the specified query strings exist
         const fields = ['status_total_logistik_id', 'item_id', 'nama_item', 'data_total_logistik_id'];
         let formShouldShow = false;

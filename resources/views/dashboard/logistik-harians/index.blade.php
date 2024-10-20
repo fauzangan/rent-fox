@@ -192,6 +192,11 @@
             return urlParams.get(name);
         }
 
+        $('button[type="reset"]').on('click', function(event) {
+            event.preventDefault(); // Mencegah form mereset secara default
+            window.location.href = "{{ route('dashboard.logistik-harians.index') }}"; // Redirect ke halaman index
+        });
+
         // Check if any of the specified query strings exist
         const fields = ['status_logistik_id', 'order_id', 'item_id', 'customer_id', 'nama_item', 'tanggal_transaksi'];
         let formShouldShow = false;

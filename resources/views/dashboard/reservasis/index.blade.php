@@ -166,6 +166,11 @@
             return urlParams.get(name);
         }
 
+        $('button[type="reset"]').on('click', function(event) {
+            event.preventDefault(); // Mencegah form mereset secara default
+            window.location.href = "{{ route('dashboard.reservasis.index') }}"; // Redirect ke halaman index
+        });
+
         // Check if any of the specified query strings exist
         const fields = ['tanggal_reservasi', 'nama_customer', 'nama_perusahaan', 'handphone'];
         let formShouldShow = false;

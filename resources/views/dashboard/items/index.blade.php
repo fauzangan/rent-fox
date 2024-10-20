@@ -172,6 +172,11 @@
             return urlParams.get(name);
         }
 
+        $('button[type="reset"]').on('click', function(event) {
+            event.preventDefault(); // Mencegah form mereset secara default
+            window.location.href = "{{ route('dashboard.items.index') }}"; // Redirect ke halaman index
+        });
+
         // Check if any of the specified query strings exist
         const fields = ['item_id', 'nama_item', 'category_item_id'];
         let formShouldShow = false;

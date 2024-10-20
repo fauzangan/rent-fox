@@ -205,6 +205,11 @@
             return urlParams.get(name);
         }
 
+        $('button[type="reset"]').on('click', function(event) {
+            event.preventDefault(); // Mencegah form mereset secara default
+            window.location.href = "{{ route('dashboard.customers.index') }}"; // Redirect ke halaman index
+        });
+
         // Check if any of the specified query strings exist
         const fields = ['customer_id', 'nama', 'nomor_identitas', 'handphone', 'nama_perusahaan', 'bonafidity', 'status_customer_id'];
         let formShouldShow = false;

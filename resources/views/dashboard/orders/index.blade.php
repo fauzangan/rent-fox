@@ -271,6 +271,12 @@
 <script src="{{ asset('assets/modules/izitoast/js/iziToast.min.js') }}"></script>
 <script>
     $(document).ready(function() {
+
+        $('button[type="reset"]').on('click', function(event) {
+            event.preventDefault(); // Mencegah form mereset secara default
+            window.location.href = "{{ route('dashboard.orders.index') }}"; // Redirect ke halaman index
+        });
+
         // Function to get query string value
         function getQueryStringParameter(name) {
             const urlParams = new URLSearchParams(window.location.search);
