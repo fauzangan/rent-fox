@@ -31,6 +31,9 @@
             <li class="{{ Request::is('dashboard/tagihans*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.tagihans.index') }}">
                 <i class="fas fa-file-invoice-dollar"></i> <span> Tagihan</span></a>
             </li>
+            <li class="{{ Request::is('dashboard/jatuh-tempos*')? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard.jatuh-tempos.index') }}">
+                <i class="fas fa-file-invoice-dollar"></i> <span> Jatuh Tempo Order</span></a>
+            </li>
             <li class="menu-header" style="color: black">Logistik</li>
             <li class="{{ Request::is('dashboard/logistik-harians*')? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('dashboard.logistik-harians.index') }}"><i class="fas fa-shipping-fast"></i> <span>Logistik Harian</span></a>

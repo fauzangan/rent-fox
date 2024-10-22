@@ -5,6 +5,7 @@ use App\Http\Controllers\BukuHarianController;
 use App\Http\Controllers\CategoryItemController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\JatuhTempoController;
 use App\Http\Controllers\JurnalBulananController;
 use App\Http\Controllers\LogistikController;
 use App\Http\Controllers\LogistikHarianController;
@@ -195,6 +196,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/dashboard/tagihans/update/{tagihan}', [TagihanController::class, 'update'])
         ->name('dashboard.tagihans.update')
         ->middleware('can:edit-tagihans');
+
+
+    // Jatuh Tempo Order
+    Route::get('/dashboard/jatuh-tempos', [JatuhTempoController::class, 'index'])
+        ->name('dashboard.jatuh-tempos.index');
 
     // Logistik Route
     Route::get('/dashboard/logistiks', [LogistikController::class, 'index'])

@@ -276,6 +276,7 @@
             event.preventDefault(); // Mencegah form mereset secara default
             window.location.href = "{{ route('dashboard.orders.index') }}"; // Redirect ke halaman index
         });
+        
 
         // Function to get query string value
         function getQueryStringParameter(name) {

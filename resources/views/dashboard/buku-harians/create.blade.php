@@ -18,53 +18,22 @@
             @csrf
             <div class="card-body">
                 <div class="row">
-                    <div class="col-3 pr-0">
+                    {{-- Tgl Entry --}}
+                    <div class="col-2 pr-0">
                         <div class="form-group">
-                            <label>Kode Posting</label>
-                            <select class="form-control @error('posting_biaya_id') is-invalid @enderror" id="posting_biaya_id" name="posting_biaya_id">
-                                <option selected disabled>Pilih Kode Posting...</option>
-                                @foreach($group_biayas as $group_biaya)
-                                <optgroup label="{{ $group_biaya->nama_group }} (Kode Group: {{ $group_biaya->prefiks }})">
-                                    @foreach($group_biaya->postingBiayas as $posting_biaya)
-                                    <option value="{{ $posting_biaya->posting_biaya_id }}">{{ $posting_biaya->posting_biaya_id }} | {{ $posting_biaya->nama_posting }}</option>
-                                    @endforeach
-                                </optgroup>
-                                @endforeach
-                            </select>
-                            @error('posting_biaya_id')
-                            <div class="invalid-feedback">
-                                {{ $message }}
+                            <label>Tanggal Entry</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="far fa-calendar-alt"></i>
+                                    </div>
+                                </div>
+                                <input type="text" class="form-control" id="tanggal_entry" name="tanggal_entry"
+                                    value="{{ \Carbon\Carbon::now()->format('d/m/Y') }}" readonly>
                             </div>
-                            @enderror
                         </div>
                     </div>
-                    <div class="col-1 pr-0">
-                        <div class="form-group">
-                            <label>Kode Order</label>
-                            <select class="form-control select2 @error('order_id') is-invalid @enderror" id="order_id" name="order_id">
-                                <option disabled selected> </option>
-                                @foreach($orders as $order)
-                                <option value="{{ $order->order_id }}" data-customer_id="{{ $order->customer_id }}">{{ $order->order_id }}</option>
-                                @endforeach
-                            </select>
-                            @error('order_id')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-1 pr-0">
-                        <div class="form-group">
-                            <label>Kode Cust</label>
-                            <input class="form-control" type="text" disabled id="customer_id" value="{{ old('customer_id') }}">
-                            @error('customer_id')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-                    </div>
+                    {{-- Tgl Transak --}}
                     <div class="col-2 pr-0">
                         <div class="form-group">
                             <label>Tanggal Transaksi</label>
@@ -85,6 +54,64 @@
                             </div>
                         </div>
                     </div>
+                    {{-- Kode Posting --}}
+                    <div class="col-3 pr-0">
+                        <div class="form-group">
+                            <label>Kode Posting</label>
+                            <select class="form-control @error('posting_biaya_id') is-invalid @enderror"
+                                id="posting_biaya_id" name="posting_biaya_id">
+                                <option selected disabled>Pilih Kode Posting...</option>
+                                @foreach($group_biayas as $group_biaya)
+                                <optgroup
+                                    label="{{ $group_biaya->nama_group }} (Kode Group: {{ $group_biaya->prefiks }})">
+                                    @foreach($group_biaya->postingBiayas as $posting_biaya)
+                                    <option value="{{ $posting_biaya->posting_biaya_id }}">{{
+                                        $posting_biaya->posting_biaya_id }} | {{ $posting_biaya->nama_posting }}
+                                    </option>
+                                    @endforeach
+                                </optgroup>
+                                @endforeach
+                            </select>
+                            @error('posting_biaya_id')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                    {{-- Kode Order --}}
+                    <div class="col-1 pr-0">
+                        <div class="form-group">
+                            <label>Kode Order</label>
+                            <select class="form-control select2 @error('order_id') is-invalid @enderror" id="order_id"
+                                name="order_id">
+                                <option disabled selected> </option>
+                                @foreach($orders as $order)
+                                <option value="{{ $order->order_id }}" data-customer_id="{{ $order->customer_id }}">{{
+                                    $order->order_id }}</option>
+                                @endforeach
+                            </select>
+                            @error('order_id')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                    {{-- Kode Cust --}}
+                    <div class="col-1 pr-0">
+                        <div class="form-group">
+                            <label>Kode Cust</label>
+                            <input class="form-control" type="text" disabled id="customer_id"
+                                value="{{ old('customer_id') }}">
+                            @error('customer_id')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                    {{-- Keterangan --}}
                     <div class="col">
                         <div class="form-group">
                             <label>Keterangan</label>
@@ -96,7 +123,8 @@
                                 <option value="Claim Rusak Ringan">Claim Rusak Ringan</option>
                                 <option value="Claim Rusak Berat">Claim Rusak Berat</option>
                                 <option value="Gaji Staff">Gaji Staff</option>
-                                <option value="IMK, Jembatan Timbang, Retribusi">IMK, Jembatan Timbang, Retribusi</option>
+                                <option value="IMK, Jembatan Timbang, Retribusi">IMK, Jembatan Timbang, Retribusi
+                                </option>
                                 <option value="Lebih Bayar">Lebih Bayar</option>
                                 <option value="Ongkos KB-KB">Ongkos KB-KB</option>
                                 <option value="Operasional">Operasional</option>
@@ -137,7 +165,8 @@
                                         Rp
                                     </div>
                                 </div>
-                                <input type="text" class="form-control @error('debit') is-invalid @enderror" name="debit" id="debit" value="0">
+                                <input type="text" class="form-control @error('debit') is-invalid @enderror"
+                                    name="debit" id="debit" value="0">
                             </div>
                             @error('debit')
                             <div class="invalid-feedback">
@@ -155,7 +184,8 @@
                                         Rp
                                     </div>
                                 </div>
-                                <input type="text" class="form-control @error('kredit') is-invalid @enderror" name="kredit" id="kredit" value="0">
+                                <input type="text" class="form-control @error('kredit') is-invalid @enderror"
+                                    name="kredit" id="kredit" value="0">
                             </div>
                             @error('kredit')
                             <div class="invalid-feedback">
@@ -173,7 +203,8 @@
                                         Rp
                                     </div>
                                 </div>
-                                <input type="text" class="form-control @error('saldo') is-invalid @enderror" disabled id="saldo">
+                                <input type="text" class="form-control @error('saldo') is-invalid @enderror" disabled
+                                    id="saldo">
                             </div>
                             @error('saldo')
                             <div class="invalid-feedback">
@@ -185,9 +216,11 @@
                     <div class="col-2 pr-0">
                         <div class="form-group">
                             <label>Status Data</label>
-                            <select class="form-control select2 @error('data_buku_harian_id') is-invalid @enderror" id="data_buku_harian_id" name="data_buku_harian_id">
+                            <select class="form-control select2 @error('data_buku_harian_id') is-invalid @enderror"
+                                id="data_buku_harian_id" name="data_buku_harian_id">
                                 @foreach($data_buku_harians as $data_buku_harian)
-                                <option value="{{ $data_buku_harian->data_buku_harian_id }}">{{ $data_buku_harian->nama_data }}</option>
+                                <option value="{{ $data_buku_harian->data_buku_harian_id }}">{{
+                                    $data_buku_harian->nama_data }}</option>
                                 @endforeach
                             </select>
                             @error('data_buku_harian_id')
@@ -200,7 +233,8 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Vendor</label>
-                            <input type="text" class="form-control @error('vendor') is-invalid @enderror" name="vendor" id="vendor">
+                            <input type="text" class="form-control @error('vendor') is-invalid @enderror" name="vendor"
+                                id="vendor">
                             @error('vendor')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -211,7 +245,7 @@
                 </div>
             </div>
             <div class="card-footer text-right pt-0">
-                <button type="submit" class="btn btn-primary">Tambah Data Buku Harian</button>
+                <button type="submit" class="btn btn-primary">Buat Data</button>
             </div>
         </form>
     </div>
@@ -265,12 +299,13 @@
 <!-- Modal Tagihan -->
 @include('dashboard.buku-harians.partials.modal-tagihans')
 <!-- Modal Tagihan -->
-  
+
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/modules/bootstrap-daterangepicker/daterangepicker.css') }}">
-<link href="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.css" rel="stylesheet">
+<link href="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.css"
+    rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('assets/modules/izitoast/css/iziToast.min.css') }}">
 @endpush
 
@@ -531,7 +566,7 @@
     });
 </script>
 <script>
-    
+
 </script>
 @endpush
 @endsection
