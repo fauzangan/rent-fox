@@ -43,8 +43,8 @@
                         <tr>
                             <td class="text-center">{{ $order->customer_id }}</td>
                             <td>{{ $order->tanggal_kirim->format('d/m/Y') }}</td>
-                            <td>1</td>
-                            <th>1</th>
+                            <th>{{ $order->bulan_ke }}</th>
+                            <td>{{ $order->tanggal_jatuh_tempo->format('d/m/Y') }}</td>
                             <td class="text-center">{{ $order->order_id }}</td>
                             <td>{{ $order->customer->nama }}</td>
                             <td>{{ $order->customer->perusahaan->badan_hukum ?? '-' }} {{ $order->customer->perusahaan->nama ?? '' }}</td>

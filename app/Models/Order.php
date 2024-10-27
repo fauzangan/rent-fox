@@ -237,6 +237,22 @@ class Order extends Model
         });
         return $order;
     }
-
     
+    public function getTanggalJatuhTempoAttribute()
+    {
+        $tanggalKirim = Carbon::parse($this->tanggal_kirim);
+        $tanggalSekarang = Carbon::now();
+
+        $bulanKe = ceil($tanggalKirim->diffInDays($tanggalSekarang) / 30);
+
+        return $tanggalKirim->addDays($bulanKe * 30);
+    }
+
+    public function getBulanKeAttribute()
+    {
+        $tanggalKirim = Carbon::parse($this->tanggal_kirim);
+        $tanggalSekarang = Carbon::now();
+
+        return ceil($tanggalKirim->diffInDays($tanggalSekarang) / 30);
+    }
 }
