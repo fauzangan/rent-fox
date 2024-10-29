@@ -11,9 +11,9 @@
 
 <div class="section-body">
     <div class="card">
-        <div class="card-header">
+        {{-- <div class="card-header">
             <h4>Jatuh Tempo Order</h4>
-        </div>
+        </div> --}}
         <div class="card-body">
             <div class="table-responsive text-nowrap">
                 @if($orders->count() == 0)
@@ -68,11 +68,92 @@
                 </table>
                 @endif
             </div>
+            <div class="text-right mt-2">
+                <nav class="d-inline-block">
+                    {{ $orders->links() }}
+                </nav>
+            </div>
         </div>
-        <div class="card-footer text-right">
-            <nav class="d-inline-block">
-                {{ $orders->links() }}
-            </nav>
+    </div>
+</div>
+
+<!-- Form Sticky di Bawah -->
+<div class="card fixed-bottom bg-light">
+    <div class="card-body">
+        <div class="row">
+            <!-- Kode Order dan Tagihan -->
+            <div class="col">
+                <form>
+                    <div class="form-group row">
+                        <label for="kodeOrder" class="col-form-label col-6 font-weight-bold text-center bg-primary text-white rounded">KODE ORDER</label>
+                        <div class="col-6">
+                            <select class="form-control" id="kodeOrder">
+                                <option value="123">123</option>
+                                <option value="124">124</option>
+                                <!-- Tambahkan opsi lainnya sesuai kebutuhan -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-6 font-weight-bold text-center bg-warning text-dark rounded">CLAIM RINGAN</label>
+                        <div class="col-6">
+                            <input type="text" class="form-control text-center bg-white" value="Rp9.000" disabled readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-6 font-weight-bold text-center bg-warning text-dark rounded">CLAIM BERAT%</label>
+                        <div class="col-6">
+                            <input type="text" class="form-control text-center bg-white" value="90" disabled readonly>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Jatuh Tempo Section -->
+            <div class="col">
+                <div class="form-group row">
+                    <label class="col-form-label col-6 font-weight-bold text-center bg-primary text-white rounded">Jatuh Tempo Lalu</label>
+                    <div class="col-6">
+                        <input type="text" class="form-control text-center bg-white" value="05/05/2024" disabled readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-6 font-weight-bold text-center bg-primary text-white rounded">Jatuh Tempo Ini</label>
+                    <div class="col-6">
+                        <input type="text" class="form-control text-center bg-white" value="04/06/2024" disabled readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-6 font-weight-bold text-center bg-primary text-white rounded">Jatuh Tempo Perpanjang</label>
+                    <div class="col-6">
+                        <input type="text" class="form-control text-center bg-white" value="04/07/2024" disabled readonly>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Final Section dengan Tombol -->
+            <div class="col">
+                <div class="form-group row">
+                    <label class="col-form-label col-6 font-weight-bold text-center bg-info text-white rounded">Tanggal Final</label>
+                    <div class="col-6">
+                        <input type="date" class="form-control" id="tanggalFinal" value="2024-06-22">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6 mb-2">
+                        <button type="button" class="btn btn-md btn-success btn-block">Tagihan Perpanjang</button>
+                    </div>
+                    <div class="col-6 mb-2">
+                        <button type="button" class="btn btn-md btn-success btn-block">Tagihan Periode Final</button>
+                    </div>
+                    <div class="col-6">
+                        <button type="button" class="btn btn-md btn-primary btn-block"><i class="fa fa-minus"></i> MIN</button>
+                    </div>
+                    <div class="col-6">
+                        <button type="button" class="btn btn-md btn-primary btn-block"><i class="fa fa-plus"></i> PLUS</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
