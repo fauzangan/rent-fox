@@ -77,21 +77,28 @@
     </div>
 </div>
 
-<!-- Form Sticky di Bawah -->
+<!-- Form Sticky Section -->
 <div class="card fixed-bottom bg-light">
     <div class="card-body">
         <div class="row">
-            <!-- Kode Order dan Tagihan -->
             <div class="col">
                 <form>
                     <div class="form-group row">
                         <label for="kodeOrder" class="col-form-label col-6 font-weight-bold text-center bg-primary text-white rounded">KODE ORDER</label>
                         <div class="col-6">
-                            <select class="form-control" id="kodeOrder">
+                            {{-- <select class="form-control" id="kodeOrder">
                                 <option value="123">123</option>
                                 <option value="124">124</option>
-                                <!-- Tambahkan opsi lainnya sesuai kebutuhan -->
-                            </select>
+                            </select> --}}
+                            <select class="form-control select2 @error('order_id') is-invalid @enderror"
+                            name="order_id" id="order_id">
+                            <option disabled selected>Pilih Kode Order</option>
+                            @foreach($orders as $order)
+                            <option value="{{ $order->order_id }}" {{ old('order_id')==$order->order_id ?
+                                'selected' : '' }}>{{
+                                $order->order_id }}</option>
+                            @endforeach
+                        </select>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -158,7 +165,14 @@
     </div>
 </div>
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/modules/bootstrap-daterangepicker/daterangepicker.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/modules/izitoast/css/iziToast.min.css') }}">
+@endpush
+
 @push('scripts')
+{{-- JS Libraries --}}
 <script src="{{ asset('assets/modules/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/modules/popper.js') }}"></script>
 <script src="{{ asset('assets/modules/tooltip.js') }}"></script>
@@ -166,5 +180,9 @@
 <script src="{{ asset('assets/modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
 <script src="{{ asset('assets/modules/moment.min.js') }}"></script>
 <script src="{{ asset('assets/js/stisla.js') }}"></script>
+
+<!-- Specific JS File -->
+<script src="{{ asset('assets/modules/izitoast/js/iziToast.min.js') }}"></script>
+<script src="{{ asset('assets/modules/select2/dist/js/select2.min.js') }}"></script>
 @endpush
 @endsection
