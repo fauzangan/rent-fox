@@ -357,16 +357,19 @@
         singleDatePicker: true,
         autoUpdateInput: false,
     });
+
     $("#tanggal_transaksi").attr(
         "placeholder",
         "dd/mm/yyyy"
     );
+
     $("#tanggal_transaksi").on(
         "apply.daterangepicker",
         function (ev, picker) {
             $(this).val(picker.startDate.format("DD/MM/YYYY"));
         }
     );
+    
     $("#tanggal_transaksi").on(
         "cancel.daterangepicker",
         function (ev, picker) {

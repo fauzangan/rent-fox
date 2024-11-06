@@ -47,7 +47,8 @@
                             <td>{{ $order->tanggal_jatuh_tempo->format('d/m/Y') }}</td>
                             <td class="text-center">{{ $order->order_id }}</td>
                             <td>{{ $order->customer->nama }}</td>
-                            <td>{{ $order->customer->perusahaan->badan_hukum ?? '-' }} {{ $order->customer->perusahaan->nama ?? '' }}</td>
+                            <td>{{ $order->customer->perusahaan->badan_hukum ?? '-' }} {{
+                                $order->customer->perusahaan->nama ?? '' }}</td>
                             <td>{{ $order->nama_proyek ?? '-' }}</td>
                             <td>{{ $order->alamat_kirim }}</td>
                             <td>{{ $order->customer->telp ?? '-' }}</td>
@@ -57,7 +58,7 @@
                             <td>
                                 @if($order->statusOrder->status_order_id == 1)
                                 <span class="badge badge-success" style="color: black">{{
-                                    $order->statusOrder->nama_status }}</span>     
+                                    $order->statusOrder->nama_status }}</span>
                                 @else
                                 <span class="badge badge-danger">{{ $order->statusOrder->nama_status }}</span>
                                 @endif
@@ -84,31 +85,34 @@
             <div class="col">
                 <form>
                     <div class="form-group row">
-                        <label for="kodeOrder" class="col-form-label col-6 font-weight-bold text-center bg-primary text-white rounded">KODE ORDER</label>
+                        <label for="kodeOrder"
+                            class="col-form-label col-6 font-weight-bold text-center bg-primary text-white rounded">KODE
+                            ORDER</label>
                         <div class="col-6">
-                            {{-- <select class="form-control" id="kodeOrder">
-                                <option value="123">123</option>
-                                <option value="124">124</option>
-                            </select> --}}
-                            <select class="form-control select2 @error('order_id') is-invalid @enderror"
-                            name="order_id" id="order_id">
-                            <option disabled selected>Pilih Kode Order</option>
-                            @foreach($orders as $order)
-                            <option value="{{ $order->order_id }}" {{ old('order_id')==$order->order_id ?
-                                'selected' : '' }}>{{
-                                $order->order_id }}</option>
-                            @endforeach
-                        </select>
+                            <select class="form-control select2 @error('order_id') is-invalid @enderror" name="order_id"
+                                id="order_id">
+                                <option value="" selected>Pilih Kode Order</option>
+                                @foreach($orders as $order)
+                                <option value="{{ $order->order_id }}" {{ old('order_id')==$order->order_id ?
+                                    'selected' : '' }}>{{
+                                    $order->order_id }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-form-label col-6 font-weight-bold text-center bg-warning text-dark rounded">CLAIM RINGAN</label>
+                        <label
+                            class="col-form-label col-6 font-weight-bold text-center bg-warning text-dark rounded">CLAIM
+                            RINGAN</label>
                         <div class="col-6">
-                            <input type="text" class="form-control text-center bg-white" value="Rp9.000" disabled readonly>
+                            <input type="text" class="form-control text-center bg-white" value="Rp 9.000" disabled
+                                readonly>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-form-label col-6 font-weight-bold text-center bg-warning text-dark rounded">CLAIM BERAT%</label>
+                        <label
+                            class="col-form-label col-6 font-weight-bold text-center bg-warning text-dark rounded">CLAIM
+                            BERAT%</label>
                         <div class="col-6">
                             <input type="text" class="form-control text-center bg-white" value="90" disabled readonly>
                         </div>
@@ -119,29 +123,37 @@
             <!-- Jatuh Tempo Section -->
             <div class="col">
                 <div class="form-group row">
-                    <label class="col-form-label col-6 font-weight-bold text-center bg-primary text-white rounded">Jatuh Tempo Lalu</label>
+                    <label class="col-form-label col-6 font-weight-bold text-center bg-primary text-white rounded">Jatuh
+                        Tempo Lalu</label>
                     <div class="col-6">
-                        <input type="text" class="form-control text-center bg-white" value="05/05/2024" disabled readonly>
+                        <input type="text" class="form-control text-center bg-white" name="jatuh_tempo_lalu" disabled
+                            readonly>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-form-label col-6 font-weight-bold text-center bg-primary text-white rounded">Jatuh Tempo Ini</label>
+                    <label class="col-form-label col-6 font-weight-bold text-center bg-primary text-white rounded">Jatuh
+                        Tempo Ini</label>
                     <div class="col-6">
-                        <input type="text" class="form-control text-center bg-white" value="04/06/2024" disabled readonly>
+                        <input type="text" class="form-control text-center bg-white" name="jatuh_tempo_ini" disabled
+                            readonly>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-form-label col-6 font-weight-bold text-center bg-primary text-white rounded">Jatuh Tempo Perpanjang</label>
+                    <label class="col-form-label col-6 font-weight-bold text-center bg-primary text-white rounded">Jatuh
+                        Tempo Perpanjang</label>
                     <div class="col-6">
-                        <input type="text" class="form-control text-center bg-white" value="04/07/2024" disabled readonly>
+                        <input type="text" class="form-control text-center bg-white" name="jatuh_tempo_perpanjang"
+                            disabled readonly>
                     </div>
                 </div>
+
             </div>
 
             <!-- Final Section dengan Tombol -->
             <div class="col">
                 <div class="form-group row">
-                    <label class="col-form-label col-6 font-weight-bold text-center bg-info text-white rounded">Tanggal Final</label>
+                    <label class="col-form-label col-6 font-weight-bold text-center bg-info text-white rounded">Tanggal
+                        Final</label>
                     <div class="col-6">
                         <input type="date" class="form-control" id="tanggalFinal" value="2024-06-22">
                     </div>
@@ -154,10 +166,12 @@
                         <button type="button" class="btn btn-md btn-success btn-block">Tagihan Periode Final</button>
                     </div>
                     <div class="col-6">
-                        <button type="button" class="btn btn-md btn-primary btn-block"><i class="fa fa-minus"></i> MIN</button>
+                        <button type="button" class="btn btn-md btn-primary btn-block"><i class="fa fa-minus"></i>
+                            MIN</button>
                     </div>
                     <div class="col-6">
-                        <button type="button" class="btn btn-md btn-primary btn-block"><i class="fa fa-plus"></i> PLUS</button>
+                        <button type="button" class="btn btn-md btn-primary btn-block"><i class="fa fa-plus"></i>
+                            PLUS</button>
                     </div>
                 </div>
             </div>
@@ -184,5 +198,57 @@
 <!-- Specific JS File -->
 <script src="{{ asset('assets/modules/izitoast/js/iziToast.min.js') }}"></script>
 <script src="{{ asset('assets/modules/select2/dist/js/select2.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+    // Handler untuk perubahan pada order_id
+    $("#order_id").change(function () {
+        const orderId = $(this).val();
+        if (orderId) {
+            fetchJatuhTempoData(orderId);
+        } else {
+            clearJatuhTempoFields();
+        }
+    });
+
+    // Fungsi untuk mengambil data jatuh tempo melalui AJAX
+    function fetchJatuhTempoData(orderId) {
+        $.ajax({
+            url: `/dashboard/jatuh-tempos/${orderId}`,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                if (data) {
+                    populateJatuhTempoFields(data);
+                } else {
+                    showError("Data jatuh tempo tidak tersedia.");
+                }
+            },
+            error: function () {
+                showError("Gagal memuat data jatuh tempo. Silakan coba lagi.");
+            },
+        });
+    }
+
+    // Fungsi untuk mengisi input field jatuh tempo dengan data yang diambil
+    function populateJatuhTempoFields(data) {
+        $("input[name='jatuh_tempo_lalu']").val(data.jatuh_tempo_lalu);
+        $("input[name='jatuh_tempo_ini']").val(data.jatuh_tempo_ini);
+        $("input[name='jatuh_tempo_perpanjang']").val(data.jatuh_tempo_perpanjang);
+    }
+
+    // Fungsi untuk mengosongkan input field jatuh tempo
+    function clearJatuhTempoFields() {
+        $("input[name='jatuh_tempo_lalu']").val("");
+        $("input[name='jatuh_tempo_ini']").val("");
+        $("input[name='jatuh_tempo_perpanjang']").val("");
+    }
+
+    // Fungsi untuk menampilkan pesan error
+    function showError(message) {
+        alert(message);
+    }
+});
+
+</script>
 @endpush
 @endsection

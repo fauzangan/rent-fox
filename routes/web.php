@@ -202,6 +202,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/jatuh-tempos', [JatuhTempoController::class, 'index'])
         ->name('dashboard.jatuh-tempos.index');
 
+    Route::get('/dashboard/jatuh-tempos/{order}', [JatuhTempoController::class, 'getJatuhTempo'])
+        ->name('dashboard.jatuh-tempos.getJatuhTempo');
+
+
     // Logistik Route
     Route::get('/dashboard/logistiks', [LogistikController::class, 'index'])
         ->name('dashboard.logistiks.index')
