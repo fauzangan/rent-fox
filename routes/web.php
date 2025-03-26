@@ -11,6 +11,7 @@ use App\Http\Controllers\LogistikController;
 use App\Http\Controllers\LogistikHarianController;
 use App\Http\Controllers\MainDashboardController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PeriodeFinalController;
 use App\Http\Controllers\ReservasiController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TagihanController;
@@ -32,7 +33,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Temporary Route
-Route::get('/', function() {
+Route::get('/', function () {
     return redirect()->route('dashboard.main-dashboard.index');
 });
 
@@ -197,13 +198,18 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('dashboard.tagihans.update')
         ->middleware('can:edit-tagihans');
 
-
     // Jatuh Tempo Order
     Route::get('/dashboard/jatuh-tempos', [JatuhTempoController::class, 'index'])
         ->name('dashboard.jatuh-tempos.index');
 
     Route::get('/dashboard/jatuh-tempos/{order}', [JatuhTempoController::class, 'getJatuhTempo'])
         ->name('dashboard.jatuh-tempos.getJatuhTempo');
+
+
+    // Tagihan Final
+    Route::get('/dashboard/tagihan/periode-final', [PeriodeFinalController::class, 'index'])
+        ->name('dashboard.periode-final.index')
+        ->middleware('can:lihat-tagihans');
 
 
     // Logistik Route
@@ -257,11 +263,11 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('dashboard.reservasis.index')
         ->middleware('can:lihat-reservasis');
 
-    Route::get('/dashboard/reservasis/create', [ReservasiController::class,'create'])
+    Route::get('/dashboard/reservasis/create', [ReservasiController::class, 'create'])
         ->name('dashboard.reservasis.create')
         ->middleware('can:tambah-reservasis');
 
-    Route::post('/dashboard/reservasis/create', [ReservasiController::class,'store'])
+    Route::post('/dashboard/reservasis/create', [ReservasiController::class, 'store'])
         ->name('dashboard.reservasis.store')
         ->middleware('can:tambah-reservasis');
 
@@ -394,6 +400,6 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::get('/export/invoice/{id}', [TestingWordController::class, 'createInvoiceFromTemplate']);
 
-Route::get('/test', function(){
+Route::get('/test', function () {
     return view('test');
 });

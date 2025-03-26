@@ -163,7 +163,7 @@
                         <button type="button" class="btn btn-md btn-success btn-block">Tagihan Perpanjang</button>
                     </div>
                     <div class="col-6 mb-2">
-                        <button type="button" class="btn btn-md btn-success btn-block">Tagihan Periode Final</button>
+                        <a href="{{ route('dashboard.periode-final.index') }}" class="btn btn-md btn-success btn-block">Tagihan Periode Final</a>
                     </div>
                     <div class="col-6">
                         <button type="button" class="btn btn-md btn-primary btn-block"><i class="fa fa-minus"></i>
